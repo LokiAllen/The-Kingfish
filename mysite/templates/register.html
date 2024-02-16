@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+<h2>User Registration</h2>
+
+<form method="post" action="{% url 'register' %}">
+    {% csrf_token %}
+
+    <label>Username:</label>
+    {{ form.username }}
+    <br>
+
+    <label>First Name:</label>
+    {{ form.first_name }}
+    <br>
+
+    <label >Last Name:</label>
+    {{ form.last_name }}
+    <br>
+
+    <label>Email:</label>
+    {{ form.email }}
+    <br>
+
+    <label>Password:</label>
+    {{ form.password1 }}
+    <br>
+
+    <label>Confirm Password:</label>
+    {{ form.password2 }}
+    <br>
+
+    {{ form.username.errors }}
+    {{ form.first_name.errors }}
+    {{ form.last_name.errors }}
+    {{ form.email.errors }}
+    {{ form.password1.errors }}
+    {{ form.password2.errors }}
+
+    <button type="submit">Register</button>
+    <button onclick="location.href='{% url 'login' %}'" type="button">Login</button>
+</form>
+
+</body>
+</html>

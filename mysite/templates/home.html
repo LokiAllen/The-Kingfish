@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+{% if logged_in %}
+    {% if super %}
+        <h2>Admin : {{ user.username }}</h2>
+        <button onclick="location.href='{% url 'manage_qr' %}'" type="button">Generate QR Codes</button>
+        <button onclick="location.href='{% url 'logout' %}'" type="button">Logout</button>
+    {% else %}
+        <h2>Firstname: {{ user.first_name }} <br>Lastname: {{ user.last_name }} <br>Username: {{ user.username }}</h2>
+        <button onclick="location.href='{% url 'logout' %}'" type="button">Logout</button>
+    {% endif %}
+
+{% else %}
+    <h2>Not logged in</h2>
+    <button onclick="location.href='{% url 'login' %}'" type="button">Login</button>
+    <button onclick="location.href='{% url 'register' %}'" type="button">Register</button>
+{% endif %}
+</body>
+</html>

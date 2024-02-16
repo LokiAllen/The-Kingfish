@@ -1,0 +1,36 @@
+<!-- template.html -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>QR Code Generator</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'js/generate_qr_code.js' %}"></script>
+    <script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+        function redirectHomePage() {
+            window.location.href = '{% url "home" %}';
+        }
+    </script>
+        <style>
+        .qr-container {
+            display: none;
+        }
+    </style>
+</head>
+<body onload="refresh_values()">
+
+<input type="text" id="dataInput" placeholder="Enter data (leave blank to complete for you)" style="width:18rem">
+
+<button onclick="generateQRCode()">Generate QR Code</button>
+<button onclick="redirectHomePage()">Home</button>
+
+<div id="qrCodeContainer">
+
+</div>
+    <br>
+    <button onclick="showQRCodes()">Show All QR Codes</button>
+    <div class="qr-container">
+    </div>
+</body>
+</html>
