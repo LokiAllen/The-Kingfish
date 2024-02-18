@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://cexwbxgfkjkdv"]
+
+[ext_resource type="Script" path="res://Scripts/Main Menu/menu.gd" id="1_yb7u0"]
+[ext_resource type="FontFile" uid="uid://1sivoi5pj24a" path="res://Fonts/FFFFORWA.TTF" id="2_u0j82"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ij66q"]
+font = ExtResource("2_u0j82")
+
+[sub_resource type="Theme" id="Theme_bdd4w"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yb7u0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+offset_right = 1960.0
+offset_bottom = 1960.0
+color = Color(0, 0, 0, 1)
+
+[node name="Main Menu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -88.5
+offset_right = 62.0
+offset_bottom = 88.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Main Menu/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Penguin Runner"
+label_settings = SubResource("LabelSettings_ij66q")
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Main Menu/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_bdd4w")
+text = "Start game"
+
+[connection signal="pressed" from="Main Menu/VBoxContainer/Button" to="." method="_on_button_pressed"]

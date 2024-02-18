@@ -8,6 +8,7 @@ import qrcode.image.svg
 import base64
 from io import BytesIO
 
+
 from qrcodes.models import *
 
 

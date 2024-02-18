@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cl1ek7w072eqc"]
+
+[ext_resource type="Texture2D" uid="uid://x0xvvti6j0am" path="res://icon.svg" id="1_ngkje"]
+[ext_resource type="Script" path="res://CharacterBody2D.gd" id="1_pixes"]
+[ext_resource type="Script" path="res://Scripts/Main Scene/WorldScroller.gd" id="4_whbhq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxks0"]
+size = Vector2(125, 125)
+
+[node name="World" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_pixes")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+modulate = Color(0, 0, 0, 1)
+texture = ExtResource("1_ngkje")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+zoom = Vector2(0.3, 0.3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_fxks0")
+
+[node name="env" type="Node2D" parent="."]
+
+[node name="WorldScroller" type="Node2D" parent="."]
+script = ExtResource("4_whbhq")
