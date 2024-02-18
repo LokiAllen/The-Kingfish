@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h3> Login </h3>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Login">
+    <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
+    <button onclick="location.href='{% url 'home' %}'" type="button">Home</button>
+</form>
+</body>
+</html>

@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "polls.apps.PollsConfig",
     'mysite',
-    'login',
+    'accounts',
+    'siteadmin',
     'qrcodes',
 ]
 
@@ -127,6 +128,3 @@ STATICFILES_DIRS = [BASE_DIR / 'static/']
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# To override the default 'AUTH_USERS' database table (used for to use different attributes)
-AUTH_USER_MODEL = 'login.User'

@@ -2,16 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Register</title>
 </head>
 <body>
-<h3> Login </h3>
+<h3> Register </h3>
 
 <form method="POST" action="">
     {% csrf_token %}
     {{form.as_p}}
-    <input type="submit" value="Login">
-    <button onclick="location.href='{% url 'register' %}'" type="button">Register</button>
+    <input type="submit" value="Change">
     <button onclick="location.href='{% url 'home' %}'" type="button">Home</button>
 </form>
 </body>

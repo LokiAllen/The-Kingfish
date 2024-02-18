@@ -1,0 +1,27 @@
+<!-- template.html -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Leaderboard</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'js/leaderboard.js' %}"></script>
+</head>
+<body onload="get_leaderboard_data()">
+    <input type="text" id="dataInput" placeholder="How many users to show?" style="width:18rem">
+
+    <button onclick="get_leaderboard_data()">Get the leaderboard</button>
+    <button onclick="location.href='{% url 'home' %}'" type="button">Home</button>
+    <table style="border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Username</th>
+                <th>Coins</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboard-table">
+        </tbody>
+    </table>
+</body>
+</html>

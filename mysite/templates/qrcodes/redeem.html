@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Redeem QR Code</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'js/location.js' %}"></script>
+    <script> var CSRF_TOKEN = '{{ csrf_token }}' </script>
+</head>
+<body onload=getLocation()>
+        <h1>Testing</h1>
+        <p>(some message should show up below)</p>
+        <p id='status'></p>
+        <button onclick="location.href='{% url 'home' %}'" type="button">Home</button>
+</body>
+</html>

@@ -1,12 +1,9 @@
 from django.urls import path
 
-from . import views
+from .views import *
 
-"""
-    - Any url at qrcodes/(code) will have the same effect, and will do something based on the (code) entered
-    - location/ is used to send a request to verify the location and validity of the code
-"""
+app_name = 'qrcodes'
+
 urlpatterns = [
-    path("<str:code>", views.qrcode_scan, name="scan_code"),
-    path("location/<str:code>", views.get_location, name="location_check"),
+    path('<str:code>/', QRCodeRedeem.as_view(), name='qrcoderedeem'),
 ]
