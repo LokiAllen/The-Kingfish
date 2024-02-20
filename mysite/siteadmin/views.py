@@ -12,6 +12,8 @@ from io import BytesIO
 from qrcodes.models import *
 
 
+
+
 # Superuser required for all 'admin' operations, so this checks that
 class SuperUserRequired(View):
     def dispatch(self, request, *args, **kwargs):
