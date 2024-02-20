@@ -1,0 +1,105 @@
+
+body {
+    background-image: url(images/arcade-unsplash.jpg);
+    background-color: rgb(41, 123, 245);
+    background-size: cover;
+    background-position: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.main {
+    text-align: center;
+    margin: 50px;
+    color: #f2f2f2;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 35px;
+    font-weight: bolder;
+}
+
+
+.topnav {
+    max-width: 1500px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(154,192,232);
+background: linear-gradient(180deg, rgba(154,192,232,1) 1%, rgba(42,146,255,1) 3%, rgba(5,104,253,1) 98%, rgba(3,60,147,1) 99%);
+    border-radius: 6px;
+    padding: 10px;
+    color: #fff;    
+}
+
+.topnav-center {
+    order: 2;
+}
+
+.topnav-right {
+    order: 3;
+}
+
+.topnav-left {
+    order: 1;
+}
+
+.topnav-brand {
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    list-style-type: none;
+}
+
+.topnav button {
+
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    will-change: box-shadow,transform;
+    background: linear-gradient(180deg, rgba(154,192,232,1) 1%, rgba(42,146,255,1) 3%, rgba(5,104,253,1) 98%, rgba(3,60,147,1) 99%);
+    box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -2px 0px rgb(58 65 111 / 50%);
+    padding: 0 32px;
+    border-radius: 6px;
+    color: #fff;
+    height: 48px;
+    font-size: 18px;
+    text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+    transition: box-shadow 0.15s ease,transform 0.15s ease;
+    
+}
+
+.topnav button:hover {
+    text-shadow: 1px 1px 10px white;
+    box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #00000035;
+    transform: translateY(1px);
+}
+
+/* Style the links inside the navigation bar */
+.nav-link {
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 18px;
+    list-style-type: none;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    text-shadow: 1px 1px 10px white;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+    color: white;
+}
