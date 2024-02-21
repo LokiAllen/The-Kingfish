@@ -2,20 +2,20 @@
 
 {% extends "../base.html" %}
 
-{% block template %}
+{% block templatepage %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
 <body>
-<h3> Login </h3>
+<h2> Login </h2>
 
 <form method="POST" action="">
     {% csrf_token %}
     {{form.as_p}}
-    <input type="submit" value="Login" class="primarybutton">
     <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
+    <input type="submit" value="Login" class="primarybutton">
 </form>
 </body>
 </html>

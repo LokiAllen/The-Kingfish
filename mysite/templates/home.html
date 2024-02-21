@@ -10,25 +10,25 @@
     <title>Home</title>
 </head>
 <body>
+<h1>Penguin Game</h1>
+
 {% if logged_in %}
     {% if super %}
         <h1>Admin</h1>
         <h2>Firstname: {{ user.first_name }} <br>Lastname: {{ user.last_name }} <br>Username: {{ user.username }} <br>Email: {{ user.email }}</h2>
         <button onclick="location.href='{% url 'siteadmin:manageqr' %}'" type="button">Manage QR Codes</button>
     {% else %}
-        <h2>Firstname: {{ user.first_name }} <br>Lastname: {{ user.last_name }} <br>Username: {{ user.username }} <br>Email: {{ user.email }}</h2>
+        <h2> Welcome back {{ user.username }}! </h2>
     {% endif %}
 
-        <button onclick="location.href='{% url 'leaderboard' %}'" type="button">Leaderboard</button>
         <button onclick="location.href='{% url 'accounts:change_email' %}'" type="button">Change Email</button>
         <button onclick="location.href='{% url 'accounts:change_password' %}'" type="button">Change Password</button>
         <button onclick="location.href='{% url 'accounts:change_username' %}'" type="button">Change Username</button>
         <button onclick="location.href='{% url 'accounts:change_info' %}'" type="button">Change Info</button>
         <button onclick="location.href='{% url 'accounts:logout' %}'" type="button">Logout</button>
 {% else %}
-    <h2>Not logged in</h2>
-    <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button">Login</button>
     <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
+    <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button" class="primarybutton">Login</button>
 {% endif %}
 </body>
 </html>
