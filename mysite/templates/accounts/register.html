@@ -14,7 +14,7 @@
 <form method="POST" action="">
     {% csrf_token %}
     {{form.as_p}}
-    <input type="submit" value="Register">
+    <input type="submit" value="Register" class="primarybutton">
     <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button">Log in</button>
     <button onclick="location.href='{% url 'home' %}'" type="button">Home</button>
 </form>
