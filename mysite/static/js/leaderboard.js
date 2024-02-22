@@ -11,7 +11,7 @@ function get_leaderboard_data() {
             leaderboard_table.html('');
             data.top_n_users.forEach(function(user, index, array) {
                 if (index === array.length - 1) {
-                    leaderboard_table.append('<tr style="border-top:1px solid black"><td><b>' + user.position + '</b></td><td><b>' + user.username + '</b></td><td><b>' + user.coins + '</b></td><td style="border:1px solid white">YOU</td> </tr>');
+                    leaderboard_table.append('<tr class="importantrow"><td><b>' + user.position + '</b></td><td><b>' + user.username + '</b></td><td><b>' + user.coins + '</tr>');
                 } else {
                     leaderboard_table.append('<tr><td>' + user.position + '</td><td>' + user.username + '</td><td>' + user.coins + '</td></tr>');
                 }

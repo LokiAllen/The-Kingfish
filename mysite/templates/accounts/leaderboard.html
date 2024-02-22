@@ -11,11 +11,14 @@
     <script src="{% static 'js/leaderboard.js' %}"></script>
 </head>
 <body onload="get_leaderboard_data()">
+    
+    <!-- For changing size of leaderboard
     <input type="text" id="dataInput" placeholder="How many users to show?" style="width:18rem">
-
     <button onclick="get_leaderboard_data()">Get the leaderboard</button>
-    <button onclick="location.href='{% url 'home' %}'" type="button">Home</button>
-    <table style="border-collapse: collapse;">
+    -->
+    <h2>Leaderboard</h2>
+
+    <table class="table">
         <thead>
             <tr>
                 <th>Position</th>
