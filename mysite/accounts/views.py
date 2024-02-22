@@ -55,6 +55,10 @@ class RegisterView(NotLoggedInRequired, FormView):
 
         return redirect('/home/')
 
+# Account view
+class AccountView(LoggedInRequired, View):
+    tempplate_name = 'accounts/account.html'
+
 # Change Email (all types of changes are basically the same format)
 class ChangeEmailView(LoggedInRequired, FormView):
     template_name = 'accounts/change.html'
