@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 {% extends "../base.html" %}
 {% load static %}
 {% block templatepage %}
@@ -7,14 +6,12 @@
     <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <title>Your Profile</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'css/edit_profile.css' %}">
-        <title>Register</title>
     </head>
     <body>
-    <h2> Register </h2>
-
-    <!-- Rest of your form -->
+    <h1>Your Profile!</h1>
     <form method="POST" action="" enctype="multipart/form-data" class="dropzone" id="RegisterForm">
         {% csrf_token %}
         <div class="subform">
@@ -23,43 +20,35 @@
 
             <div class="column">{{ form.username.label_tag }}
                 {{ form.username }}</div>
-        </div>
+        </div><div class="subform">
 
-        <div class="subform">
-            <div class="column">{{ form.first_name.label_tag }}
-                {{ form.first_name }}</div>
+        <div class="column">{{ form.first_name.label_tag }}
+            {{ form.first_name }}</div>
 
-            <div class="column">{{ form.last_name.label_tag }}
-                {{ form.last_name }}</div>
-        </div>
-
-        <div class="subform">
-            <div class="column">{{ form.password1.label_tag }}
-                {{ form.password1 }}</div>
-
-            <div class="column">{{ form.password2.label_tag }}
-                {{ form.password2 }}</div>
-        </div>
+        <div class="column">{{ form.last_name.label_tag }}
+            {{ form.last_name }}</div>
+    </div>
 
         <label for="id_profile_picture">Profile Picture</label>
         <div class="sideDiv" id="previewDiv">
             <input type="file" name="profile_picture" id="id_profile_picture" class="dropzone custom-file-input">
-            <img src="#" id="pfp">
+            <img src="{{ user.userinfo.picture.url }}" id="pfp" style="display: block;">
         </div>
 
-        <input type="submit" value="Register" class="primarybutton">
-        {{ form.errors }}
+        <input type="submit" value="Change" class="primarybutton">
+        {{ form.username.errors }}
+        {{ form.email.errors }}
     </form>
 
-    <!-- Use window.onload to ensure the DOM is fully loaded -->
+
     <script>
+        // Changes the picture anytime a file is 'dragged' or uploaded
         $('document').ready(function () {
             $("#id_profile_picture").change(function () {
                 if (this.files && this.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                        $('#pfp').attr('src', e.target.result);
-                        $('#pfp').css('display', 'block');
+                        $('.sideDiv #pfp').attr('src', e.target.result);
                     }
                     reader.readAsDataURL(this.files[0]);
                 }

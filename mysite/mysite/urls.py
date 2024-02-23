@@ -18,9 +18,10 @@ from django.contrib import admin
 from django.urls import include, path
 from mysite import settings, views
 from accounts import views as account_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path("polls/", include("polls.urls")),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('qrcodes/', include('qrcodes.urls')),
@@ -28,3 +29,6 @@ urlpatterns = [
     path('home/', views.home_view, name='home'),
     path('leaderboard/', account_views.LeaderboardView.as_view(), name='leaderboard'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

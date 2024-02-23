@@ -23,7 +23,7 @@ class UserLogin(forms.Form):
         username_or_email = self.cleaned_data['username_or_email']
 
         # Checks whether there exists a user with the username or email that they have entered
-        user = User.objects.filter(Q(username=username_or_email) | Q(email__iexact=username_or_email)).first()
+        user = User.objects.filter(Q(username__iexact=username_or_email) | Q(email__iexact=username_or_email)).first()
 
         if not user:
             raise ValidationError('User does not exist')
@@ -47,14 +47,15 @@ class UserLogin(forms.Form):
 
 # Register form
 class RegisterForm(UserCreationForm):
+    profile_picture = forms.ImageField(required=False)
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'profile_picture']
 
     def clean_username(self):
         username = self.cleaned_data['username']
 
-        if User.objects.filter(username=username).exists():
+        if User.objects.filter(username__iexact=username).exists():
             raise ValidationError('An account with this username already exists')
 
         return username
@@ -62,62 +63,44 @@ class RegisterForm(UserCreationForm):
     def clean_email(self):
         email = self.cleaned_data['email']
 
-        if User.objects.filter(email=email).exists():
+        if User.objects.filter(email__iexact=email).exists():
             raise ValidationError('An account with this email already exists')
 
         return email
 
-# Allows user to change their email
-class ChangeEmail(forms.Form):
-    email = forms.EmailField(label='Email')
-
-    # Used to set the original value inside the form to their current email
-    def __init__(self, user, *args, **kwargs):
-        self.user = user
-        super().__init__(*args, **kwargs)
-
-    def clean_email(self):
-        email = self.cleaned_data['email']
-
-        if email == self.user.email:
-            raise ValidationError('Enter a new email, not the same')
-
-        user = User.objects.filter(email=email).exists()
-        if user:
-            raise ValidationError('An account with this email already exists')
-
-        return email
-
-# Change their username
-class ChangeUsername(forms.Form):
-    username = forms.CharField(label='Username')
-
-    def __init__(self, user, *args, **kwargs):
-        self.user = user
-        super().__init__(*args, **kwargs)
-
-    def clean_email(self):
-        username = self.cleaned_data['username']
-
-        if username == self.user.username:
-            raise ValidationError('Enter a new email, not the same')
-
-        user = User.objects.filter(username=username).exists()
-        if user:
-            raise ValidationError('An account with this username already exists')
-
-        return username
-
-# Change their first and last name
+# Everything a user can change under their profile page
 class ChangeInfo(forms.Form):
     first_name = forms.CharField(label='First Name')
     last_name = forms.CharField(label='Last Name')
+    username = forms.CharField(label='Username')
+    email = forms.EmailField(label='Email')
+    profile_picture = forms.ImageField(required=False)
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
         super().__init__(*args, **kwargs)
 
     def clean_email(self):
+        email = self.cleaned_data['email']
+
+        if email != self.user.email:
+            user = User.objects.filter(email__iexact=email).exists()
+            if user:
+                raise ValidationError('An account with this email already exists')
+
+        return email
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+
+        if username != self.user.username:
+            user = User.objects.filter(username__iexact=username).exists()
+            if user:
+                raise ValidationError('An account with this username already exists')
+
+        return username
+
+    def clean_info(self):
         first_name = self.cleaned_data['first_name']
         last_name = self.cleaned_data['last_name']
 
