@@ -11,7 +11,7 @@ body {
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    overflow: hidden;
+    overflow: auto;
     font-family: Actionman;
     text-align: center;
     margin: auto;
@@ -64,7 +64,7 @@ h2 {
     */
     border-radius: 6px;
     padding: 10px;
-    color: #fff;    
+    color: #fff;
 }
 
 .topnav-center {
@@ -72,7 +72,11 @@ h2 {
 }
 
 .topnav-right {
+    display: inherit;
+    width: 30%;
     order: 3;
+    justify-content: right;
+    align-items: center;
 }
 
 .topnav-left {
@@ -129,7 +133,7 @@ button {
     text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
     font-family: actionman;
     transition: box-shadow 0.15s ease,transform 0.15s ease;
-    
+
 }
 
 button:hover {
@@ -149,7 +153,7 @@ input {
     font-size: 18px;
     text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
     font-family: actionman;
-    
+
 }
 
 .primarybutton {
@@ -161,7 +165,7 @@ input {
     background: radial-gradient(circle, rgba(230,228,128,1) 11%, rgba(255,210,91,1) 80%);
     */
     background: rgb(255,241,218);
-background: linear-gradient(180deg, rgba(255,241,218,1) 2%, rgba(250,220,171,1) 17%, rgba(250,191,97,1) 87%, rgba(210,135,18,1) 99%);
+    background: linear-gradient(180deg, rgba(255,241,218,1) 2%, rgba(250,220,171,1) 17%, rgba(250,191,97,1) 87%, rgba(210,135,18,1) 99%);
     box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -2px 0px rgb(58 65 111 / 50%);
 }
 
@@ -171,25 +175,12 @@ background: linear-gradient(180deg, rgba(255,241,218,1) 2%, rgba(250,220,171,1) 
     transform: translateY(1px);
 }
 
-table {
-    background-color: wheat;
-    color: white;
-    border-radius: 6px;
-    font-size: xx-large;
-    -webkit-text-stroke: 1px #40270e;
-    text-shadow: 0 2px 0px #40270e;
-    border-collapse: collapse;
-    margin: auto;
+.account-img {
+    width: 100%;
+    border-radius: 50%;
 }
 
-table th,
-table td {
-    padding: 12px 15px;
-}
-
-table .importantrow{
-    background: rgb(255,241,218);
-    background: linear-gradient(180deg, rgba(255,241,218,1) 2%, rgba(250,220,171,1) 17%, rgba(250,191,97,1) 87%, rgba(210,135,18,1) 99%);
-    box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -2px 0px rgb(58 65 111 / 50%);
-    border-radius: 6px;
+a#pfp {
+    width: 36px;
+    height: 36px;
 }
