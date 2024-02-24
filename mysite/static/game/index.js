@@ -183,7 +183,6 @@ if (ENVIRONMENT_IS_SHELL) {
    readBinary = url => {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, false);
-    console.error.apply(console, ["cunt"]);
     xhr.responseType = "arraybuffer";
     xhr.send(null);
     return new Uint8Array(xhr.response);
