@@ -123,6 +123,8 @@ USE_TZ = True
 # For loading javascript/css files
 STATIC_URL = 'mysite/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static/']
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

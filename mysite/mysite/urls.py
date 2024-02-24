@@ -27,4 +27,5 @@ urlpatterns = [
     path('siteadmin/', include('siteadmin.urls')),
     path('home/', views.home_view, name='home'),
     path('leaderboard/', account_views.LeaderboardView.as_view(), name='leaderboard'),
+    path('game/', include('game.urls'))
 ]
