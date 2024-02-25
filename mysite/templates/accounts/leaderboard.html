@@ -15,6 +15,8 @@
     <div class="leaderboardtype">
         <button onclick="location.href='{% url 'leaderboard' %}?type=global'" type="button">Global</button>
         <button onclick="location.href='{% url 'leaderboard' %}?type=friends'" type="button">Friends</button>
+        <button onclick="location.href='{% url 'leaderboard' %}?type={{ request.GET.type }}&score_type=cumulative'" type="button">Cumulative Score</button>
+        <button onclick="location.href='{% url 'leaderboard' %}?type={{ request.GET.type }}&score_type=high'" type="button">High Score</button>
     </div>
 
     <table class="table">
@@ -23,7 +25,11 @@
             <th></th>
             <th>Position</th>
             <th>Username</th>
-            <th>Coins</th>
+            {% if request.GET.score_type == "cumulative" %}
+                <th>Cumulative Score</th>
+            {% else %}
+                <th>High Score</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody id="leaderboard-table">
@@ -32,7 +38,11 @@
                 <td><a href="{% url 'accounts:profile' username=user.username %}"><img src="{{ user.profile_picture }}"></a></td>
                 <td><a href="{% url 'accounts:profile' username=user.username %}"><b>{{ user.position }}</b></a></td>
                 <td><a href="{% url 'accounts:profile' username=user.username %}"><b>{{ user.username }}</b></a></td>
-                <td><a href="{% url 'accounts:profile' username=user.username %}"><b>{{ user.coins }}</b></a></td>
+                {% if request.GET.score_type == "cumulative" %}
+                    <td><a href="{% url 'accounts:profile' username=user.username %}"><b>{{ user.cumulativeScore }}</b></a></td>
+                {% else %}
+                    <td><a href="{% url 'accounts:profile' username=user.username %}"><b>{{ user.highscore }}</b></a></td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>

@@ -9,6 +9,8 @@ def upload__rename(instance, filename):
 class UserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     coins = models.IntegerField(default=0)
+    highscore = models.IntegerField(default=0)
+    cumulativeScore = models.IntegerField(default=0)
     picture = models.ImageField(default='media/default.png', upload_to=upload__rename)
 
     def __str__(self):
