@@ -85,26 +85,41 @@ class LeaderboardView(LoggedInRequired, View):
     template_name = 'accounts/leaderboard.html'
 
     def dispatch(self, request, *args, **kwargs):
+        score_type = self.request.GET.get('score_type', 'cumulative')
         #self.num_users = 15 # --> If adding limit to users uncomment this
-        self.leaderboard_value = '-coins'
+        if score_type == 'cumulative':
+            self.leaderboard_value = "-cumulativeScore"
+        else:
+            self.leaderboard_value = "-highscore"
+
         leaderboard_type = self.request.GET.get('type', 'global')
 
-        data = self.get_leaderboard_data(leaderboard_type)
+
+        data = self.get_leaderboard_data(leaderboard_type, score_type)
 
         return render(request, self.template_name, data)
-
-    def get_leaderboard_data(self, type):
-        def get_position(user):
-            position = cache.get(f'user_{user.id}_position')
+    def get_leaderboard_data(self, type, score_type='cumulative'):
+        def get_position(user, score_field):
+            position_cache_key = f'user_{user.id}_position_{score_field}'
+            position = cache.get(position_cache_key)
 
             if not position:
-                position = UserInfo.objects.filter(coins__gt=user.coins).count() + 1
-                cache.set(f'user_{user.id}_position', position, timeout=300)
+                if score_field == 'cumulativeScore':
+                    position = UserInfo.objects.filter(cumulativeScore__gt=user.cumulativeScore).count() + 1
+                else:
+                    position = UserInfo.objects.filter(highscore__gt=user.highscore).count() + 1
+
+                cache.set(position_cache_key, position, timeout=300)
 
             return position
 
         def unpack_data(user):
-            return {'username': user.user.username, 'coins': user.coins, 'position': get_position(user), 'profile_picture': user.picture.url}
+            return {
+                'username': user.user.username,
+                'profile_picture': user.picture.url,
+                'position': get_position(user, 'cumulativeScore' if score_type == 'cumulative' else 'highscore'),
+                'cumulativeScore': user.cumulativeScore,
+                'highscore': user.highscore,}
 
         # Currently this is a list of anyone the user is following instead of 'friends'
         if type == 'friends':
