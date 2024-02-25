@@ -1,6 +1,5 @@
 
-
-var Godot = ((thisArg, argArray) => {
+var Godot = (() => {
   var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
   
   return (
@@ -14133,8 +14132,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 				if (!path.startsWith('godot.')) {
 					return path;
 				} else if (path.endsWith('.worker.js')) {
-					//return `${loadPath}.worker.js`;
-                    return `../mysite/static/game/index.worker.js`
+					return `${loadPath}.worker.js`;
 				} else if (path.endsWith('.audio.worklet.js')) {
 					return `${loadPath}.audio.worklet.js`;
 				} else if (path.endsWith('.js')) {
@@ -14244,7 +14242,7 @@ const Engine = (function () {
 	Engine.load = function (basePath, size) {
 		if (loadPromise == null) {
 			loadPath = basePath;
-			loadPromise = preloader.loadPromise(`../mysite/static/game/index.wasm`, size, true);
+			loadPromise = preloader.loadPromise(`${loadPath}.wasm`, size, true);
 			requestAnimationFrame(preloader.animateProgress);
 		}
 		return loadPromise;
@@ -14406,7 +14404,7 @@ const Engine = (function () {
 				this.config.update(override);
 				// Add main-pack argument.
 				const exe = this.config.executable;
-				const pack = this.config.mainPack || `../mysite/static/game/index.pck`;
+				const pack = this.config.mainPack || `${exe}.pck`;
 				this.config.args = ['--main-pack', pack].concat(this.config.args);
 				// Start and init with execName as loadPath if not inited.
 				const me = this;

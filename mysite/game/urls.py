@@ -1,7 +1,8 @@
 # game/urls.py
 from django.urls import path
-from . import views
+from .views import *
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', game_view, name='game'),
+    path('<str:filename>/', GameFileView.as_view(), name='game__get_file'),
 ]

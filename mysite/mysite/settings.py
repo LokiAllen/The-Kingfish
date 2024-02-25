@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "polls.apps.PollsConfig",
+    'corsheaders',
     'mysite',
     'accounts',
     'siteadmin',
@@ -47,11 +48,12 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -123,7 +125,6 @@ USE_TZ = True
 # For loading javascript/css files
 STATIC_URL = 'mysite/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static/']
-SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 
 # Default primary key field type
