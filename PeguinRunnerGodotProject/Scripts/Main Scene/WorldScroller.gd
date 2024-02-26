@@ -23,6 +23,7 @@ var speed : float = 400.0
 var transitionChance : float = 1.0
 
 var targetMovementState : Player.movementState = Player.movementState.flipGravity
+var dead : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -44,8 +45,9 @@ func addChunk(targetChunk : Resource):
 func _physics_process(delta):
 	rootChunkPosition.x = currentChunks[0].position.x
 	
-	for chunk in currentChunks:
-		chunk.position.x -= speed * delta
+	if !dead:
+		for chunk in currentChunks:
+			chunk.position.x -= speed * delta
 	
 	if rootChunkPosition.x < -chunkWidth:
 		remove_child(currentChunks[0])
@@ -77,3 +79,7 @@ func isChunkTransition():
 		return true
 	else:
 		return false
+
+
+func stop():
+	dead = true

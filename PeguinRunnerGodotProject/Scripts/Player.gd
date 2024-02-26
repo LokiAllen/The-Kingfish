@@ -11,9 +11,14 @@ var currentGravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 enum movementState {flipGravity, jumpGravity}
 var currentState : movementState = movementState.jumpGravity
 
+var alive : bool = true
+
+# Reference to score and the variable counting the score
 @onready var scoreCounter = $"../Camera2D/CanvasLayer/Control/ScoreCounter"
 var score : int = 0
 
+#Reference to the world scroller
+@onready var worldScroller = $"../WorldScroller"
 
 # Always start the player in the flipGravity movement state
 func _ready():
@@ -21,7 +26,8 @@ func _ready():
 
 
 func _physics_process(delta):
-	score += 1
+	if alive:
+		score += 1
 	# Add the gravity.
 	if not is_on_floor() or not is_on_ceiling():
 		velocity.y += currentGravity * delta
@@ -36,8 +42,11 @@ func _physics_process(delta):
 		movementState.jumpGravity:
 			if Input.is_action_just_pressed("ui_accept"):
 				velocity.y = -jumpForce
+			
 
-	move_and_slide()
+	var collision = move_and_slide()
+	if collision and currentState == movementState.jumpGravity:
+		kill()
 	
 	scoreCounter.text = "Score: %d" % score
 	
@@ -68,3 +77,8 @@ func changeGravity():
 
 func getState():
 	return currentState
+
+
+func kill():
+	worldScroller.stop()
+	alive = false

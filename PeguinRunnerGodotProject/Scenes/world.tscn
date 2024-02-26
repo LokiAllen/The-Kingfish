@@ -11,7 +11,7 @@ size = Vector2(52, 20)
 [sub_resource type="LabelSettings" id="LabelSettings_eel1b"]
 font = ExtResource("4_yr7ex")
 font_color = Color(0, 0, 0, 1)
-outline_size = 2
+outline_size = 4
 
 [node name="World" type="Node2D"]
 
@@ -48,8 +48,10 @@ grow_vertical = 2
 size_flags_horizontal = 4
 
 [node name="ScoreCounter" type="Label" parent="Camera2D/CanvasLayer/Control"]
+texture_filter = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_top = 7.0
+offset_right = 84.0
+offset_bottom = 30.0
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_eel1b")
