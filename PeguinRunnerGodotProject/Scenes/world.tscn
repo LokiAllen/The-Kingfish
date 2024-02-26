@@ -1,23 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://cl1ek7w072eqc"]
+[gd_scene load_steps=7 format=3 uid="uid://cl1ek7w072eqc"]
 
-[ext_resource type="Script" path="res://CharacterBody2D.gd" id="1_pixes"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_7ptju"]
 [ext_resource type="Texture2D" uid="uid://d008klt1xb05d" path="res://Images/Penguins/defaultPenguin.png" id="2_boi32"]
 [ext_resource type="Script" path="res://Scripts/Main Scene/WorldScroller.gd" id="4_whbhq"]
+[ext_resource type="FontFile" uid="uid://1sivoi5pj24a" path="res://Fonts/FFFFORWA.TTF" id="4_yr7ex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fxks0"]
 size = Vector2(52, 20)
 
+[sub_resource type="LabelSettings" id="LabelSettings_eel1b"]
+font = ExtResource("4_yr7ex")
+font_color = Color(0, 0, 0, 1)
+outline_size = 2
+
 [node name="World" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-script = ExtResource("1_pixes")
+[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
+script = ExtResource("1_7ptju")
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
 texture_filter = 1
 scale = Vector2(2, 2)
 texture = ExtResource("2_boi32")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_fxks0")
 
@@ -29,3 +35,21 @@ script = ExtResource("4_whbhq")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -200)
 position_smoothing_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+
+[node name="Control" type="Control" parent="Camera2D/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="ScoreCounter" type="Label" parent="Camera2D/CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_eel1b")
