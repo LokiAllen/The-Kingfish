@@ -1,11 +1,11 @@
 extends Node2D
 
 const flipChunks : Array[Resource] = [
-	preload("res://Scenes/Chunks/testChunk2.tscn")
+	preload("res://Scenes/Chunks/FlipChunks/flipChunk1.tscn")
 ]
 
 const jumpChunks : Array[Resource] = [
-	preload("res://Scenes/Chunks/testChunk2.tscn")
+	preload("res://Scenes/Chunks/JumpChunks/jumpChunk1.tscn")
 ]
 
 const flipTransitionChunks : Array[Resource] = [
@@ -16,11 +16,13 @@ const jumpTransitionChunks : Array[Resource] = [
 	preload("res://Scenes/Chunks/TransitionChunks/testStartJump.tscn")
 ]
 
+const startingChunk : Resource = preload("res://Scenes/Chunks/testChunk2.tscn")
+
 var rootChunkPosition = Vector2(0,0)
 var chunkWidth = 16 * 2 * 16
 var currentChunks : Array[TileMap]
 var speed : float = 400.0
-var transitionChance : float = 1.0
+var transitionChance : float = 0.25
 
 var targetMovementState : Player.movementState = Player.movementState.flipGravity
 var dead : bool = false
@@ -30,7 +32,7 @@ func _ready():
 	
 	
 	for i in range(0,3):
-		var newChunk = addChunk(flipChunks.pick_random())
+		var newChunk = addChunk(startingChunk)
 		newChunk.position = rootChunkPosition
 		rootChunkPosition.x += chunkWidth
 
