@@ -2,11 +2,10 @@
 
 [ext_resource type="Script" path="res://Scripts/Main Menu/menu.gd" id="1_yb7u0"]
 [ext_resource type="FontFile" uid="uid://1sivoi5pj24a" path="res://Fonts/FFFFORWA.TTF" id="2_u0j82"]
+[ext_resource type="Theme" uid="uid://be8pcaengcs42" path="res://UI Themes/menu.tres" id="3_fkquf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ij66q"]
 font = ExtResource("2_u0j82")
-
-[sub_resource type="Theme" id="Theme_bdd4w"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -62,7 +61,7 @@ horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="Main Menu/VBoxContainer"]
 layout_mode = 2
-theme = SubResource("Theme_bdd4w")
+theme = ExtResource("3_fkquf")
 text = "Start game"
 
 [connection signal="pressed" from="Main Menu/VBoxContainer/Button" to="." method="_on_button_pressed"]

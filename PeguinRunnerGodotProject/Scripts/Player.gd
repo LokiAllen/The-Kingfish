@@ -25,11 +25,15 @@ var score : int = 0
 
 #Reference to the sprite's animation player
 @onready var animationPlayer = $Penguin/AnimationPlayer
+@onready var deathAnimationPlayer = $"../CanvasLayer/AnimationPlayer"
 
 #Reference to the sprites
 @onready var penguinSprite = $Penguin
 @onready var wingPivot = $Penguin/WingPivot
 
+#Reference to return button and final score label
+@onready var returnButton = $"../CanvasLayer/ColorRect/VBoxContainer/ReturnButton"
+@onready var finalScoreLabel = $"../CanvasLayer/ColorRect/VBoxContainer/FinalScoreLabel"
 
 
 
@@ -39,40 +43,39 @@ func _ready():
 
 
 func _physics_process(delta):
-	print(velocity.y)
 	handleRotation()
 	
 	if alive:
 		score += 1
-	# Add the gravity.
-	if not is_on_floor() or not is_on_ceiling():
-		velocity.y += currentGravity * delta
-	
-	if invinsibleTimer > 0:
-		invinsibleTimer -= 1
-	
-	# Handle movement state
-	match currentState:
-		movementState.flipGravity:
-			if Input.is_action_just_pressed("ui_accept") and (is_on_floor() or is_on_ceiling()):
-				if currentGravity > 0:
-					animationPlayer.play("flip")
-				else:
-					animationPlayer.play_backwards("flip")
-					
-				currentGravity = -currentGravity
-				velocity.y += currentGravity * delta
-		movementState.jumpGravity:
-			if Input.is_action_just_pressed("ui_accept"):
-				velocity.y = -jumpForce
-	
-	
-	var collision = move_and_slide()
-	if collision and currentState == movementState.jumpGravity:
-		kill()
-	
-	
-	scoreCounter.text = "Score: %d" % score
+		# Add the gravity.
+		if not is_on_floor() or not is_on_ceiling():
+			velocity.y += currentGravity * delta
+		
+		if invinsibleTimer > 0:
+			invinsibleTimer -= 1
+		
+		# Handle movement state
+		match currentState:
+			movementState.flipGravity:
+				if Input.is_action_just_pressed("ui_accept") and (is_on_floor() or is_on_ceiling()):
+					if currentGravity > 0:
+						animationPlayer.play("flip")
+					else:
+						animationPlayer.play_backwards("flip")
+						
+					currentGravity = -currentGravity
+					velocity.y += currentGravity * delta
+			movementState.jumpGravity:
+				if Input.is_action_just_pressed("ui_accept"):
+					velocity.y = -jumpForce
+		
+		
+		var collision = move_and_slide()
+		if collision and currentState == movementState.jumpGravity:
+			kill()
+		
+		
+		scoreCounter.text = "Score: %d" % score
 
 
 func handleRotation():
@@ -126,3 +129,6 @@ func kill():
 	if invinsibleTimer <= 0:
 		worldScroller.stop()
 		alive = false
+		deathAnimationPlayer.play("endGame")
+		returnButton.enable()
+		finalScoreLabel.text = "Final Score: %d" % score
