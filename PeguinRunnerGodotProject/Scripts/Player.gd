@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
-const SPEED = 300.0
+const SPEED = 30.0
 const jumpForce = 750.0
 const ROTATIONSPEED = 0.1
 
@@ -65,10 +65,13 @@ func _physics_process(delta):
 						
 					currentGravity = -currentGravity
 					velocity.y += currentGravity * delta
+			
 			movementState.jumpGravity:
 				if Input.is_action_just_pressed("ui_accept"):
 					velocity.y = -jumpForce
 		
+		if position.x < 0:
+					velocity.x = -position.x * SPEED / 256
 		
 		var collision = move_and_slide()
 		if collision and currentState == movementState.jumpGravity:
