@@ -1,21 +1,71 @@
 <!DOCTYPE html>
 
 {% extends "../base.html" %}
-
+{% load static %}
 {% block templatepage %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-<h2> Register </h2>
 
-<form method="POST" action="">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Register" class="primarybutton">
-</form>
-</body>
-</html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/edit_profile.css' %}">
+        <title>Register</title>
+    </head>
+    <body>
+    <h2> Register </h2>
+
+    <!-- Rest of your form -->
+    <form method="POST" action="" enctype="multipart/form-data" class="dropzone" id="RegisterForm">
+        {% csrf_token %}
+        <div class="subform">
+            <div class="column">{{ form.email.label_tag }}
+                {{ form.email }}</div>
+
+            <div class="column">{{ form.username.label_tag }}
+                {{ form.username }}</div>
+        </div>
+
+        <div class="subform">
+            <div class="column">{{ form.first_name.label_tag }}
+                {{ form.first_name }}</div>
+
+            <div class="column">{{ form.last_name.label_tag }}
+                {{ form.last_name }}</div>
+        </div>
+
+        <div class="subform">
+            <div class="column">{{ form.password1.label_tag }}
+                {{ form.password1 }}</div>
+
+            <div class="column">{{ form.password2.label_tag }}
+                {{ form.password2 }}</div>
+        </div>
+
+        <label for="id_profile_picture">Profile Picture</label>
+        <div class="sideDiv" id="previewDiv">
+            <input type="file" name="profile_picture" id="id_profile_picture" class="dropzone custom-file-input">
+            <img src="#" id="pfp">
+        </div>
+
+        <input type="submit" value="Register" class="primarybutton">
+        {{ form.errors }}
+    </form>
+
+    <!-- Use window.onload to ensure the DOM is fully loaded -->
+    <script>
+        $('document').ready(function () {
+            $("#id_profile_picture").change(function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#pfp').attr('src', e.target.result);
+                        $('#pfp').css('display', 'block');
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+    </script>
+    </body>
+    </html>
 {% endblock %}

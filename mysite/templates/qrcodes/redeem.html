@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 {% extends "../base.html" %}
 {% load static %}
 
@@ -8,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Redeem QR Code</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="{% static 'js/location.js' %}"></script>
     <script> var CSRF_TOKEN = '{{ csrf_token }}' </script>
 </head>
@@ -16,6 +15,7 @@
         <h2>You found a code!</h2>
         <p>(some message should show up below)</p>
         <p id='status'></p>
+        <button onclick="location.href='{% url 'quiz:QuizAttempt' %}'" type="button">Extra Coins? BONUS QUIZ</button>
         <button onclick="location.href='{% url 'home' %}'" type="button" class="primarybutton">PLAY</button>
 </body>
 </html>
