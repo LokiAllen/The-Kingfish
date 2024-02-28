@@ -5,7 +5,12 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 
 
-# UserLogin form - Accepts both 'Username' and 'Email' to login with
+"""
+ * Form for the login of a user, accepts both 'email' or 'username'
+ * and a password
+ *
+ * @author Jasper
+"""
 class UserLogin(forms.Form):
     username_or_email = forms.CharField(label='Username or Email')
     password = forms.CharField(label='Password', strip=False, widget=forms.PasswordInput)
@@ -45,13 +50,18 @@ class UserLogin(forms.Form):
 
         return password
 
-# Register form
+"""
+ * Form for the register of a user
+ *
+ * @author Jasper
+"""
 class RegisterForm(UserCreationForm):
     profile_picture = forms.ImageField(required=False)
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'profile_picture']
 
+    # Gets (if exists) and validates the username of the user
     def clean_username(self):
         username = self.cleaned_data['username']
 
@@ -60,6 +70,7 @@ class RegisterForm(UserCreationForm):
 
         return username
 
+    # Gets (if exists) and validates the email of the user
     def clean_email(self):
         email = self.cleaned_data['email']
 
@@ -68,7 +79,11 @@ class RegisterForm(UserCreationForm):
 
         return email
 
-# Everything a user can change under their profile page
+"""
+ * Form for changing all current information of the user
+ *
+ * @author Jasper
+"""
 class ChangeInfo(forms.Form):
     first_name = forms.CharField(label='First Name')
     last_name = forms.CharField(label='Last Name')
@@ -80,6 +95,7 @@ class ChangeInfo(forms.Form):
         self.user = user
         super().__init__(*args, **kwargs)
 
+    # Gets and validates the email of the user
     def clean_email(self):
         email = self.cleaned_data['email']
 
@@ -90,6 +106,7 @@ class ChangeInfo(forms.Form):
 
         return email
 
+    # Gets and validates the username of the user
     def clean_username(self):
         username = self.cleaned_data['username']
 
@@ -100,6 +117,7 @@ class ChangeInfo(forms.Form):
 
         return username
 
+    # Gets and validates the first and last name of the user
     def clean_info(self):
         first_name = self.cleaned_data['first_name']
         last_name = self.cleaned_data['last_name']

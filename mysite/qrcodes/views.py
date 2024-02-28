@@ -1,14 +1,21 @@
+# Static imports
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.utils import timezone
 
-from shapely.geometry import MultiPoint, Point
-
+# Non-static imports
 from .models import *
 from accounts.models import UserInfo
 
-# Used for views that require the user to be logged in
+# Other imports
+from shapely.geometry import MultiPoint, Point
+
+"""
+ * A custom view class that ensures the user is logged in for access
+ * 
+ * @author Jasper
+"""
 class LoggedInRequired(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -16,13 +23,17 @@ class LoggedInRequired(View):
 
         return redirect('/home/')
 
-# Handles the entirety of redeeming a QR code
+"""
+ * A custom view class that handles all information related to
+ * redeeming a QR code
+ * 
+ * @author Jasper
+"""
 class QRCodeRedeem(LoggedInRequired, View):
-    # Renders the page on page load
     def get(self, request, *args, **kwargs):
         return render(request, 'qrcodes/redeem.html')
 
-    # Validates the QR code (after location has been sent - if it isn't that is realised in the page JS)
+    # Validates the QR code in relation to location and status of the code
     def post(self, request, *args, **kwargs):
         self.code = kwargs['code']
         latitude = request.POST.get('latitude')
@@ -41,12 +52,20 @@ class QRCodeRedeem(LoggedInRequired, View):
         self.redeem_reward()
         return JsonResponse({'message': 'Successfully redeemed'})
 
-    # Checks whether someone is in an area - need to figure out what area we are going to be checking, currently its just Exeter
+    """
+        Validates whether a given set of (latitude, longitude) coordinates are within a set
+        of (latitude, longitude) coordinates.
+        Currently checks a general location close to central Exeter.
+        
+        @param latitude: The latitude coordinate
+        @param longitude: The longitude coordinate
+        @return: Whether the coordinates are in the set of coordinates specified 
+    """
     def in_area(self, latitude, longitude):
-        area_coords = [(50.71218031124059, -3.5154032337386054),
-                       (50.71467533851543, -3.5505363451162353),
-                       (50.73446435468427, -3.5313077137622417),
-                       (50.73630213241543, -3.4015564901983964)]
+        area_coords = [(50.741308, -3.539192),
+                       (50.738105, -3.503562),
+                       (50.712527, -3.498785),
+                       (50.718142, -3.566304)]
 
         # Basically creates a polygon relative to the coordinates above
         area = MultiPoint(area_coords).convex_hull
@@ -55,7 +74,7 @@ class QRCodeRedeem(LoggedInRequired, View):
         point = Point(latitude, longitude)
         return point.within(area)
 
-    # Checks if the code exists and hasn't expired
+    # Checks the validity of a given QR code
     def validate_code(self):
         self.qr = QrCodeModel.objects.filter(id=self.code)
 
@@ -64,7 +83,7 @@ class QRCodeRedeem(LoggedInRequired, View):
 
         return True
 
-    # Checks whether the user has visited the code in the last 24 hours
+    # Checks whether the user has scanned the code in the last 24 hours
     def check_last_visit(self):
         scanned_time, not_scanned = QrCodeVisit.objects.get_or_create(user=self.request.user, qrcode=self.qr.first())
 
@@ -76,7 +95,7 @@ class QRCodeRedeem(LoggedInRequired, View):
 
         return False
 
-    # Applys the reward to the user (currently only +5 coins)
+    # Adds coins to the user's account
     def redeem_reward(self):
         user = UserInfo.objects.get(user=self.request.user)
         user.coins += 5

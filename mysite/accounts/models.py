@@ -1,11 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Store the users profile pictures under '/media/profile_pictures/' as user_{id}
+"""
+    Store the users profile pictures under '/media/profile_pictures/' as user_{id}
+    
+    @param instance: The current user instance
+    @param filename: The file name of the file uploaded
+    @return The new file path of the file uploaded
+"""
 def upload__rename(instance, filename):
     ext = filename.split('.')[-1]
     return f'media/profile_pictures/user_{instance.user.id}.{ext}'
 
+"""
+ * Model for storing additional information for users
+ * 
+ * @author Jasper and Loki
+"""
 class UserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     coins = models.IntegerField(default=0)
@@ -19,7 +30,11 @@ class UserInfo(models.Model):
     class Meta:
         db_table = 'user_info'
 
-# For friends system
+"""
+ * Model for storing information for friends of users
+ *
+ * @author Jasper
+"""
 class UserFriends(models.Model):
     user_id = models.IntegerField()
     following_id = models.IntegerField()
