@@ -6,23 +6,32 @@ import random
 from .models import *
 from accounts.models import UserInfo
 
+#Author: Tom
 
+#Render page for answering the quiz.
 def QuizAttempt(request):
-    user = request.user
-    questions = getQuestions(user)
+    user = request.user #Get session user.
+    questions = getQuestions(user) #Generate random 3 questions from pool.
+
+    #Render error page if not enough questions left for this user.
+    #To be replaced with functionality to refill the pools of questions for a user.
     if(questions == []):
         return render(request, 'quiz/quiz_error.html')
-    answers = getAnswers(questions)
     
+    answers = getAnswers(questions) #Get answers for the questions.
+    
+    #Render the quiz with the generated question and answer arrays.
     return render(request, 'quiz/quiz_attempt.html', {'questions':questions,'answers':answers})
 
 def QuizResult(request):
     user = request.user
     if request.method == 'POST':
+        #Fetch the user's answer choices from post request.
         chosen_answerID1 = request.POST.get("chosen_answerID1", "")
         chosen_answerID2 = request.POST.get("chosen_answerID2", "")
         chosen_answerID3 = request.POST.get("chosen_answerID3", "")
 
+        #Get the corresponding answer model objects.
         chosen_answer1 = Answer.objects.get(pk=chosen_answerID1)
         chosen_answer2 = Answer.objects.get(pk=chosen_answerID2)
         chosen_answer3 = Answer.objects.get(pk=chosen_answerID3)

@@ -3,7 +3,7 @@
 {% load static %}
 {% load tfilters %}
 {% block templatepage %}
-
+<!--Author: Tom-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,8 +18,10 @@
     
         <h1>Bonus Quiz!</h1>
 
+        <!--Post request to result page including the user's answer choices-->
         <form method="POST"  id="quiz-form" action="{% url 'quiz:QuizResult' %}">
             {% csrf_token %}
+            <!--Use custom template filter to index through question and answer arrays and load their data to page-->
             <div class="question">
                 {% with question=questions|return_index:0 %}
                     {% if question %}

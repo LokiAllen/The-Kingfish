@@ -1,5 +1,6 @@
 from quiz.models import *
-
+#Author: Tom
+#Populates the question and answer database tables with quiz content.
 q = Question(q_text="What is the current recycle rate of UK households?")
 a1 = Answer(question= q, a_text = "74%", label="x", correct=False)
 a2 = Answer(question= q, a_text = "55%", label="x", correct=False)
