@@ -29,6 +29,7 @@ urlpatterns = [
     path('home/', views.home_view, name='home'),
     path("quiz/", include("quiz.urls")),
     path('leaderboard/', account_views.LeaderboardView.as_view(), name='leaderboard'),
+    path('game/', include('game.urls'))
 ]
 
 if settings.DEBUG:
