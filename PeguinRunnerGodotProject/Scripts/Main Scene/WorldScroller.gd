@@ -36,7 +36,7 @@ var dead : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for i in range(0,2):
+	for i in range(0,4):
 		var newChunk = addChunk(startingChunk)
 		newChunk.position = rootChunkPosition
 		rootChunkPosition.x += chunkWidth
