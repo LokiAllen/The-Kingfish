@@ -126,9 +126,10 @@ func getState():
 
 
 func kill():
+	print("kill")
 	if invinsibleTimer <= 0:
 		worldScroller.stop()
 		alive = false
 		deathAnimationPlayer.play("endGame")
-		returnButton.enable()
+		#returnButton.enable()
 		finalScoreLabel.text = "Final Score: %d" % score

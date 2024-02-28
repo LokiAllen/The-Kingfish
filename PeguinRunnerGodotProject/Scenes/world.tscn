@@ -1,11 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://cl1ek7w072eqc"]
+[gd_scene load_steps=16 format=3 uid="uid://cl1ek7w072eqc"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_7ptju"]
 [ext_resource type="Texture2D" uid="uid://d008klt1xb05d" path="res://Images/Penguins/defaultPenguin.png" id="2_boi32"]
 [ext_resource type="Texture2D" uid="uid://dqyu42c3mlt0h" path="res://Images/Penguins/defaultPenguinFlipper.png" id="3_80t2g"]
 [ext_resource type="Script" path="res://Scripts/Main Scene/WorldScroller.gd" id="4_whbhq"]
 [ext_resource type="FontFile" uid="uid://1sivoi5pj24a" path="res://Fonts/FFFFORWA.TTF" id="4_yr7ex"]
-[ext_resource type="Shader" path="res://Shaders/water.gdshader" id="6_aougp"]
+[ext_resource type="Script" path="res://Scripts/DeathButton.gd" id="6_85ase"]
+[ext_resource type="Theme" uid="uid://be8pcaengcs42" path="res://UI Themes/menu.tres" id="6_rj4t7"]
 
 [sub_resource type="Animation" id="Animation_nlnd3"]
 length = 0.001
@@ -76,18 +77,42 @@ font = ExtResource("4_yr7ex")
 font_color = Color(0, 0, 0, 1)
 outline_size = 4
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_8fg70"]
+[sub_resource type="Animation" id="Animation_pdbjg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cuxd3"]
-noise = SubResource("FastNoiseLite_8fg70")
+[sub_resource type="Animation" id="Animation_bg0x8"]
+resource_name = "endGame"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_41dvp"]
-shader = ExtResource("6_aougp")
-shader_parameter/refraction_stretch = Vector2(1, 1)
-shader_parameter/refraction_strength = 0.005
-shader_parameter/water_tint = Color(0.2, 0.6, 1, 0.1)
-shader_parameter/speed = 0.1
-shader_parameter/refraction_map = SubResource("NoiseTexture2D_cuxd3")
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_riorx"]
+_data = {
+"RESET": SubResource("Animation_pdbjg"),
+"endGame": SubResource("Animation_bg0x8")
+}
 
 [node name="World" type="Node2D"]
 
@@ -124,7 +149,7 @@ position = Vector2(0, -200)
 position_smoothing_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
-layer = 4
+layer = 3
 
 [node name="Control" type="Control" parent="Camera2D/CanvasLayer"]
 layout_mode = 3
@@ -145,13 +170,54 @@ text = "Score: 0"
 label_settings = SubResource("LabelSettings_eel1b")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 3
-visible = false
+layer = 4
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-material = SubResource("ShaderMaterial_41dvp")
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DeathLabel" type="Label" parent="CanvasLayer/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("6_rj4t7")
+text = "You died!"
+
+[node name="FinalScoreLabel" type="Label" parent="CanvasLayer/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("6_rj4t7")
+text = "Final Score: 0"
+
+[node name="ReturnButton" type="Button" parent="CanvasLayer/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("6_rj4t7")
+text = "Return to Main Menu"
+script = ExtResource("6_85ase")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+libraries = {
+"": SubResource("AnimationLibrary_riorx")
+}
+
+[connection signal="pressed" from="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" to="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" to="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" method="_on_button_pressed"]
