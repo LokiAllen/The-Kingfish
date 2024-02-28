@@ -1,12 +1,15 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import PasswordChangeView
-from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.core.files.storage import default_storage
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, reverse
 from django.views.generic import View, FormView
 from django.core.cache import cache
 
+import re
+
 from .forms import *
-from .models import UserInfo
+from .models import UserInfo, UserFriends
 
 
 # Used for views that require the user to not be logged in
@@ -48,84 +51,14 @@ class RegisterView(NotLoggedInRequired, FormView):
         user_info = UserInfo()
         user_info.user = user
 
+        user_info.picture = form.cleaned_data['profile_picture']
+        if not user_info.picture:
+            user_info.picture = 'default.png'
+
         # Saves their account to the db and logs them in
         user.save()
         user_info.save()
         login(self.request, user)
-
-        return redirect('/home/')
-
-# Account view
-class AccountView(LoggedInRequired, View):
-    tempplate_name = 'accounts/account.html'
-
-# Change Email (all types of changes are basically the same format)
-class ChangeEmailView(LoggedInRequired, FormView):
-    template_name = 'accounts/change.html'
-    form_class = ChangeEmail
-
-    # Tells the form the 'User' that is changing their email
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
-
-    # Sets the initial contents of the form to the user's email
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['email'] = self.request.user.email
-        return initial
-
-    def form_valid(self, form):
-        user = self.request.user
-        user.email = form.cleaned_data['email']
-        user.save()
-
-        return redirect('/home/')
-
-# Change Username
-class ChangeUsernameView(LoggedInRequired, FormView):
-    template_name = 'accounts/change.html'
-    form_class = ChangeUsername
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
-
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['username'] = self.request.user.username
-        return initial
-
-    def form_valid(self, form):
-        user = self.request.user
-        user.username = form.cleaned_data['username']
-        user.save()
-
-        return redirect('/home/')
-
-# Change Info (currently first name and last name - depending on what is used for accounts further it can be altered for them
-class ChangeInfoView(LoggedInRequired, FormView):
-    template_name = 'accounts/change.html'
-    form_class = ChangeInfo
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
-
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['first_name'] = self.request.user.first_name
-        initial['last_name'] = self.request.user.last_name
-        return initial
-
-    def form_valid(self, form):
-        user = self.request.user
-        user.first_name = form.cleaned_data['first_name']
-        user.last_name = form.cleaned_data['last_name']
-        user.save()
 
         return redirect('/home/')
 
@@ -146,49 +79,152 @@ class LogoutView(LoggedInRequired, View):
         return redirect('/home/')
 
 # Leaderboard view
+# Adds all top users to the leaderboard data based on url parameter 'friends' otherwise is 'global'
+# Currently caches the user position for 5 minutes as quite expensive operation to calculate position everytime leaderboard loaded
 class LeaderboardView(LoggedInRequired, View):
+    template_name = 'accounts/leaderboard.html'
+
     def dispatch(self, request, *args, **kwargs):
-        # Loads the page if it hasn't been loaded
-        page_loaded = request.GET.get('page_loaded', False)
-        if not page_loaded:
-            return render(request, 'accounts/leaderboard.html')
+        score_type = self.request.GET.get('score_type', 'cumulative')
+        #self.num_users = 15 # --> If adding limit to users uncomment this
+        if score_type == 'cumulative':
+            self.leaderboard_value = "-cumulativeScore"
+        else:
+            self.leaderboard_value = "-highscore"
 
-        # Get number of users to show (default 3)
-        self.num_users = request.GET.get('num_users', None)
-        if not self.num_users:
-            self.num_users = 3
+        leaderboard_type = self.request.GET.get('type', 'global')
 
-        # GET request sends as a string -> Convert to integer
-        self.num_users = int(self.num_users)
 
-        # Get the values for a 'coins' leaderboard
-        self.leaderboard_value = '-coins'
-        data = self.get_leaderboard_data()
+        data = self.get_leaderboard_data(leaderboard_type, score_type)
 
-        return JsonResponse(data)
+        return render(request, self.template_name, data)
+    def get_leaderboard_data(self, type, score_type='cumulative'):
+        def get_position(user, score_field):
+            position_cache_key = f'user_{user.id}_position_{score_field}'
+            position = cache.get(position_cache_key)
 
-    # Get info for the users to show + the user
-    def get_leaderboard_data(self):
-        top_n_users_object = UserInfo.objects.order_by(self.leaderboard_value)[:self.num_users]
-
-        # Adds all top users to the leaderboard data
-        top_n_user_list = []
-        for user in top_n_users_object:
-            # Currently caches the user position for 5 minutes as quite expensive operation to calculate position every time leaderboard loaded
-            position = cache.get(f'user_{user.id}_position')
             if not position:
-                position = UserInfo.objects.filter(coins__gt=user.coins).count() + 1
-                cache.set(f'user_{user.id}_position', position, timeout=300)
+                if score_field == 'cumulativeScore':
+                    position = UserInfo.objects.filter(cumulativeScore__gt=user.cumulativeScore).count() + 1
+                else:
+                    position = UserInfo.objects.filter(highscore__gt=user.highscore).count() + 1
 
-            top_n_user_list.append({'username': user.user.username, 'coins': user.coins, 'position': position})
+                cache.set(position_cache_key, position, timeout=300)
 
-        # Adds the user themselves to the end of the list (regardless of if they are already in the leaderboard data)
-        user_object = UserInfo.objects.get(user=self.request.user)
-        position = cache.get(f'user_{user.id}_position')
-        if not position:
-            position = UserInfo.objects.filter(coins__gt=user_object.coins).count() + 1
-            cache.set(f'user_{user.id}_position', position, timeout=300)
+            return position
 
-        top_n_user_list.append({'username': self.request.user.username, 'coins': user_object.coins, 'position': position})
+        def unpack_data(user):
+            return {
+                'username': user.user.username,
+                'profile_picture': user.picture.url,
+                'position': get_position(user, 'cumulativeScore' if score_type == 'cumulative' else 'highscore'),
+                'cumulativeScore': user.cumulativeScore,
+                'highscore': user.highscore,}
 
-        return {'top_n_users': top_n_user_list}
+        # Currently this is a list of anyone the user is following instead of 'friends'
+        if type == 'friends':
+            friend_objects = UserFriends.objects.filter(user_id=self.request.user.id)
+            friend_ids = [friend.following_id for friend in friend_objects]
+
+            friend_info_objects = UserInfo.objects.filter(user__in=friend_ids)
+            top_friends_list = friend_info_objects.order_by(self.leaderboard_value) # [:self.num_users]  # --> If adding limit to users uncomment this
+
+            top_user_list = [unpack_data(user) for user in top_friends_list]
+
+        else:
+            top_users_object = UserInfo.objects.order_by(self.leaderboard_value) # [:self.num_users]  # --> If adding limit to users uncomment this
+            top_user_list = [unpack_data(user) for user in top_users_object]
+
+        top_user_list.append(unpack_data(self.request.user.userinfo))
+
+        return {'top_users': top_user_list}
+
+
+class FriendSystem:
+    def friend_query(request, *args, **kwargs):
+        user = User.objects.filter(id=request.user.id)
+        user_to_query = User.objects.filter(username=kwargs['user'])
+
+        if user.exists() and user_to_query.exists():
+            user, user_to_query = user.first(), user_to_query.first()
+            friend_check__object = UserFriends.objects.filter(user_id=user_to_query.id, following_id=user.id)
+
+            if friend_check__object.exists():
+                friend = friend_check__object.first()
+                friend.is_friend = kwargs['method'] == 'add'
+                friend.save()
+
+            if kwargs['method'] == 'add':
+                return UserFriends.objects.create(user_id=user.id, following_id=user_to_query.id,
+                                              is_friend=friend_check__object.exists())
+            return UserFriends.objects.filter(user_id=user.id, following_id=user_to_query.id).delete()
+
+
+# Redirects to either their own profile to edit, or the users profile
+class ProfileDispatch(View):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            if request.user.username == kwargs['username']:
+                return OwnProfileView.as_view()(request, *args, **kwargs)
+
+            return ProfileView.as_view()(request, *args, **kwargs)
+
+        return redirect('/home/')
+
+# Own users profile (currently a FormView to edit their info)
+class OwnProfileView(FormView):
+    template_name = 'accounts/ownprofile.html'
+    form_class = ChangeInfo
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['email'] = self.request.user.email
+        initial['username'] = self.request.user.username
+        initial['first_name'] = self.request.user.first_name
+        initial['last_name'] = self.request.user.last_name
+        return initial
+
+    def form_valid(self, form):
+        user = self.request.user
+        user.email = form.cleaned_data['email']
+        user.username = form.cleaned_data['username']
+        user.first_name = form.cleaned_data['first_name']
+        user.last_name = form.cleaned_data['last_name']
+
+        if form.cleaned_data['profile_picture']:
+            default_storage.delete(user.userinfo.picture.path)
+            user.userinfo.picture = form.cleaned_data['profile_picture']
+            user.userinfo.save()
+
+        user.save()
+
+        current_url = reverse('accounts:profile', kwargs={'username': user.username})
+
+        return redirect(current_url)
+
+# Viewing users profiles
+class ProfileView(View):
+    def get(self, request, *args, **kwargs):
+        if request.user.username == kwargs['username']:
+            return OwnProfileView.as_view()(request, *args, **kwargs)
+
+        user_data = User.objects.filter(username=kwargs['username'])
+        if user_data:
+            user_data = user_data.first()
+
+            following = UserFriends.objects.filter(user_id=request.user.id, following_id=user_data.id)
+            friend = False
+            if following:
+                friend = following.first().is_friend
+
+            return render(request, 'accounts/profile.html', {'user_data': user_data, 'following': following, 'friend': friend})
+
+    def post(self, request, *args, **kwargs):
+        if FriendSystem.friend_query(request, **{'method':request.POST.get('method', None), 'user':kwargs['username']}):
+            return HttpResponse(200)

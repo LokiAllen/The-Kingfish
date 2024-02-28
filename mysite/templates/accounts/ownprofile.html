@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% extends "../base.html" %}
+{% load static %}
+{% block templatepage %}
+
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Your Profile</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/edit_profile.css' %}">
+    </head>
+    <body>
+    <h1>Your Profile!</h1>
+    <form method="POST" action="" enctype="multipart/form-data" class="dropzone" id="RegisterForm">
+        {% csrf_token %}
+        <div class="subform">
+            <div class="column">{{ form.email.label_tag }}
+                {{ form.email }}</div>
+
+            <div class="column">{{ form.username.label_tag }}
+                {{ form.username }}</div>
+        </div><div class="subform">
+
+        <div class="column">{{ form.first_name.label_tag }}
+            {{ form.first_name }}</div>
+
+        <div class="column">{{ form.last_name.label_tag }}
+            {{ form.last_name }}</div>
+    </div>
+
+        <label for="id_profile_picture">Profile Picture</label>
+        <div class="sideDiv" id="previewDiv">
+            <input type="file" name="profile_picture" id="id_profile_picture" class="dropzone custom-file-input">
+            <img src="{{ user.userinfo.picture.url }}" id="pfp" style="display: block;">
+        </div>
+
+        <input type="submit" value="Change" class="primarybutton">
+        {{ form.username.errors }}
+        {{ form.email.errors }}
+    </form>
+
+
+    <script>
+        // Changes the picture anytime a file is 'dragged' or uploaded
+        $('document').ready(function () {
+            $("#id_profile_picture").change(function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('.sideDiv #pfp').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+    </script>
+    </body>
+    </html>
+{% endblock %}

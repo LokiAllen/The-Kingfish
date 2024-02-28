@@ -1,0 +1,78 @@
+#RegisterForm {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.column input {
+    width: 50%;
+    align-self: center;
+}
+
+.subform {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%;
+    text-align: center;
+    width: 20%;
+}
+
+#id_profile_picture {
+    background: None;
+    text-align: center;
+    height: auto;
+}
+
+#previewDiv {
+    position: relative;
+}
+
+.sideDiv #pfp {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: calc(100% + 10px);
+    width: 48px;
+}
+
+input[type=file] {
+    color: transparent;
+    text-shadow: none;
+}
+
+.custom-file-input {
+    text-align: center;
+    line-height: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+.custom-file-input::before {
+    content: 'Select or Drop';
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    background: rgb(255,249,233);
+    border-radius: 6px;
+    padding: 0 32px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+    color: black;
+}

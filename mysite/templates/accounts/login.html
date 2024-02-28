@@ -13,7 +13,7 @@
 
 <form method="POST" action="">
     {% csrf_token %}
-    {{form.as_p}}
+    {{form.as_p}} <!-- Can be changed similar to how 'register.html' does forms for more customisability -->
     <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
     <input type="submit" value="Login" class="primarybutton">
 </form>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% extends "../base.html" %}
+<html lang="en">
+{% load static %}
+{% block templatepage %}
+    <head>
+        <meta charset="UTF-8">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="{% static 'js/profile.js' %}"></script>
+        <script>
+            var CSRF_TOKEN = '{{ csrf_token }}';
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+
+        <title>Profile</title>
+    </head>
+    <body>
+    <div id="profileboard">
+
+        <div id="imagename">
+            <img src="{{ user_data.userinfo.picture.url }}" id="pfp" style="display: block;">
+            <h1> {{ user_data.username }}</h1>
+        </div>
+
+        <p> First Name: {{ user_data.first_name }}</p>
+        <p> Last Name: {{ user_data.first_name }}</p>
+        <p> uid: {{ user_data.id }}</p>
+        <p> coins: {{ user_data.userinfo.coins }}</p>
+
+        <div id="buttons">
+            <button onclick="location.href='{% url 'accounts:profile' username=user.username %}'" type="button">Your Profile</button>
+            <button onclick="location.href='{% url 'home' %}'" type="button">Home</button>
+
+            {% if not following %}
+                <button id="addfriend" onclick="addFriend('{{ user_data.username }}')" type="button">Add friend</button>
+
+            {% elif friend %}
+                <button id="message" type="button">Message</button>
+            {% endif %}
+
+            {% if following %}
+                <button id="removefriend" onclick="removeFriend('{{ user_data.username }}')" type="button">Remove friend</button>
+            {% endif %}
+        </div>
+    </div>
+    </body>
+    </html>
+{% endblock %}
