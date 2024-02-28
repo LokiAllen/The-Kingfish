@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'siteadmin',
     'qrcodes',
+    'quiz.apps.QuizConfig',
 ]
 
 MIDDLEWARE = [

@@ -16,6 +16,7 @@
         <h2>You found a code!</h2>
         <p>(some message should show up below)</p>
         <p id='status'></p>
+        <button onclick="location.href='{% url 'quiz:QuizAttempt' %}'" type="button">BONUS QUIZ</button>
         <button onclick="location.href='{% url 'home' %}'" type="button" class="primarybutton">PLAY</button>
 </body>
 </html>
