@@ -27,6 +27,7 @@ urlpatterns = [
     path('qrcodes/', include('qrcodes.urls')),
     path('siteadmin/', include('siteadmin.urls')),
     path('home/', views.home_view, name='home'),
+    path("quiz/", include("quiz.urls")),
     path('leaderboard/', account_views.LeaderboardView.as_view(), name='leaderboard'),
 ]
 
