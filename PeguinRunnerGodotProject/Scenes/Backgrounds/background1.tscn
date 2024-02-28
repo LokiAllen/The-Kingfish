@@ -1,8 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://c42grwhhcicom"]
 
-[ext_resource type="Texture2D" uid="uid://b5573p7sbafp4" path="res://Images/tilemap-backgrounds_packed.png" id="1_u5jvt"]
+[ext_resource type="Texture2D" uid="uid://d2pxy6jnchp0s" path="res://Images/backgroundTest.png" id="1_eiios"]
 
-[node name="Background1" type="Sprite2D"]
+[node name="RootPosition" type="Node2D"]
+
+[node name="Background1" type="Sprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(2.667, 30)
-texture = ExtResource("1_u5jvt")
+position = Vector2(0, -200)
+texture = ExtResource("1_eiios")
