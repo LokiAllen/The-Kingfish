@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://cl1ek7w072eqc"]
+[gd_scene load_steps=18 format=3 uid="uid://cl1ek7w072eqc"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_7ptju"]
 [ext_resource type="Texture2D" uid="uid://d008klt1xb05d" path="res://Images/Penguins/defaultPenguin.png" id="2_boi32"]
 [ext_resource type="Texture2D" uid="uid://dqyu42c3mlt0h" path="res://Images/Penguins/defaultPenguinFlipper.png" id="3_80t2g"]
+[ext_resource type="Script" path="res://Scripts/DeathPlane.gd" id="4_5kcvg"]
 [ext_resource type="Script" path="res://Scripts/Main Scene/WorldScroller.gd" id="4_whbhq"]
 [ext_resource type="FontFile" uid="uid://1sivoi5pj24a" path="res://Fonts/FFFFORWA.TTF" id="4_yr7ex"]
 [ext_resource type="Script" path="res://Scripts/DeathButton.gd" id="6_85ase"]
@@ -72,6 +73,9 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fxks0"]
 size = Vector2(52, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cf6jl"]
+size = Vector2(50, 1100)
+
 [sub_resource type="LabelSettings" id="LabelSettings_eel1b"]
 font = ExtResource("4_yr7ex")
 font_color = Color(0, 0, 0, 1)
@@ -116,6 +120,13 @@ _data = {
 
 [node name="World" type="Node2D"]
 
+[node name="WorldScroller" type="Node2D" parent="."]
+script = ExtResource("4_whbhq")
+
+[node name="Background" type="Node2D" parent="WorldScroller"]
+
+[node name="Foreground" type="Node2D" parent="WorldScroller"]
+
 [node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
 script = ExtResource("1_7ptju")
 
@@ -141,8 +152,26 @@ shape = SubResource("RectangleShape2D_fxks0")
 
 [node name="env" type="Node2D" parent="."]
 
-[node name="WorldScroller" type="Node2D" parent="."]
-script = ExtResource("4_whbhq")
+[node name="DeathPlane" type="Area2D" parent="env"]
+script = ExtResource("4_5kcvg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="env/DeathPlane"]
+position = Vector2(340, -196)
+shape = SubResource("RectangleShape2D_cf6jl")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="env/DeathPlane"]
+position = Vector2(-340, -196)
+shape = SubResource("RectangleShape2D_cf6jl")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="env/DeathPlane"]
+position = Vector2(6, -726)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_cf6jl")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="env/DeathPlane"]
+position = Vector2(6, 311)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_cf6jl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -200)
@@ -219,5 +248,6 @@ libraries = {
 "": SubResource("AnimationLibrary_riorx")
 }
 
+[connection signal="body_entered" from="env/DeathPlane" to="env/DeathPlane" method="_on_body_entered"]
 [connection signal="pressed" from="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" to="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" method="_on_pressed"]
 [connection signal="pressed" from="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" to="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" method="_on_button_pressed"]

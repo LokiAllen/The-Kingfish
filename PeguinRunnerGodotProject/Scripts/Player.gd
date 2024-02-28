@@ -126,7 +126,6 @@ func getState():
 
 
 func kill():
-	print("kill")
 	if invinsibleTimer <= 0:
 		worldScroller.stop()
 		alive = false
