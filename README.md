@@ -31,6 +31,6 @@ Tom Tooley worked on implementing both the front and back end of the sustainabil
 Jasper Wise worked on implementing the back end for the account management system of the site, the leaderboard feature, as well as the system for generating and redeeming qrcodes. These features support the fundamental functionality of the site, allowing users to make an account, gain coins to play the game via redeeming the qrcodes, and compete against other users via the leaderboard. This work can be found in the 'qrcodes', 'accounts', and 'siteadmin' app directories.
 
 ### Charlie Walford - Project documentaion and support of back end development:
-Charlie Walford documented the development process, wrote up the product document, and assisted both Tom Tooley and Jasper Wise in the development of the back end in each of their parts.
+Charlie Walford documented the development process, wrote up the product document, and assisted both Tom Tooley and Jasper Wise in the development of the back end in each of their parts through both contributing to the code and helping with debugging.
 
 
