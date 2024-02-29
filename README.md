@@ -2,9 +2,14 @@
 
 ## Deploying the Django Project
 The project requires python versions `3.10` to `3.11`
-To install dependencies, navigate to the root directory and run the command:
+To install dependencies, navigate to the `root directory` and run the command:
 ```
 pip install -r requirements.txt
+```
+
+Then you can navigate to the directory `mysite` and deploy the server by running the command:
+```
+python manage.py runserver
 ```
 ## Work performed by each group member
 
