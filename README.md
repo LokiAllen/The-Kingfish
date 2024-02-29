@@ -29,7 +29,7 @@ Daniel Banks worked on the front end of the website. This included the creation 
 
 ### Back End Design and Development
 Members working on this include:
-- Jaspser
+- Jasper
 - Tom
 - Charlie
 
