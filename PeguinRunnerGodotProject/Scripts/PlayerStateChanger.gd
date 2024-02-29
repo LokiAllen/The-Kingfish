@@ -1,5 +1,9 @@
 extends Area2D
-# PlayerStateChanger script for changing the player state when they enter an Area2D
+'''
+PlayerStateChanger script for changing the player state when they enter an Area2D
+
+@author Daniel Hibbin
+'''
 
 
 # Allow the target state to be changed in the editor for this class

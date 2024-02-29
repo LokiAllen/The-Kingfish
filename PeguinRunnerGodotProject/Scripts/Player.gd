@@ -1,6 +1,10 @@
 extends CharacterBody2D
 class_name Player
-# Player script for the Penguin Character
+'''
+Player script for the Penguin Character
+
+@author Daniel Hibbin
+'''
 
 
 # Define constants
