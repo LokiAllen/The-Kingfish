@@ -1,7 +1,11 @@
 # The Kingfish Sustainability Project - Penguin Dash
 
 ## Deploying the Django Project
-
+The project requires python versions `3.10` to `3.11`
+To install dependencies, navigate to the root directory and run the command:
+```
+'pip install -r requirements.txt'
+```
 ## Work performed by each group member
 
 ### Loki - Database Design and Development:
