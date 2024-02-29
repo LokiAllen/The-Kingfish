@@ -108,7 +108,7 @@ class LogoutView(LoggedInRequired, View):
  * A view class that presents the user with a leaderboard to display the
  * information specified for the number or type of users specified
  * 
- * @author Jasper
+ * @author Jasper and Loki
 """
 class LeaderboardView(LoggedInRequired, View):
     template_name = 'accounts/leaderboard.html'
