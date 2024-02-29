@@ -1,5 +1,9 @@
 extends Node2D
-# WorldScroller script for the scrolling of the game world
+'''
+WorldScroller script for the scrolling of the game world
+
+@author Daniel Hibbin
+'''
 
 
 # List of chunks for the flipping movement state

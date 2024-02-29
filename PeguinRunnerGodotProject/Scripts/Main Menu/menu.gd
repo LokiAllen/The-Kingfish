@@ -1,5 +1,9 @@
 extends Control
-# Menu script for the Main Menu Scene 
+'''
+Menu script for the Main Menu Scene 
+
+@author Daniel Hibbin
+'''
 
 
 # Reference to the world scene
