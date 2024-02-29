@@ -24,4 +24,7 @@ Members working on this include:
 - Tom
 - Charlie
 
+### Tom Tooley - Sustainability Quiz:
+Tom Tooley worked on implementing the sustainability quiz feature of the site. The django backend for this work can be found in the 'quiz' app directory, and the front end can be found in the static html/quiz directory.
+
 
