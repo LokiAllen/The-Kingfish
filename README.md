@@ -25,6 +25,12 @@ Members working on this include:
 - Charlie
 
 ### Tom Tooley - Sustainability Quiz:
-Tom Tooley worked on implementing the sustainability quiz feature of the site. The django backend for this work can be found in the 'quiz' app directory, and the front end can be found in the static html/quiz directory.
+Tom Tooley worked on implementing both the front and back end of the sustainability quiz feature of the site, a multiple-choice quiz a user can partake in to gain bonus coins after redeeming a qrcode to raise environmental awareness. The django backend for this work can be found in the 'quiz' app directory, and the front end can be found in the static html/quiz directory.
+
+### Jasper Wise - Account, Leaderboard and Qrcode systems back end:
+Jasper Wise worked on implementing the back end for the account management system of the site, the leaderboard feature, as well as the system for generating and redeeming qrcodes. These features support the fundamental functionality of the site, allowing users to make an account, gain coins to play the game via redeeming the qrcodes, and compete against other users via the leaderboard. This work can be found in the 'qrcodes', 'accounts', and 'siteadmin' app directories.
+
+### Charlie Walford - Project documentaion and support of back end development:
+Charlie Walford documented the development process, wrote up the product document, and assisted both Tom Tooley and Jasper Wise in the development of the back end in each of their parts.
 
 
