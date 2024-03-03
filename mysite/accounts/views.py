@@ -20,7 +20,7 @@ class NotLoggedInRequired(View):
     # Overrides the dispatch method to ensure the user is not logged in before proceeding with the view
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('/home/')
+            return redirect('/')
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -34,7 +34,7 @@ class LoggedInRequired(View):
         if request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
 
-        return redirect('/home/')
+        return redirect('/')
 
 """
  * A view class that presents the 'UserLogin' form and redirects to the
@@ -49,7 +49,7 @@ class LoginView(NotLoggedInRequired, FormView):
     # If the form is valid - logs them in
     def form_valid(self, form):
         login(self.request, form.user)
-        return redirect('/home/')
+        return redirect('/')
 
 """
  * A view class that presents the 'RegisterForm' form and logs the user
@@ -70,14 +70,14 @@ class RegisterView(NotLoggedInRequired, FormView):
 
         user_info.picture = form.cleaned_data['profile_picture']
         if not user_info.picture:
-            user_info.picture = 'default.png'
+            user_info.picture = 'media/default.png'
 
         # Saves their account to the db and logs them in
         user.save()
         user_info.save()
         login(self.request, user)
 
-        return redirect('/home/')
+        return redirect('/')
 
 """
  * A view class that presents the 'PasswordChangeView' to the user to securely change
@@ -92,7 +92,7 @@ class ChangePasswordView(LoggedInRequired, PasswordChangeView):
         user = form.save()
         login(self.request, user)
 
-        return redirect('/home/')
+        return redirect('/')
 
 """
  * A view class that logs the user out and redirects them to the home page
@@ -102,7 +102,7 @@ class ChangePasswordView(LoggedInRequired, PasswordChangeView):
 class LogoutView(LoggedInRequired, View):
     def dispatch(self, request, *args, **kwargs):
         logout(request)
-        return redirect('/home/')
+        return redirect('/')
 
 """
  * A view class that presents the user with a leaderboard to display the
@@ -120,7 +120,7 @@ class LeaderboardView(LoggedInRequired, View):
         score_type = f'-{score_type}'
 
         if score_type not in ['-cumulativeScore', '-highscore', '-coins']:
-            return redirect('/home/')
+            return redirect('/')
 
         data = self.get_leaderboard_data(leaderboard_type, score_type)
 
@@ -239,7 +239,7 @@ class ProfileDispatch(View):
                 return OwnProfileView.as_view()(request, *args, **kwargs)
             return ProfileView.as_view()(request, *args, **kwargs)
 
-        return redirect('/home/')
+        return redirect('/')
 
 """
  * A class based form for the own users profile to allow them

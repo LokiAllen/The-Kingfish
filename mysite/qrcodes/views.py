@@ -21,7 +21,7 @@ class LoggedInRequired(View):
         if request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
 
-        return redirect('/home/')
+        return redirect('/')
 
 """
  * A custom view class that handles all information related to
