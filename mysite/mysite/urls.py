@@ -23,14 +23,15 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('siteadmin/', include('siteadmin.urls')),
     path('accounts/', include('accounts.urls')),
     path('qrcodes/', include('qrcodes.urls')),
-    path('siteadmin/', include('siteadmin.urls')),
-    path('', views.home_view, name='home'),
-    path('home', views.home_view, name='home_view'),
+    path('game/', include('game.urls')),
     path("quiz/", include("quiz.urls")),
+    path('api/', include('api.urls')),
+    path('', views.home_view, name='home'),
+    path('home/', views.home_view, name='home_view'),
     path('leaderboard/', account_views.LeaderboardView.as_view(), name='leaderboard'),
-    path('game/', include('game.urls'))
 ]
 
 if settings.DEBUG:

@@ -4,7 +4,7 @@ from django.contrib.auth.views import PasswordChangeView
 from django.core.files.storage import default_storage
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
-from django.views.generic import View, FormView
+from django.views.generic import View, FormView, TemplateView
 from django.core.cache import cache
 
 # Non-static imports
@@ -310,3 +310,34 @@ class ProfileView(View):
     def post(self, request, *args, **kwargs):
         if FriendSystem.friend_query(request, **{'method':request.POST.get('method', None), 'user':kwargs['username']}):
             return HttpResponse(200)
+
+
+
+"""
+ * A custom view class that checks the user is logged in, messaging
+ * an existing user, and is friends with them before access
+ * 
+ * @author Jasper
+"""
+class MessageUserChecks(LoggedInRequired, View):
+    def dispatch(self, request, *args, **kwargs):
+        receiver = User.objects.filter(username__iexact=kwargs['username'])
+        if receiver:
+            user_friend_object = UserFriends.objects.filter(user_id=request.user.id, following_id=receiver[0].id)
+            if user_friend_object.exists() and user_friend_object.first().is_friend:
+                return super().dispatch(request, *args, **kwargs)
+        return redirect('/')
+
+"""
+ * A view that presents the message form to the user, where the data for that is retrieved
+ * via the REST API inside the 'api' app
+ * 
+ * @author Jasper
+"""
+class MessageView(MessageUserChecks, TemplateView):
+    template_name = 'accounts/messages.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.kwargs['username']
+        context['user_messaging'] = User.objects.filter(username__iexact=kwargs['username']).first()
+        return context
