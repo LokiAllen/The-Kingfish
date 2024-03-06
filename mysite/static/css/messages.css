@@ -1,0 +1,62 @@
+/* style.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+#message-container {
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+}
+
+#messages {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#message-form {
+    display: flex;
+    padding: 20px;
+}
+
+#message-input {
+    width: 85%;
+    padding: 10px;
+}
+
+button {
+    height: 100%;
+    width: 15%;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.sender {
+    text-align: right;
+    padding-left: 60%;
+    padding-top: 3%;
+}
+
+.receiver {
+    text-align: left;
+    max-width: 40%;
+    padding-top: 3%;
+}
+
+div#userinfo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+div#userinfo h1 {
+    margin: 0;
+    padding-left: 3%;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

@@ -37,7 +37,7 @@
                 <button id="addfriend" onclick="addFriend('{{ user_data.username }}')" type="button">Add friend</button>
 
             {% elif friend %}
-                <button id="message" type="button">Message</button>
+                <button id="message" onclick="location.href='{% url 'accounts:message' username=user_data.username %}'" type="button">Message</button>
             {% endif %}
 
             {% if following %}
