@@ -89,7 +89,7 @@ func _physics_process(delta):
 		match currentState:
 			movementState.flipGravity:
 				# Flip player if space is pressed
-				if Input.is_action_just_pressed("ui_accept") and (is_on_floor() or is_on_ceiling()):
+				if Input.is_action_just_pressed("jump") and (is_on_floor() or is_on_ceiling()):
 					# Play flip animation
 					if currentGravity > 0:
 						animationPlayer.play("flip")
@@ -100,7 +100,7 @@ func _physics_process(delta):
 					velocity.y += currentGravity * delta
 			movementState.jumpGravity:
 				# Jump if space is pressed
-				if Input.is_action_just_pressed("ui_accept"):
+				if Input.is_action_just_pressed("jump"):
 					velocity.y = -JUMPFORCE
 		
 		
@@ -181,5 +181,6 @@ func kill():
 		alive = false
 		
 		# Introduce death screen and set text of final score
+		returnButton.disabled = false
 		deathAnimationPlayer.play("endGame")
 		finalScoreLabel.text = "Final Score: %d" % score
