@@ -14,20 +14,16 @@ const WORLD = preload("res://Scenes/world.tscn")
 
 func _ready():
 	if OS.has_feature('web'):
-		JavaScriptBridge.eval("""
-			console.log('The JavaScriptBridge singleton is available')
-		""")
-		
-		# Retrieve the `window.console` object.
-		var console = JavaScriptBridge.get_interface("console")
-
-		# Call the `window.console.log()` method.
-		console.log("Hello, JavaScript console!")
 		
 		var http_request = HTTPRequest.new()
 		self.add_child(http_request)
-
-		var error = http_request.request("http://localhost:8000")
+		
+		JavaScriptBridge.eval("""
+			console.log('Javascript bridge is functional')
+		""")
+		
+		
+		var error = http_request.request("http://localhost:8000/game/index.pck")
 		if error == OK:
 			print("Request successful!")
 		else:
