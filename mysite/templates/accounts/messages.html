@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% extends "../base.html" %}
+
+{% block templatepage %}
+
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Messaging</title>
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+    <script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+        const username = '{{ user_messaging.username }}';
+    </script>
+    <script src="{% static 'js/messages.js' %}"></script>
+</head>
+<body>
+<div id="userinfo">
+    <img src="{{ user_messaging.userinfo.picture.url }}" id="pfp" style="display: block;">
+    <h1> {{ user_messaging.username }}</h1>
+</div>
+<div id="message-container">
+    <div id="messages"></div>
+    <form id="message-form">
+        <input type="text" id="message-input" placeholder="Type a message...">
+        <button type="submit">Send</button>
+    </form>
+</div>
+</body>
+</html>
+
+{% endblock %}
