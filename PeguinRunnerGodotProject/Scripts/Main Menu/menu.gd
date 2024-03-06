@@ -31,11 +31,11 @@ func _ready():
 				this.callback(JSON.stringify(data));
 			},
 			makeRequest: function() {
-				fetch('index.pck')
+				fetch('data/user')
 					.then(response => response.text())
 					.then(data => {
 						// Send the data back to GDScript.
-						this.callback(data);
+						this.callback(JSON.stringify(data));
 					})
 					.catch(error => console.error('Error:', error));
 			}
