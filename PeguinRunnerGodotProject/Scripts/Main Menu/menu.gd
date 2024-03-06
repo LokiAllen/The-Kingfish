@@ -22,6 +22,11 @@ func _ready():
 			console.log('Javascript bridge is functional')
 		""")
 		
+		print(IP.get_local_addresses())
+		
+		var custom_headers = [
+			"Access-Control-Allow-Origin: *"
+		]
 		
 		var error = http_request.request("http://localhost:8000/game/index.pck")
 		if error == OK:
