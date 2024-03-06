@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import include, path
 from mysite import settings, views
 from accounts import views as account_views
+from game import views as game_views
 from django.conf import settings
 from django.conf.urls.static import static
 
