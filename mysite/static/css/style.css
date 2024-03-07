@@ -5,14 +5,13 @@
 
 
 body {
-    background-image: url('../media/background.png');
-    background-color: #02050C;
+    background: rgb(244,244,244);
+    background: linear-gradient(0deg, rgba(244,244,244,1) 21%, rgba(236,254,255,1) 54%, rgba(219,253,255,1) 100%);
     background-size: contain;
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
     overflow: hidden;
-    font-family: Actionman;
     text-align: center;
     margin: auto;
 }
@@ -22,23 +21,29 @@ body {
     max-width: 1000px;
     margin: auto;
     margin-top: 50px;
-    border-radius: 6px;
-    /*
-    background: rgb(255,249,233);
-    background: radial-gradient(circle, rgba(255,249,233,1) 78%, rgba(220,237,255,1) 100%);
-    */
-    background: rgb(4,30,41);
-    background: radial-gradient(circle, rgba(4,30,41,1) 19%, rgba(22,24,31,1) 98%);
-    color: white;
-    padding: 10px
+    padding: 10px;
+    background-color: #f4f4f4;
+  background-position: 0 90%;
+  background-repeat: repeat no-repeat;
+  background-size: 4px 3px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+  box-sizing: border-box;
+  color: #333c57;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
 }
 
 h1 {
     font-family: Actionman;
-    color: white;
+    color: #f4f4f4;
     font-size: 75px;
-    -webkit-text-stroke: 2px #02050C;
-    text-shadow: 0 5px 0px #02050C;
+    -webkit-text-stroke: 2px #333c57;
+    text-shadow: 0 5px 0px #333c57;
     font-weight: bold;
 }
 
@@ -58,13 +63,8 @@ h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /*
-    background: rgb(154,192,232);
-    background: linear-gradient(180deg, rgba(154,192,232,1) 1%, rgba(42,146,255,1) 3%, rgba(5,104,253,1) 98%, rgba(3,60,147,1) 99%);
-    */
-    border-radius: 6px;
     padding: 10px;
-    color: #fff;    
+    color: #333c57;   
 }
 
 .topnav-center {
@@ -80,7 +80,7 @@ h2 {
 }
 
 .topnav-brand {
-    color: #f2f2f2;
+    color: #333c57;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -90,7 +90,7 @@ h2 {
 
 /* Style the links inside the navigation bar */
 .nav-link {
-    color: #f2f2f2;
+    color: #333c57;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -108,68 +108,82 @@ h2 {
     color: white;
 }
 
-button {
+input {
+    background-color: #f4f4f4;
+  background-position: 0 90%;
+  background-repeat: repeat no-repeat;
+  background-size: 4px 3px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-width: 2px;
+  box-sizing: border-box;
+  color: #333c57;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Neucha, sans-serif;
+  font-size: 1rem;
+  line-height: 23px;
+  outline: none;
+  padding: .75rem;
+  text-decoration: none;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+}
 
-    display: inline-block;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    will-change: box-shadow,transform;
-    /*
-    background: linear-gradient(180deg, rgba(154,192,232,1) 1%, rgba(42,146,255,1) 3%, rgba(5,104,253,1) 98%, rgba(3,60,147,1) 99%);
-    */
-    background: rgb(53,91,107);
-    background: linear-gradient(180deg, rgba(53,91,107,1) 2%, rgba(10,66,89,1) 11%, rgba(7,47,64,1) 80%, rgba(3,22,29,1) 98%);
-    box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -2px 0px rgb(3,60,147 / 50%);
-    padding: 0 32px;
-    border-radius: 6px;
-    color: #fff;
-    height: 48px;
-    font-size: 18px;
-    text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
-    font-family: actionman;
-    transition: box-shadow 0.15s ease,transform 0.15s ease;
-    
+/* CSS */
+button {
+    align-self: center;
+    background-color: #f4f4f4;
+  background-position: 0 90%;
+  background-repeat: repeat no-repeat;
+  background-size: 4px 3px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+  box-sizing: border-box;
+  color: #333c57;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Neucha, sans-serif;
+  font-size: 1rem;
+  line-height: 23px;
+  outline: none;
+  padding: .75rem;
+  text-decoration: none;
+  transition: all 235ms ease-in-out;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
 button:hover {
-    text-shadow: 1px 1px 10px white;
-    box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #00000035;
-    transform: translateY(1px);
+  box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+  transform: translate3d(0, 2px, 0);
 }
 
-input {
-
-    display: inline-block;
-    background: rgb(255,249,233);
-    padding: 0 32px;
-    border-radius: 6px;
-    color: #02050C;
-    height: 48px;
-    font-size: 18px;
-    text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
-    font-family: actionman;
-    
+button:focus {
+  box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }
 
 .primarybutton {
-    outline: 0;
-    border: 0;
-    color: rgb(136, 96, 47);
-    /*
-    background: rgb(230,228,128);
-    background: radial-gradient(circle, rgba(230,228,128,1) 11%, rgba(255,210,91,1) 80%);
-    */
-    background: rgb(255,241,218);
-background: linear-gradient(180deg, rgba(255,241,218,1) 2%, rgba(250,220,171,1) 17%, rgba(250,191,97,1) 87%, rgba(210,135,18,1) 99%);
-    box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -2px 0px rgb(58 65 111 / 50%);
+    transition: all 235ms ease-in-out;
+    color: #333c57;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    background: rgb(178,244,249);
+    background: linear-gradient(0deg, rgba(178,244,249,1) 7%, rgba(213,249,251,1) 57%);
 }
 
 .primarybutton:hover {
-    text-shadow: 1px 1px 10px white;
-    box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #00000035;
-    transform: translateY(1px);
-}
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+    transform: translate3d(0, 2px, 0);
+  }
 
 table {
     background-color: wheat;
