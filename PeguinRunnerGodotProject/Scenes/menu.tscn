@@ -55,26 +55,25 @@ offset_bottom = -45.25
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Main Menu/VBoxContainer2"]
+[node name="Title" type="Label" parent="CanvasLayer/Main Menu/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Penguin Rush
-
-"
+text = "Sustainability Slide"
 label_settings = SubResource("LabelSettings_ij66q")
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Main Menu/VBoxContainer2"]
 layout_mode = 2
+size_flags_horizontal = 4
 
-[node name="Label2" type="Label" parent="CanvasLayer/Main Menu/VBoxContainer2/HBoxContainer"]
+[node name="Coins Label" type="Label" parent="CanvasLayer/Main Menu/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Coins: 15   "
 label_settings = SubResource("LabelSettings_vge2g")
 horizontal_alignment = 1
 
-[node name="Label3" type="Label" parent="CanvasLayer/Main Menu/VBoxContainer2/HBoxContainer"]
+[node name="Playable Label" type="Label" parent="CanvasLayer/Main Menu/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "You can play!"

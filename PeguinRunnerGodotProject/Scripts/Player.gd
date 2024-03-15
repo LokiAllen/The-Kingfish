@@ -184,3 +184,7 @@ func kill():
 		returnButton.disabled = false
 		deathAnimationPlayer.play("endGame")
 		finalScoreLabel.text = "Final Score: %d" % score
+		
+		# Set the highscore and push the data to the server
+		GameManager.setHighScore(score)
+		GameManager.pushSessionData()
