@@ -5,18 +5,17 @@ from django.core.files.storage import default_storage
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import View, FormView, TemplateView
-from django.core.cache import cache
 
 # Non-static imports
 from .forms import *
-from .models import UserInfo, UserFriends
+from .models import UserInfo, UserFriends, UserOwnedBackgrounds, UserOwnedTitles, Backgrounds, Titles
 
-"""
- * A custom view class that ensures the user is logged in for access
- * 
- * @author Jasper
-"""
 class NotLoggedInRequired(View):
+    """
+     * A custom view class that ensures the user is logged in for access
+     *
+     * @author Jasper
+    """
     # Overrides the dispatch method to ensure the user is not logged in before proceeding with the view
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -24,25 +23,25 @@ class NotLoggedInRequired(View):
 
         return super().dispatch(request, *args, **kwargs)
 
-"""
- * A custom view class that ensures the user is not logged in for access
- * 
- * @author Jasper
-"""
 class LoggedInRequired(View):
+    """
+     * A custom view class that ensures the user is not logged in for access
+     *
+     * @author Jasper
+    """
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
 
         return redirect('/')
 
-"""
- * A view class that presents the 'UserLogin' form and redirects to the
- * home page after the login is complete
- * 
- * @author Jasper
-"""
 class LoginView(NotLoggedInRequired, FormView):
+    """
+     * A view class that presents the 'UserLogin' form and redirects to the
+     * home page after the login is complete
+     *
+     * @author Jasper
+    """
     template_name = 'accounts/login.html'
     form_class = UserLogin
 
@@ -51,13 +50,13 @@ class LoginView(NotLoggedInRequired, FormView):
         login(self.request, form.user)
         return redirect('/')
 
-"""
- * A view class that presents the 'RegisterForm' form and logs the user
- * in and redirects them to the home page after the register is complete
- * 
- * @author Jasper
-"""
 class RegisterView(NotLoggedInRequired, FormView):
+    """
+     * A view class that presents the 'RegisterForm' form and logs the user
+     * in and redirects them to the home page after the register is complete
+     *
+     * @author Jasper
+    """
     template_name = 'accounts/register.html'
     form_class = RegisterForm
 
@@ -75,17 +74,19 @@ class RegisterView(NotLoggedInRequired, FormView):
         # Saves their account to the db and logs them in
         user.save()
         user_info.save()
+        UserOwnedTitles.objects.create(user=user, title=Titles.objects.filter(title_name='Eco Rookie').first())
+        UserOwnedBackgrounds.objects.create(user=user, background=Backgrounds.objects.filter(background_name='Default').first())
         login(self.request, user)
 
         return redirect('/')
 
-"""
- * A view class that presents the 'PasswordChangeView' to the user to securely change
- * their password, and redirects them to the home page after the change is complete
- * 
- * @author Jasper
-"""
 class ChangePasswordView(LoggedInRequired, PasswordChangeView):
+    """
+     * A view class that presents the 'PasswordChangeView' to the user to securely change
+     * their password, and redirects them to the home page after the change is complete
+     *
+     * @author Jasper
+    """
     template_name = 'accounts/change.html'
 
     def form_valid(self, form):
@@ -94,119 +95,22 @@ class ChangePasswordView(LoggedInRequired, PasswordChangeView):
 
         return redirect('/')
 
-"""
- * A view class that logs the user out and redirects them to the home page
- * 
- * @author Jasper
-"""
 class LogoutView(LoggedInRequired, View):
+    """
+     * A view class that logs the user out and redirects them to the home page
+     *
+     * @author Jasper
+    """
     def dispatch(self, request, *args, **kwargs):
         logout(request)
         return redirect('/')
 
-"""
- * A view class that presents the user with a leaderboard to display the
- * information specified for the number or type of users specified
- * 
- * @author Jasper and Loki
-"""
-class LeaderboardView(LoggedInRequired, View):
-    template_name = 'accounts/leaderboard.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        leaderboard_type = self.request.GET.get('type', 'global')
-        score_type = self.request.GET.get('score_type', 'coins')
-
-        score_type = f'-{score_type}'
-
-        if score_type not in ['-cumulativeScore', '-highscore', '-coins']:
-            return redirect('/')
-
-        data = self.get_leaderboard_data(leaderboard_type, score_type)
-
-        return render(request, self.template_name, data)
-
-
-    """
-        Gets the dictionary leaderboard data values for the type and score_type specified
-        
-        @param leaderboard_type: The type of users to show (global, friends, ...)
-        @param score_type: The type of score to show (coins, high score, ...) 
-        @return A dictionary of users leaderboard data
-    """
-    def get_leaderboard_data(self, leaderboard_type, score_type):
-        """
-           Gets the current position of the user in the leaderboard with respect to the
-           score_type specified in get_leaderboard_data()
-           Caches the user's position for faster retrieval
-
-           @param user: The user to get the position for
-           @return Integer value of their current position in the leaderboard
-        """
-        def get_position(user):
-            position_cache_key = f'user_{user.id}_position_{score_type}'
-            position = cache.get(position_cache_key)
-
-            if not position:
-                match score_type:
-                    case '-cumulativeScore':
-                        position = UserInfo.objects.filter(cumulativeScore__gt=user.cumulativeScore).count() + 1
-                    case '-highscore':
-                        position = UserInfo.objects.filter(highscore__gt=user.highscore).count() + 1
-                    case '-coins':
-                        position = UserInfo.objects.filter(highscore__gt=user.coins).count() + 1
-
-                cache.set(position_cache_key, position, timeout=300)
-
-            return position
-
-        """
-            Gets the required user data for 'user' specified for the leaderboard
-            
-            @param user: The user whose data is being retrieved
-            @return The required user data for the leaderboard 
-        """
-        def unpack_data(user):
-            match score_type:
-                case '-cumulativeScore':
-                    value = user.cumulativeScore
-                case '-highscore':
-                    value = user.highscore
-                case '-coins':
-                    value = user.coins
-
-            return {
-                'username': user.user.username,
-                'profile_picture': user.picture.url,
-                'position': get_position(user),
-                'value': value,
-            }
-
-        # Retrieves the base user's for the leaderboard and retrieves the required data for the leaderboard
-        if leaderboard_type == 'friends':
-            friend_objects = UserFriends.objects.filter(user_id=self.request.user.id)
-            friend_ids = [friend.following_id for friend in friend_objects]
-
-            friend_info_objects = UserInfo.objects.filter(user__in=friend_ids)
-            top_friends_list = friend_info_objects.order_by(score_type)
-
-            top_user_list = [unpack_data(user) for user in top_friends_list]
-
-        else:
-            top_users_object = UserInfo.objects.order_by(score_type)
-            top_user_list = [unpack_data(user) for user in top_users_object]
-
-        top_user_list.append(unpack_data(self.request.user.userinfo))
-
-        return {'top_users': top_user_list}
-
-
-"""
- * Standard class for handling functions related to the friends system
- *
- * @author Jasper
-"""
 class FriendSystem:
+    """
+     * Standard class for handling functions related to the friends system
+     *
+     * @author Jasper
+    """
     def friend_query(request, *args, **kwargs):
         user = User.objects.filter(id=request.user.id)
         user_to_query = User.objects.filter(username=kwargs['user'])
@@ -226,13 +130,13 @@ class FriendSystem:
             return UserFriends.objects.filter(user_id=user.id, following_id=user_to_query.id).delete()
 
 
-"""
- * A custom view class that redirects the user to either their
- * own profile page, or the users profile page correspondingly
- * 
- * @author Jasper
-"""
 class ProfileDispatch(View):
+    """
+     * A custom view class that redirects the user to either their
+     * own profile page, or the users profile page correspondingly
+     *
+     * @author Jasper
+    """
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             if request.user.username == kwargs['username']:
@@ -241,13 +145,13 @@ class ProfileDispatch(View):
 
         return redirect('/')
 
-"""
- * A class based form for the own users profile to allow them
- * to edit their profile information
- *
- * @author Jasper
-"""
 class OwnProfileView(FormView):
+    """
+     * A class based form for the own users profile to allow them
+     * to edit their profile information
+     *
+     * @author Jasper
+    """
     template_name = 'accounts/ownprofile.html'
     form_class = ChangeInfo
 
@@ -264,6 +168,8 @@ class OwnProfileView(FormView):
         initial['username'] = self.request.user.username
         initial['first_name'] = self.request.user.first_name
         initial['last_name'] = self.request.user.last_name
+        initial['title'] = self.request.user.userinfo.title_id
+        initial['background'] = self.request.user.userinfo.background_id
         return initial
 
     # If the form is valid it will save the information specified
@@ -273,6 +179,8 @@ class OwnProfileView(FormView):
         user.username = form.cleaned_data['username']
         user.first_name = form.cleaned_data['first_name']
         user.last_name = form.cleaned_data['last_name']
+        user.userinfo.title = form.cleaned_data['title']
+        user.userinfo.background = form.cleaned_data['background']
 
         # Deletes and updates the profile picture if it has changed
         if form.cleaned_data['profile_picture']:
@@ -281,17 +189,18 @@ class OwnProfileView(FormView):
             user.userinfo.save()
 
         user.save()
+        user.userinfo.save()
 
         current_url = reverse('accounts:profile', kwargs={'username': user.username})
 
         return redirect(current_url)
 
-"""
- * A class based view to display profile information on specific users
- *
- * @author Jasper
-"""
 class ProfileView(View):
+    """
+     * A class based view to display profile information on specific users
+     *
+     * @author Jasper
+    """
     def get(self, request, *args, **kwargs):
         if request.user.username == kwargs['username']:
             return OwnProfileView.as_view()(request, *args, **kwargs)
@@ -305,21 +214,20 @@ class ProfileView(View):
             if following:
                 friend = following.first().is_friend
 
-            return render(request, 'accounts/profile.html', {'user_data': user_data, 'following': following, 'friend': friend})
+            return render(request, 'accounts/profile.html', {'user_data': user_data, 'following': following, 'friend': friend, 'title': user_data.userinfo.title.title_name})
 
     def post(self, request, *args, **kwargs):
         if FriendSystem.friend_query(request, **{'method':request.POST.get('method', None), 'user':kwargs['username']}):
             return HttpResponse(200)
 
 
-
-"""
- * A custom view class that checks the user is logged in, messaging
- * an existing user, and is friends with them before access
- * 
- * @author Jasper
-"""
 class MessageUserChecks(LoggedInRequired, View):
+    """
+     * A custom view class that checks the user is logged in, messaging
+     * an existing user, and is friends with them before access
+     *
+     * @author Jasper
+    """
     def dispatch(self, request, *args, **kwargs):
         receiver = User.objects.filter(username__iexact=kwargs['username'])
         if receiver:
@@ -328,16 +236,30 @@ class MessageUserChecks(LoggedInRequired, View):
                 return super().dispatch(request, *args, **kwargs)
         return redirect('/')
 
-"""
- * A view that presents the message form to the user, where the data for that is retrieved
- * via the REST API inside the 'api' app
- * 
- * @author Jasper
-"""
 class MessageView(MessageUserChecks, TemplateView):
+    """
+     * A view that presents the message form to the user, where the data for that is retrieved
+     * via the endpoint inside the 'api' app
+     *
+     * @author Jasper
+    """
     template_name = 'accounts/messages.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['username'] = self.kwargs['username']
         context['user_messaging'] = User.objects.filter(username__iexact=kwargs['username']).first()
         return context
+
+
+
+class LeaderboardView(LoggedInRequired, View):
+    """
+     * A view that presents the leaderboard to the user, where the data for that is retrieved
+     * via the endpoint inside the 'api' app
+     *
+     * @author Jasper
+    """
+    template_name = 'accounts/leaderboard.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        return render(request, self.template_name)

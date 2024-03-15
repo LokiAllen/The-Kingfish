@@ -1,0 +1,5 @@
+button[disabled] {
+    background: gray;
+    transition: none;
+    pointer-events: none;
+}

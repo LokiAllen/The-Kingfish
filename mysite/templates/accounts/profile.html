@@ -9,11 +9,18 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="{% static 'js/profile.js' %}"></script>
         <script>
+            var user_background = '{{ user_data.userinfo.background.css_class }}';
             var CSRF_TOKEN = '{{ csrf_token }}';
         </script>
-
         <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
-
+        <link rel="stylesheet" type="text/css" href="{% static 'css/background_styles.css' %}">
+        <style>
+            {% if user_data.userinfo.background.picture %}
+            .page {
+                background-image: url("{% static 'media/profile_backgrounds/' %}{{ user_data.userinfo.background.picture }}")
+            }
+            {% endif %}
+        </style>
         <title>Profile</title>
     </head>
     <body>
@@ -23,6 +30,7 @@
             <img src="{{ user_data.userinfo.picture.url }}" id="pfp" style="display: block;">
             <h1> {{ user_data.username }}</h1>
         </div>
+        <h3>{{ title }}</h3>
 
         <p> First Name: {{ user_data.first_name }}</p>
         <p> Last Name: {{ user_data.first_name }}</p>

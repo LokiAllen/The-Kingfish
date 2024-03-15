@@ -20,11 +20,11 @@
         {% if user.is_authenticated %}
 
             <a href="{% url 'leaderboard' %}" class="nav-link">Leaderboard</a>
+            <a href="{% url 'shop' %}" class="nav-link">Shop</a>
+            <a href="{% url 'leaderboard' %}" class="nav-link">Get Coins</a>
 
         {% endif %}
-
-        <a href="{% url 'leaderboard' %}" class="nav-link">Get Coins</a>
-        <a href="{% url 'leaderboard' %}" class="nav-link">About</a>
+        <a href="{% url 'home' %}" class="nav-link">About</a>
 
     </div>
 
@@ -39,11 +39,6 @@
             </a>
             <a href="{% url 'accounts:profile' username=user.username %}" class="nav-link">{{ user.username }} </a>
             <button onclick="location.href='{% url 'accounts:logout' %}'" type="button">Logout</button>
-
-        {% else %}
-
-            <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
-            <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button" class="primarybutton">Login</button>
 
         {% endif %}
         {% if user.is_superuser %}
