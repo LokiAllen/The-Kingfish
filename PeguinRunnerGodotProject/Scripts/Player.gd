@@ -54,6 +54,9 @@ var score : int = 0
 
 @onready var slidingParticles = $Penguin/SlidingParticles
 @onready var jumpSoundPlayer = $jumpSoundPlayer
+@onready var gameOverSound = $gameOverSound
+
+@onready var musicPlayer = $"../MusicPlayer"
 
 
 # Always start the player in the flipGravity movement state
@@ -200,6 +203,9 @@ func kill():
 		returnButton.disabled = false
 		deathAnimationPlayer.play("endGame")
 		finalScoreLabel.text = "Final Score: %d" % score
+		
+		gameOverSound.play()
+		musicPlayer.stop()
 		
 		# Set the highscore and push the data to the server
 		if OS.has_feature('web'):

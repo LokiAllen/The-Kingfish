@@ -9,6 +9,8 @@ Menu script for the Main Menu Scene
 @onready var playableLabel = $"CanvasLayer/Main Menu/VBoxContainer2/HBoxContainer/Playable Label"
 @onready var startButton = $"CanvasLayer/Main Menu/VBoxContainer/StartButton"
 
+@onready var audioStreamPlayer = $AudioStreamPlayer
+
 
 # Reference to the world scene
 const WORLD = preload("res://Scenes/world.tscn")
@@ -23,6 +25,10 @@ func _process(delta):
 		else:
 			playableLabel.text = "You can't play. :("
 			startButton.disabled = true
+	
+	if audioStreamPlayer.playing == false:
+		audioStreamPlayer.play()
+	
 
 
 # When the "Start Game" button is pressed, 
