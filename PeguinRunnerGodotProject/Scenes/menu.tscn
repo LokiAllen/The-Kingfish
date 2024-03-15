@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cexwbxgfkjkdv"]
+[gd_scene load_steps=7 format=3 uid="uid://cexwbxgfkjkdv"]
 
 [ext_resource type="Script" path="res://Scripts/Main Menu/menu.gd" id="1_yb7u0"]
 [ext_resource type="FontFile" uid="uid://1sivoi5pj24a" path="res://Fonts/FFFFORWA.TTF" id="2_u0j82"]
 [ext_resource type="Theme" uid="uid://be8pcaengcs42" path="res://UI Themes/menu.tres" id="3_4sox8"]
+[ext_resource type="AudioStream" uid="uid://dja60stxi1usp" path="res://Music/pixel_sprinter_loop.ogg" id="4_em64b"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ij66q"]
 font = ExtResource("2_u0j82")
@@ -103,5 +104,10 @@ text = "Start game"
 layout_mode = 2
 theme = ExtResource("3_4sox8")
 text = "Play Tutorial"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_em64b")
+volume_db = -5.0
+autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/Main Menu/VBoxContainer/StartButton" to="." method="_on_button_pressed"]
