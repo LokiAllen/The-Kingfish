@@ -3,31 +3,39 @@
 <html lang="en">
 {% load static %}
 {% block templatepage %}
-    <head>
-        <meta charset="UTF-8">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="{% static 'js/profile.js' %}"></script>
-        <script>
-            var user_background = '{{ user_data.userinfo.background.css_class }}';
-            var CSRF_TOKEN = '{{ csrf_token }}';
-        </script>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/background_styles.css' %}">
-        <style>
-            {% if user_data.userinfo.background.picture %}
-            .page {
-                background-image: url("{% static 'media/profile_backgrounds/' %}{{ user_data.userinfo.background.picture }}")
-            }
-            {% endif %}
-        </style>
-        <title>Profile</title>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{% static 'js/profile.js' %}"></script>
+    <script>
+        var user_background = '{{ user_data.userinfo.background.css_class }}';
+        var CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/background_styles.css' %}">
+    <style>
+        {
+            % if user_data.userinfo.background.picture %
+        }
+
+        .page {
+            background-image: url("{% static 'media/profile_backgrounds/' %}{{ user_data.userinfo.background.picture }}")
+        }
+
+            {
+            % endif %
+        }
+    </style>
+    <title>Profile</title>
+</head>
+
+<body>
     <div id="profileboard">
 
         <div id="imagename">
-            <img src="{{ user_data.userinfo.picture.url }}" id="pfp" style="display: block;">
+            <img src="{{ user_data.userinfo.picture.url }}" id="pfp" class="account-img">
             <h1> {{ user_data.username }}</h1>
         </div>
         <h3>{{ title }}</h3>
@@ -38,21 +46,25 @@
         <p> coins: {{ user_data.userinfo.coins }}</p>
 
         <div id="buttons">
-            <button onclick="location.href='{% url 'accounts:profile' username=user.username %}'" type="button">Your Profile</button>
+            <button onclick="location.href='{% url 'accounts:profile' username=user.username %}'" type="button">Your
+                Profile</button>
             <button onclick="location.href='{% url 'home' %}'" type="button">Home</button>
 
             {% if not following %}
-                <button id="addfriend" onclick="addFriend('{{ user_data.username }}')" type="button">Add friend</button>
+            <button id="addfriend" onclick="addFriend('{{ user_data.username }}')" type="button">Add friend</button>
 
             {% elif friend %}
-                <button id="message" onclick="location.href='{% url 'accounts:message' username=user_data.username %}'" type="button">Message</button>
+            <button id="message" onclick="location.href='{% url 'accounts:message' username=user_data.username %}'"
+                type="button">Message</button>
             {% endif %}
 
             {% if following %}
-                <button id="removefriend" onclick="removeFriend('{{ user_data.username }}')" type="button">Remove friend</button>
+            <button id="removefriend" onclick="removeFriend('{{ user_data.username }}')" type="button">Remove
+                friend</button>
             {% endif %}
         </div>
     </div>
-    </body>
-    </html>
+</body>
+
+</html>
 {% endblock %}

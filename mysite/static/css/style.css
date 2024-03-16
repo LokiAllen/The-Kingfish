@@ -5,14 +5,15 @@
 
 
 body {
-    background: rgb(244,244,244);
-    background: linear-gradient(0deg, rgba(244,244,244,1) 21%, rgba(236,254,255,1) 54%, rgba(219,253,255,1) 100%);
+    background: rgb(244, 244, 244);
+    background: linear-gradient(0deg, rgba(244, 244, 244, 1) 21%, rgba(236, 254, 255, 1) 54%, rgba(219, 253, 255, 1) 100%);
     background-size: contain;
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
     text-align: center;
     margin: auto;
+    font-family: "PT Sans", sans-serif;
 }
 
 .page {
@@ -22,26 +23,26 @@ body {
     margin-top: 50px;
     padding: 10px;
     background-color: #f4f4f4;
-  background-position: 0 90%;
-  background-repeat: repeat no-repeat;
-  background-size: 4px 3px;
-  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
-  border-style: solid;
-  border-width: 2px;
-  box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
-  box-sizing: border-box;
-  color: #333c57;
-  border-bottom-left-radius: 15px 255px;
-  border-bottom-right-radius: 225px 15px;
-  border-top-left-radius: 255px 15px;
-  border-top-right-radius: 15px 225px;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    color: #333c57;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
 }
 
 h1 {
     font-family: Actionman;
     color: #f4f4f4;
     font-size: 75px;
-    -webkit-text-stroke: 2px #333c57;
+    -webkit-text-stroke: 1px #333c57;
     text-shadow: 0 5px 0px #333c57;
     font-weight: bold;
 }
@@ -50,11 +51,12 @@ h2 {
     font-family: Actionman;
     color: white;
     font-size: 50px;
-    -webkit-text-stroke: 2px #02050C;
-    text-shadow: 0 3px 0px #02050C;
+    -webkit-text-stroke: 1px #333c57;
+    text-shadow: 0 3px 0px #333c57;
     font-weight: bolder;
 }
 
+/* ---- NAVBAR ---- */
 
 .topnav {
     max-width: 1500px;
@@ -63,7 +65,7 @@ h2 {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    color: #333c57;   
+    color: #333c57;
 }
 
 .topnav-center {
@@ -87,7 +89,6 @@ h2 {
     list-style-type: none;
 }
 
-/* Style the links inside the navigation bar */
 .nav-link {
     color: #333c57;
     text-align: center;
@@ -97,78 +98,91 @@ h2 {
     list-style-type: none;
 }
 
-/* Change the color of links on hover */
 .topnav a:hover {
     text-shadow: 1px 1px 10px white;
 }
 
-/* Add a color to the active/current link */
 .topnav a.active {
     color: white;
 }
 
-input {
-    background-color: #f4f4f4;
-  background-position: 0 90%;
-  background-repeat: repeat no-repeat;
-  background-size: 4px 3px;
-  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
-  border-style: solid;
-  border-width: 2px;
-  box-sizing: border-box;
-  color: #333c57;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Neucha, sans-serif;
-  font-size: 1rem;
-  line-height: 23px;
-  outline: none;
-  padding: .75rem;
-  text-decoration: none;
-  border-bottom-left-radius: 15px 255px;
-  border-bottom-right-radius: 225px 15px;
-  border-top-left-radius: 255px 15px;
-  border-top-right-radius: 15px 225px;
+.account-img {
+    height: 50px;
+    width: 50px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #333c57;
+    border-bottom-left-radius: 50px 45px;
+    border-bottom-right-radius: 45px 50px;
+    border-top-left-radius: 45px 50px;
+    border-top-right-radius: 50px 45px;
 }
 
-/* CSS */
+
+/* ---- INPUTS ----*/
+
+input {
+    background-color: #f4f4f4;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-sizing: border-box;
+    border-color: #333c57;
+    color: #333c57;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Neucha, sans-serif;
+    font-size: 1rem;
+    line-height: 23px;
+    outline: none;
+    padding: .75rem;
+    text-decoration: none;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+}
+
 button {
     align-self: center;
     background-color: #f4f4f4;
-  background-position: 0 90%;
-  background-repeat: repeat no-repeat;
-  background-size: 4px 3px;
-  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
-  border-style: solid;
-  border-width: 2px;
-  box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
-  box-sizing: border-box;
-  color: #333c57;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Neucha, sans-serif;
-  font-size: 1rem;
-  line-height: 23px;
-  outline: none;
-  padding: .75rem;
-  text-decoration: none;
-  transition: all 235ms ease-in-out;
-  border-bottom-left-radius: 15px 255px;
-  border-bottom-right-radius: 225px 15px;
-  border-top-left-radius: 255px 15px;
-  border-top-right-radius: 15px 225px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-color: #333c57;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    color: #333c57;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1rem;
+    line-height: 23px;
+    outline: none;
+    padding: .75rem;
+    text-decoration: none;
+    transition: all 235ms ease-in-out;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 button:hover {
-  box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
-  transform: translate3d(0, 2px, 0);
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+    transform: translate3d(0, 2px, 0);
 }
 
 button:focus {
-  box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }
 
 button:disabled {
@@ -187,14 +201,159 @@ button:disabled:hover {
     transition: all 235ms ease-in-out;
     color: #333c57;
     box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
-    background: rgb(178,244,249);
-    background: linear-gradient(0deg, rgba(178,244,249,1) 7%, rgba(213,249,251,1) 57%);
+    background: rgb(178, 244, 249);
+    background: linear-gradient(0deg, rgba(178, 244, 249, 1) 7%, rgba(213, 249, 251, 1) 57%);
 }
 
 .primarybutton:hover {
     box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
     transform: translate3d(0, 2px, 0);
-  }
+}
+
+/* ---- SEGMENTED BUTTON ---- */
+
+.segmented-button {
+    display: flex;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+
+    padding: 5px;
+
+    align-self: center;
+    background-color: #f4f4f4;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-sizing: border-box;
+    color: #333c57;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1rem;
+    line-height: 23px;
+    outline: none;
+    text-decoration: none;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.segmented-button input {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+    /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+    /* added line */
+}
+
+.segmented-button label {
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    flex: 1 1 0px;
+    position: relative;
+    z-index: 2;
+    transition: inherit;
+
+    align-self: center;
+    display: inline-block;
+    padding: .75rem;
+}
+
+.segmented-button input:checked+label {
+    font-weight: 600;
+
+    background-color: #f4f4f4;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+/* --- FILE UPLOAD ---- */
+
+input[type=file] {
+    text-align: center;
+    line-height: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #333c57;
+    background-color: #f4f4f4;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+}
+
+.custom-file-input::before {
+    content: 'Select or Drop';
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+}
+
+/* ---- DROPDOWN ---- */
+
+select {
+
+    background-color: #f4f4f4;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #333c57;
+
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+}
+
+/* ---- TABLE ---- */
 
 .table {
     font-size: xx-large;
@@ -207,25 +366,9 @@ button:disabled:hover {
     padding: 12px 10px;
 }
 
-<<<<<<< Updated upstream
-table .importantrow{
-    background: rgb(255,241,218);
-    background: linear-gradient(180deg, rgba(255,241,218,1) 2%, rgba(250,220,171,1) 17%, rgba(250,191,97,1) 87%, rgba(210,135,18,1) 99%);
-=======
 .table th {
     text-align: left;
     font-size: 0.6em;
-}
-
-.table a {
-    max-height: 48px;
-}
-
-.table tbody tr td:nth-child(2) img {
-    height: auto;
-    max-height: 48px;
-    border-radius: 50%;
-    margin-right: 10px;
 }
 
 .table tbody tr td {
@@ -234,16 +377,10 @@ table .importantrow{
 
 .table tbody tr td a {
     text-decoration: none;
-    color: #333c57;
+    color: #333;
+    -webkit-text-stroke: initial;
 }
 
-.table .importantrow {
-    background: rgb(255, 241, 218);
-    background: linear-gradient(180deg, rgba(255, 241, 218, 1) 2%, rgba(250, 220, 171, 1) 17%, rgba(250, 191, 97, 1) 87%, rgba(210, 135, 18, 1) 99%);
->>>>>>> Stashed changes
-    box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -2px 0px rgb(58 65 111 / 50%);
-    border-radius: 6px;
-}
 
 .table tbody tr:last-child {
     border-top: 1px solid black;
@@ -274,8 +411,17 @@ p.title {
 }
 
 .name-box img {
-    max-height: 100%;
+    object-fit: fill;
     margin-right: 20px !important;
+    height: 50px;
+    width: 50px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #333c57;
+    border-bottom-left-radius: 50px 45px;
+    border-bottom-right-radius: 45px 50px;
+    border-top-left-radius: 45px 50px;
+    border-top-right-radius: 50px 45px;
 }
 
 .name-box div {
@@ -284,163 +430,4 @@ p.title {
     justify-content: center;
     text-align: left;
     width: 100%;
-}
-
-
-/* 
- * SEGMENTED CONTROLS LAYOUT
- */
-
-/*
- * Container
- */
-.segmented-controls {
-    display: flex;
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-    transition: all .3s ease;
-}
-
-/*
-   * Vissualy hidden radiobuttons
-   */
-.segmented-controls input {
-    position: absolute !important;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    clip: rect(1px 1px 1px 1px);
-    /* IE6, IE7 */
-    clip: rect(1px, 1px, 1px, 1px);
-    white-space: nowrap;
-    /* added line */
-}
-
-/* 
-   * Labels need to be the same size
-   */
-.segmented-controls label {
-    grid-row: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    cursor: pointer;
-    flex: 1 1 0px;
-    position: relative;
-    z-index: 2;
-    transition: inherit;
-}
-
-/* 
-   * Adjust z-index of last label since that contains 
-   * the paddle that needs to go beneath all other labels 
-   */
-.segmented-controls label:last-of-type {
-    z-index: 1;
-}
-
-/*
-   * Paddle 
-   */
-.segmented-controls label:last-of-type::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -2;
-    background-color: black;
-    transition: inherit;
-}
-
-/*
-   * Move paddle depending on which option is selected
-   */
-@for $i from 1 through 9 {
-    .segmented-controls input:nth-last-of-type(#{$i + 1}):checked~label:last-of-type::after {
-        transform: translateX($i * -100%);
-    }
-}
-
-
-/*
-   * IOS 13 Theme
-   * Special thanks to https://www.figma.com/community/file/768365747273056340
-   */
-
-body {
-    background: #f1f2f6;
-}
-
-/*
-   * Container
-   */
-.segmented-controls {
-    border-radius: 0.5rem;
-    background: #e2e2e9;
-    height: 2rem;
-    padding: 0.125rem;
-}
-
-/*
-   * Labels 
-   */
-.segmented-controls label {
-    font-size: 0.8125rem;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-weight: 500;
-    line-height: 1;
-}
-
-/*
-   * Dividers
-   */
-.segmented-controls label:not(:first-of-type)::before {
-    content: "";
-    position: absolute;
-    z-index: -3;
-    top: 0.5rem;
-    left: 0;
-    bottom: 0.5rem;
-    width: 1px;
-    background: rgba(0, 0, 0, 0.15);
-    transition: inherit;
-}
-
-
-/*
-   * Selected option 
-   */
-.segmented-controls input:checked+label {
-    font-weight: 600;
-    font-size: 0.875rem;
-}
-
-/*
-   * Hide dividers before and after the selected option
-   */
-.segmented-controls input:checked+label::before,
-.segmented-controls input:checked+label+input+label::before {
-    opacity: 0;
-}
-
-/*
-   * Focus style for keyboard navigation
-   */
-.segmented-controls:focus-within {
-    box-shadow: 0 0 0 .2rem rgba(0, 122, 255, 0.75);
-}
-
-
-/*
-   * Paddle
-   */
-.segmented-controls label:last-of-type::after {
-    background: white;
-    border-radius: 0.4275rem;
-    border: 0.5px solid rgba(0, 0, 0, 0.04);
-    box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.04), 0px 3px 8px rgba(0, 0, 0, 0.12);
 }

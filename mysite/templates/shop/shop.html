@@ -3,31 +3,36 @@
 
 {% load static %}
 {% block template %}
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Shop</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/shop.css' %}">
-        <script src="{% static 'js/shop.js' %}"></script>
-        <script>
-            var CSRF_TOKEN = '{{ csrf_token }}';
-            var USER_COINS = '{{ user.userinfo.coins }}'
-        </script>
-    </head>
-    <body>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/shop.css' %}">
+    <script src="{% static 'js/shop.js' %}"></script>
+    <script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+        var USER_COINS = '{{ user.userinfo.coins }}'
+    </script>
+</head>
+
+<body>
     <div class="page">
+        <h2>Shop</h2>
         <h3 class="coins-title">COINS: {{ user.userinfo.coins }}</h3>
-        <table class="shop-table">
+        <table class="table">
             <thead>
-            <th>Name</th>
-            <th>Price</th>
-            <th>   </th>
+                <th>Name</th>
+                <th>Price</th>
+                <th> </th>
             </thead>
             <tbody id="shop-table">
 
             </tbody>
 
-        </table></div>
-    </body>
-    </html>
+        </table>
+    </div>
+</body>
+
+</html>
 {% endblock %}

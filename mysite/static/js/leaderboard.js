@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const th_score_type = document.getElementById('th-score-type');
     const tableBody = document.getElementById('leaderboard-table');
     const leaderboard_types = ['global', 'friends'];
@@ -58,10 +58,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     const row =
                         createElement('tr', {}, [
                             createElement('td', {}, [
-                                createElement('b', {textContent: user.position})
+                                createElement('b', { textContent: user.position })
                             ]),
-                            createElement('td', {classList: ['name-box']}, [
-                                createElement('img', {src: user.picture}),
+                            createElement('td', { classList: ['name-box'] }, [
+                                createElement('img', { src: user.picture }),
                                 createElement('div', {}, [
                                     createElement('a', {
                                         href: `../accounts/profile/${user.user_username}`,
@@ -69,13 +69,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                     }, [
                                         createElement('b')
                                     ]),
-                                    createElement('a', {href: `../accounts/profile/${user.user_username}`}, [
-                                        createElement('p', {textContent: user.title_name, classList: ['title']})
+                                    createElement('a', { href: `../accounts/profile/${user.user_username}` }, [
+                                        createElement('p', { textContent: user.title_name, classList: ['title'] })
                                     ])
                                 ])
                             ]),
                             createElement('td', {}, [
-                                createElement('b', {textContent: user.value})
+                                createElement('b', { textContent: user.value })
                             ])
                         ]);
 
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('leaderboard_type', 'global');
     }
 
-    if (!(localStorage.getItem('score_type'))){
+    if (!(localStorage.getItem('score_type'))) {
         localStorage.setItem('score_type', 'coins');
     }
     getData('global', 'coins');
@@ -98,10 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * Event listener instead of direct on press functions for the buttons to allow the other
      * functions to more easily set the button types
      */
-    document.addEventListener('click', function(event) {
-        if (event.target.nodeName != 'BUTTON'){
-            return
-        }
+    document.addEventListener('click', function (event) {
 
         var value = event.srcElement.value;
 
