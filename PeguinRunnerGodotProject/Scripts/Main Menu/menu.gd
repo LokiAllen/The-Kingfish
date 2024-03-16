@@ -15,6 +15,7 @@ Menu script for the Main Menu Scene
 
 # Reference to the world scene
 const WORLD = preload("res://Scenes/world.tscn")
+const TUTORIAL = preload("res://Scenes/tutorial.tscn")
 
 func _ready():
 	titleAnimaiton.play("title")
@@ -37,5 +38,10 @@ func _process(delta):
 
 
 # When the "Start Game" button is pressed, 
-func _on_button_pressed():
+func _on_startButton_pressed():
 	get_tree().change_scene_to_packed(WORLD)
+
+
+#When the "Play Tutorial" button is pressed
+func _on_tutorialButton_pressed():
+	get_tree().change_scene_to_packed(TUTORIAL)

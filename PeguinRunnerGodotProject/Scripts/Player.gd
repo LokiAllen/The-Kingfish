@@ -75,10 +75,6 @@ func _physics_process(delta):
 		# Increment the score
 		score += 1
 		
-		
-		print(is_on_ceiling())
-		
-		
 		# Apply the gravity if the player is not on floor or ceiling
 		if not (is_on_floor() or is_on_ceiling()):
 			slidingParticles.emitting = false
@@ -208,6 +204,6 @@ func kill():
 		musicPlayer.stop()
 		
 		# Set the highscore and push the data to the server
-		if OS.has_feature('web'):
+		if OS.has_feature('web') and !worldScroller.isTutorial:
 			GameManager.setHighScore(score)
 			GameManager.pushSessionData()

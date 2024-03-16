@@ -186,4 +186,5 @@ autoplay = true
 [node name="WorldScroller" parent="." instance=ExtResource("5_4htyh")]
 position = Vector2(350, 684.32)
 
-[connection signal="pressed" from="CanvasLayer/Main Menu/VBoxContainer/StartButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main Menu/VBoxContainer/StartButton" to="." method="_on_startButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main Menu/VBoxContainer/TutorialButton" to="." method="_on_tutorialButton_pressed"]
