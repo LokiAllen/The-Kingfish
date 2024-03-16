@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'game',
     'api',
+    'shop',
 ]
 
 MIDDLEWARE = [

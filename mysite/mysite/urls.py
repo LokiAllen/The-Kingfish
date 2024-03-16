@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import include, path
 from mysite import settings, views
 from accounts import views as account_views
-from game import views as game_views
+from shop import views as shop_views
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -33,6 +33,7 @@ urlpatterns = [
     path('', views.home_view, name='home'),
     path('home/', views.home_view, name='home_view'),
     path('leaderboard/', account_views.LeaderboardView.as_view(), name='leaderboard'),
+    path('shop/', shop_views.ShopView.as_view(), name='shop')
 ]
 
 if settings.DEBUG:

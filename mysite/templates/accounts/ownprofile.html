@@ -9,6 +9,7 @@
         <title>Your Profile</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'css/edit_profile.css' %}">
+        <!--<link rel="stylesheet" type="text/css" href="{% static 'css/background_styles.css' %}"> -->
     </head>
     <body>
     <h1>Your Profile!</h1>
@@ -29,6 +30,14 @@
             {{ form.last_name }}</div>
     </div>
 
+        <div class="subform">
+            <div class="column">{{ form.title.label_tag }}
+                {{ form.title }}</div>
+
+            <div class="column">{{ form.background.label_tag }}
+                {{ form.background }}</div>
+        </div>
+
         <label for="id_profile_picture">Profile Picture</label>
         <div class="sideDiv" id="previewDiv">
             <input type="file" name="profile_picture" id="id_profile_picture" class="dropzone custom-file-input">
@@ -40,10 +49,23 @@
         {{ form.email.errors }}
     </form>
 
-
     <script>
-        // Changes the picture anytime a file is 'dragged' or uploaded
+        bg_filenames = {
+            'Green': 'green.jpg',
+            'Forest': 'forest.jpg',
+            'Cosmic': 'cosmic.jpg',
+            'First Penguin': 'penguin_one.jpg',
+            'Second Penguin': 'penguin_two.jpg',
+        }
+
         $('document').ready(function () {
+            // Sets the background if the user has one
+            {% if user.userinfo.background.picture %}
+                let page = document.getElementsByClassName('page')[0];
+                page.style.backgroundImage = `url("{% static 'media/profile_backgrounds/' %}{{ user.userinfo.background.picture }}")`;
+            {% endif %}
+
+            // Changes the picture anytime a file is dragged or uploaded
             $("#id_profile_picture").change(function () {
                 if (this.files && this.files[0]) {
                     var reader = new FileReader();
@@ -53,6 +75,20 @@
                     reader.readAsDataURL(this.files[0]);
                 }
             });
+
+            // Changes the background if a new one is selected
+            $("#id_background").change(function () {
+                var selected = $(this).children("option:selected").text();
+                let page = document.getElementsByClassName('page')[0];
+
+                if (selected == 'Default') {
+                    page.removeAttribute('style');
+                    return
+                }
+
+                page.style.backgroundImage = ` url("{% static 'media/profile_backgrounds/' %}${bg_filenames[selected]}")`;
+                page.classList = `page ${selected}-background`;
+            })
         });
     </script>
     </body>
