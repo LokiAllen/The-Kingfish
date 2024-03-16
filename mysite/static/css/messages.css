@@ -8,41 +8,7 @@ body, html {
 #message-container {
     display: flex;
     flex-direction: column;
-    height: 60vh;
-}
-
-#messages {
-    padding: 20px;
-    overflow-y: auto;
-}
-
-#message-form {
-    display: flex;
-    padding: 20px;
-}
-
-#message-input {
-    width: 85%;
-    padding: 10px;
-}
-
-button {
-    height: 100%;
-    width: 15%;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.sender {
-    text-align: right;
-    padding-left: 60%;
-    padding-top: 3%;
-}
-
-.receiver {
-    text-align: left;
-    max-width: 40%;
-    padding-top: 3%;
+    height: 75vh;
 }
 
 div#userinfo {
@@ -59,4 +25,91 @@ div#userinfo h1 {
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+#messages {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+#messages div {
+    max-width: 60%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+.grouped-messages div {
+    max-width: 100% !important;
+}
+
+
+.receiver {
+    background-color: #aeb9cc;
+    align-self: flex-start;
+    text-align: left;
+    margin-bottom: 0 !important;
+}
+
+.sender {
+    background-color: #218aff;
+    align-self: flex-end;
+    text-align: left;
+    padding-right: 18px !important;
+    margin-bottom: 0 !important;
+}
+
+.grouped-messages .receiver {
+    background-color: #aeb9cc;
+    align-self: flex-start;
+    text-align: left;
+}
+
+.grouped-messages .receiver:not(:first-child),
+.grouped-messages .sender:not(:first-child) {
+    margin-top: 1% !important;
+}
+
+.grouped-messages .receiver:last-child,
+.grouped-messages .sender:last-child {
+    margin-bottom: 0 !important;
+}
+
+.grouped-messages .sender {
+    background-color: #218aff;
+    align-self: flex-end;
+    text-align: left;
+}
+
+#group-sender {
+    margin-left: 40% !important;
+}
+
+
+.grouped-messages {
+    display: inline-flex;
+    flex-shrink: 0;
+    background-color: inherit;
+    flex-direction: column;
+}
+
+#messages p {
+    margin: 0;
+    padding: 5px;
+    font-size: 0.8rem;
+    color: #666;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.sender-time {
+    text-align: right;
+}
+
+.receiver-time {
+    text-align: left;
 }

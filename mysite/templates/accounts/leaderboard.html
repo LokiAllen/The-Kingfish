@@ -7,43 +7,35 @@
     <html lang="en">
     <head>
         <link rel="stylesheet" type="text/css" href="{% static 'css/leaderboard.css' %}">
+        <script src="{% static 'js/leaderboard.js' %}"></script>
         <title>Leaderboard</title>
+        <script>
+            var CSRF_TOKEN = '{{ csrf_token }}';
+            const username = '{{ user.username }}';
+        </script>
     </head>
     <body>
 
     <h2 style="margin-bottom: 3%;">Leaderboard</h2>
     <div class="leaderboardtype">
-        <button onclick="location.href='{% url 'leaderboard' %}?type=global'" type="button">Global</button>
-        <button onclick="location.href='{% url 'leaderboard' %}?type=friends'" type="button">Friends</button>
-        <button style="margin-left: 5%;" onclick="location.href='{% url 'leaderboard' %}?type={{ request.GET.type }}&score_type=cumulativeScore'" type="button">Cumulative Score</button>
-        <button onclick="location.href='{% url 'leaderboard' %}?type={{ request.GET.type }}&score_type=highscore'" type="button">High Score</button>
-        <button onclick="location.href='{% url 'leaderboard' %}?type={{ request.GET.type }}&score_type=coins'" type="button">Coins</button>
+        <button value="global">Global</button>
+        <button value="friends">Friends</button>
+        <button value="cumulativeScore" style="margin-left: 5%;">Cumulative Score</button>
+        <button value="highscore">High Score</button>
+        <button value="coins">Coins</button>
     </div>
 
     <table class="table">
         <thead>
         <tr>
             <th></th>
-            <th>Position</th>
             <th>Username</th>
-            {% if request.GET.score_type == "cumulativeScore" %}
-                <th>Cumulative Score</th>
-            {% elif request.GET.score_type == "highscore" %}
-                <th>High Score</th>
-            {% else %}
-                <th>Coins</th>
-            {% endif %}
+            <th id="th-score-type">Cumulative Score</th>
+            <th>   </th>
         </tr>
         </thead>
         <tbody id="leaderboard-table">
-        {% for user in top_users %}
-            <tr>
-                <td><a href="{% url 'accounts:profile' username=user.username %}"><img src="{{ user.profile_picture }}"></a></td>
-                <td><a href="{% url 'accounts:profile' username=user.username %}"><b>{{ user.position }}</b></a></td>
-                <td><a href="{% url 'accounts:profile' username=user.username %}"><b>{{ user.username }}</b></a></td>
-                <td><a href="{% url 'accounts:profile' username=user.username %}"><b>{{ user.value }}</b></a></td>
-            </tr>
-        {% endfor %}
+
         </tbody>
     </table>
     </body>
