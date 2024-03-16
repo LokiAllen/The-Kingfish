@@ -1,24 +1,125 @@
-// Gets the leaderboard data and writes it to the table relative to how many users to show
-function get_leaderboard_data() {
-    var leaderboard_table = $('#leaderboard-table');
-    var num_users = $('#dataInput').val();
+document.addEventListener('DOMContentLoaded', function() {
+    const th_score_type = document.getElementById('th-score-type');
+    const tableBody = document.getElementById('leaderboard-table');
+    const leaderboard_types = ['global', 'friends'];
+    const score_types = ['coins', 'cumulativeScore', 'highscore'];
 
-    $.ajax({
-        url: '/leaderboard/',
-        type: 'GET',
-        data: {'num_users': num_users, 'page_loaded': true},
-        success: function(data) {
-            leaderboard_table.html('');
-            data.top_n_users.forEach(function(user, index, array) {
-                if (index === array.length - 1) {
-                    leaderboard_table.append('<tr class="importantrow"><td><b>' + user.position + '</b></td><td><b>' + user.username + '</b></td><td><b>' + user.coins + '</tr>');
-                } else {
-                    leaderboard_table.append('<tr><td>' + user.position + '</td><td>' + user.username + '</td><td>' + user.coins + '</td></tr>');
+    /**
+     * To reduce repetitive code, creates a given element with corresponding
+     * properties and child elements assigned to it
+     *
+     * @author Jasper
+     * @param type          The element type to create
+     * @param properties    The properties for the element, including a List of classes
+     * @param children      The children elements to nest inside the created element
+     * @returns             The created element alongside with its nested child elements
+     * */
+    function createElement(type, properties = {}, children = []) {
+        const element = document.createElement(type);
+        Object.entries(properties).forEach(([key, value]) => {
+            if (key === 'textContent') {
+                element.textContent = value;
+            } else if (key === 'classList') {
+                element.classList.add(...value);
+            } else {
+                element[key] = value;
+            }
+        });
+        children.forEach(child => {
+            if (typeof child === 'string') {
+                element.appendChild(document.createTextNode(child));
+            } else {
+                element.appendChild(child);
+            }
+        });
+        return element;
+    }
+
+    /**
+     * Gets the leaderboard data relative to the parameters, creates the required elements
+     * and sets them inside the leaderboard table
+     *
+     * @author Jasper
+     * @param leaderboard_type  The leaderboard type to show (global/friends)
+     * @param score_type        The score type to show (I.E highscore)
+     */
+    function getData(leaderboard_type, score_type) {
+        fetch(`/api/data/leaderboard/${username}/${leaderboard_type}/${score_type}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (score_type == 'cumulativeScore') {
+                    score_type = 'Cumulative Score';
                 }
+
+                th_score_type.textContent = score_type[0].toUpperCase() + score_type.slice(1);
+                tableBody.innerHTML = '';
+
+                data.forEach(user => {
+                    const row =
+                        createElement('tr', {}, [
+                            createElement('td', {}, [
+                                createElement('b', {textContent: user.position})
+                            ]),
+                            createElement('td', {classList: ['name-box']}, [
+                                createElement('img', {src: user.picture}),
+                                createElement('div', {}, [
+                                    createElement('a', {
+                                        href: `../accounts/profile/${user.user_username}`,
+                                        textContent: user.user_username
+                                    }, [
+                                        createElement('b')
+                                    ]),
+                                    createElement('a', {href: `../accounts/profile/${user.user_username}`}, [
+                                        createElement('p', {textContent: user.title_name, classList: ['title']})
+                                    ])
+                                ])
+                            ]),
+                            createElement('td', {}, [
+                                createElement('b', {textContent: user.value})
+                            ])
+                        ]);
+
+                    tableBody.appendChild(row);
+                });
+
             });
-        },
-        error: function(error) {
-            console.error(error);
+    }
+
+    if (!(localStorage.getItem('leaderboard_type'))) {
+        localStorage.setItem('leaderboard_type', 'global');
+    }
+
+    if (!(localStorage.getItem('score_type'))){
+        localStorage.setItem('score_type', 'coins');
+    }
+    getData('global', 'coins');
+
+    /**
+     * Event listener instead of direct on press functions for the buttons to allow the other
+     * functions to more easily set the button types
+     */
+    document.addEventListener('click', function(event) {
+        if (event.target.nodeName != 'BUTTON'){
+            return
         }
+
+        var value = event.srcElement.value;
+
+        // Checks whether it is setting the score type or leaderboard type value
+        if (score_types.includes(value)) {
+            var leaderboard_type = localStorage.getItem('leaderboard_type');
+            var score_type = value;
+            localStorage.setItem('score_type', value);
+
+        } else if (leaderboard_types.includes(value)) {
+            var score_type = localStorage.getItem('score_type');
+            var leaderboard_type = value;
+            localStorage.setItem('leaderboard_type', value);
+
+        } else {
+            return
+        }
+
+        getData(leaderboard_type, score_type);
     });
-}
+});

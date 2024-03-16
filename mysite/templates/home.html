@@ -12,16 +12,15 @@
 <body>
 <h1>Penguin Game</h1>
 
-{% if logged_in %}
-    {% if super %}
+{% if user.is_authenticated %}
+    {% if user.is_superuser %}
         <h1>Admin</h1>
-        <h2>Firstname: {{ user.first_name }} <br>Lastname: {{ user.last_name }} <br>Username: {{ user.username }} <br>Email: {{ user.email }}</h2>
         <button onclick="location.href='{% url 'siteadmin:manageqr' %}'" type="button">Manage QR Codes</button>
     {% else %}
-        <h2> Welcome back {{ user.username }}! </h2>
+        <h2> Welcome back {{ user.username }}!</h2>
     {% endif %}
 
-        <button onclick="location.href='{% url 'accounts:change_email' %}'" type="button" class="primarybutton">PLAY</button>
+        <button onclick="location.href='{% url 'game' %}'" type="button" class="primarybutton">PLAY</button>
 {% else %}
     <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
     <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button" class="primarybutton">Login</button>

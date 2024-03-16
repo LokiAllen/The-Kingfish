@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c42grwhhcicom"]
+
+[ext_resource type="Texture2D" uid="uid://d2pxy6jnchp0s" path="res://Images/backgroundTest.png" id="1_eiios"]
+
+[node name="RootPosition" type="Node2D"]
+
+[node name="Background1" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -200)
+texture = ExtResource("1_eiios")

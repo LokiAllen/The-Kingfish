@@ -12,7 +12,11 @@ from io import BytesIO
 from qrcodes.models import *
 
 
-# Superuser required for all 'admin' operations, so this checks that
+"""
+ * A custom view class that ensures the user is a super user for access
+ * 
+ * @author Jasper
+"""
 class SuperUserRequired(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_superuser:
@@ -20,16 +24,18 @@ class SuperUserRequired(View):
 
         return redirect('/home/')
 
-# Handles everything related to managing the QR code
+"""
+ * A class based view to handle everything related to managing the QR codes
+ * 
+ * @author Jasper
+"""
 class QrCodeManager(SuperUserRequired, View):
     # GET requests are for generating and refreshing the codes (and initial page load)
     def get(self, request, *args, **kwargs):
-        # Gets the method and code (if it exists)
         method = request.GET.get('method', None)
         if kwargs:
             self.code = kwargs['code']
 
-        # If the page isn't loaded it loads it
         if not method:
             return render(request, 'admin/manage_qr.html')
 
@@ -39,27 +45,26 @@ class QrCodeManager(SuperUserRequired, View):
         if method == 'refresh':
             return self.get_all_codes()
 
-    # POST requests are for adding or deleting codes from the db
     def post(self, request, *args, **kwargs):
         method = request.POST.get('method', None)
         if kwargs:
             self.code = kwargs['code']
 
-        if method == 'add':
-            self.add_code()
-            return self.get_all_codes()
+        match method:
+            case 'add':
+                self.add_code()
+            case 'delete':
+                self.delete_code()
 
-        if method == 'delete':
-            self.delete_code()
-            return self.get_all_codes()
+        return self.get_all_codes()
 
-    # Gets all codes and formats it for the js in the page to be able to render it
+    # Gets all current QR codes and returns a JsonResponse for the javascript to load it onto the page
     def get_all_codes(self):
         all_codes = QrCodeModel.objects.all()
         codes_list = [{'id': code.id, 'expired': code.expired, 'longitude': code.longitude, 'latitude': code.latitude} for code in all_codes]
         return JsonResponse({'values': codes_list})
 
-    # Generates a QR code based on the code provided (currently generates a link to /qrcodes/{code})
+    # Generates a QR code based on the code provided and returns a JsonResponse for the javascript to load it onto the page
     def generate_qrcode(self):
         qr = qrcode.QRCode()
 

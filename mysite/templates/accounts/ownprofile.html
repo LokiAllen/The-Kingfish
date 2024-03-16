@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+{% extends "../base.html" %}
+{% load static %}
+{% block templatepage %}
+
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Your Profile</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/edit_profile.css' %}">
+        <!--<link rel="stylesheet" type="text/css" href="{% static 'css/background_styles.css' %}"> -->
+    </head>
+    <body>
+    <h1>Your Profile!</h1>
+    <form method="POST" action="" enctype="multipart/form-data" class="dropzone" id="RegisterForm">
+        {% csrf_token %}
+        <div class="subform">
+            <div class="column">{{ form.email.label_tag }}
+                {{ form.email }}</div>
+
+            <div class="column">{{ form.username.label_tag }}
+                {{ form.username }}</div>
+        </div><div class="subform">
+
+        <div class="column">{{ form.first_name.label_tag }}
+            {{ form.first_name }}</div>
+
+        <div class="column">{{ form.last_name.label_tag }}
+            {{ form.last_name }}</div>
+    </div>
+
+        <div class="subform">
+            <div class="column">{{ form.title.label_tag }}
+                {{ form.title }}</div>
+
+            <div class="column">{{ form.background.label_tag }}
+                {{ form.background }}</div>
+        </div>
+
+        <label for="id_profile_picture">Profile Picture</label>
+        <div class="sideDiv" id="previewDiv">
+            <input type="file" name="profile_picture" id="id_profile_picture" class="dropzone custom-file-input">
+            <img src="{{ user.userinfo.picture.url }}" id="pfp" style="display: block;">
+        </div>
+
+        <input type="submit" value="Change" class="primarybutton">
+        {{ form.username.errors }}
+        {{ form.email.errors }}
+    </form>
+
+    <script>
+        bg_filenames = {
+            'Green': 'green.jpg',
+            'Forest': 'forest.jpg',
+            'Cosmic': 'cosmic.jpg',
+            'First Penguin': 'penguin_one.jpg',
+            'Second Penguin': 'penguin_two.jpg',
+        }
+
+        $('document').ready(function () {
+            // Sets the background if the user has one
+            {% if user.userinfo.background.picture %}
+                let page = document.getElementsByClassName('page')[0];
+                page.style.backgroundImage = `url("{% static 'media/profile_backgrounds/' %}{{ user.userinfo.background.picture }}")`;
+            {% endif %}
+
+            // Changes the picture anytime a file is dragged or uploaded
+            $("#id_profile_picture").change(function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('.sideDiv #pfp').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+
+            // Changes the background if a new one is selected
+            $("#id_background").change(function () {
+                var selected = $(this).children("option:selected").text();
+                let page = document.getElementsByClassName('page')[0];
+
+                if (selected == 'Default') {
+                    page.removeAttribute('style');
+                    return
+                }
+
+                page.style.backgroundImage = ` url("{% static 'media/profile_backgrounds/' %}${bg_filenames[selected]}")`;
+                page.classList = `page ${selected}-background`;
+            })
+        });
+    </script>
+    </body>
+    </html>
+{% endblock %}

@@ -2,7 +2,11 @@ from django.conf.global_settings import AUTH_USER_MODEL
 from django.db import models
 
 
-# QR Code model
+"""
+ * Model for information regarding the QR codes
+ *
+ * @author Jasper
+"""
 class QrCodeModel(models.Model):
     id = models.CharField(primary_key=True, max_length=30)
     latitude = models.IntegerField(default=0)
@@ -15,7 +19,11 @@ class QrCodeModel(models.Model):
     class Meta:
         db_table = 'qrcodes'
 
-# Used to check whether a user has 'scanned' or 'redeemed' that QR code within the past 'n' hours
+"""
+ * Model for information regarding the times QR codes were scanned by each user
+ *
+ * @author Jasper
+"""
 class QrCodeVisit(models.Model):
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     qrcode = models.ForeignKey(QrCodeModel, on_delete=models.CASCADE)

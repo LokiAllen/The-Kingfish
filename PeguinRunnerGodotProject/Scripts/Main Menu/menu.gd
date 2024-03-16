@@ -1,16 +1,15 @@
 extends Control
+'''
+Menu script for the Main Menu Scene 
 
+@author Daniel Hibbin
+'''
+
+
+# Reference to the world scene
 const WORLD = preload("res://Scenes/world.tscn")
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
+# When the "Start Game" button is pressed, 
 func _on_button_pressed():
 	get_tree().change_scene_to_packed(WORLD)

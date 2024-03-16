@@ -1,0 +1,115 @@
+/* style.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+#message-container {
+    display: flex;
+    flex-direction: column;
+    height: 75vh;
+}
+
+div#userinfo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+div#userinfo h1 {
+    margin: 0;
+    padding-left: 3%;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+#messages {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+#messages div {
+    max-width: 60%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+.grouped-messages div {
+    max-width: 100% !important;
+}
+
+
+.receiver {
+    background-color: #aeb9cc;
+    align-self: flex-start;
+    text-align: left;
+    margin-bottom: 0 !important;
+}
+
+.sender {
+    background-color: #218aff;
+    align-self: flex-end;
+    text-align: left;
+    padding-right: 18px !important;
+    margin-bottom: 0 !important;
+}
+
+.grouped-messages .receiver {
+    background-color: #aeb9cc;
+    align-self: flex-start;
+    text-align: left;
+}
+
+.grouped-messages .receiver:not(:first-child),
+.grouped-messages .sender:not(:first-child) {
+    margin-top: 1% !important;
+}
+
+.grouped-messages .receiver:last-child,
+.grouped-messages .sender:last-child {
+    margin-bottom: 0 !important;
+}
+
+.grouped-messages .sender {
+    background-color: #218aff;
+    align-self: flex-end;
+    text-align: left;
+}
+
+#group-sender {
+    margin-left: 40% !important;
+}
+
+
+.grouped-messages {
+    display: inline-flex;
+    flex-shrink: 0;
+    background-color: inherit;
+    flex-direction: column;
+}
+
+#messages p {
+    margin: 0;
+    padding: 5px;
+    font-size: 0.8rem;
+    color: #666;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.sender-time {
+    text-align: right;
+}
+
+.receiver-time {
+    text-align: left;
+}

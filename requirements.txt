@@ -1,0 +1,10 @@
+Django==5.0.1
+asgiref>=3.7.0,<4
+typing-extensions>=4
+sqlparse>=0.3.1
+tzdata
+qrcode==7.4.2
+django-cors-headers==4.3.1
+django-bootstrap4==24.1
+shapely==2.0.2
+pillow==10.2.0
