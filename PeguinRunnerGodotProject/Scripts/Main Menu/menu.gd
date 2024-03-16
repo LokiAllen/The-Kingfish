@@ -10,10 +10,15 @@ Menu script for the Main Menu Scene
 @onready var startButton = $"CanvasLayer/Main Menu/VBoxContainer/StartButton"
 
 @onready var audioStreamPlayer = $AudioStreamPlayer
+@onready var titleAnimaiton = $"CanvasLayer/Main Menu/VBoxContainer2/Title/AnimationPlayer"
 
 
 # Reference to the world scene
 const WORLD = preload("res://Scenes/world.tscn")
+
+func _ready():
+	titleAnimaiton.play("title")
+
 
 func _process(delta):
 	if OS.has_feature('web'):

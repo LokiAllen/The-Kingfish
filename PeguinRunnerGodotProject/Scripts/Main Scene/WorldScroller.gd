@@ -29,11 +29,6 @@ const jumpTransitionChunks : Array[Resource] = [
 	preload("res://Scenes/Chunks/TransitionChunks/testStartJump.tscn")
 ]
 
-
-# Reference to the background image
-const backgoundImage : Resource = preload("res://Scenes/Backgrounds/background1.tscn")
-
-
 # Reference to chunks that are safe to spawn the player in
 const startingChunk : Resource = preload("res://Scenes/Chunks/testChunk2.tscn")
 
@@ -60,23 +55,26 @@ var dead : bool = false
 # References to parent of background objects and foreground objects
 @onready var background = $Background
 @onready var foreground = $Foreground
+@onready var backgroundAnimation = $Background2/AnimationPlayer
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Create new chunks on game start
-	for i in range(0,4):
+	rootChunkPosition.x = -chunkWidth * 2
+	for i in range(0,5):
 		var newChunk = addChunk(startingChunk)
 		newChunk.position = rootChunkPosition
 		rootChunkPosition.x += chunkWidth
 	
+	backgroundAnimation.play("scroll")
 	
 	# Create new background images on game start
-	rootChunkPosition.x = 0
-	for i in range(0,4):
-		var newBackground = addBackground(backgoundImage)
-		newBackground.position = rootChunkPosition
-		rootChunkPosition.x += chunkWidth
+	#rootChunkPosition.x = -chunkWidth * 2
+	#for i in range(0,10):
+	#	var newBackground = addBackground(backgoundImage)
+	#	newBackground.position = rootChunkPosition
+	#	rootChunkPosition.x += chunkWidth
 
 
 # Adds a chunk to the foreground and list of chunks
@@ -103,15 +101,15 @@ func _physics_process(delta):
 	# If the player isn't dead, move background and foreground children
 	if !dead:
 		# Backgrounds move at half the speed of chunks to create parallax effect
-		for backdrop in background.get_children():
-			backdrop.position.x -= (speed / 2) * delta 
+		#for backdrop in background.get_children():
+		#	backdrop.position.x -= (speed / 2) * delta 
 		
 		for chunk in currentChunks:
 			chunk.position.x -= speed * delta
 	
 	
 	# If the oldest chunk is off screen by more than the width of a chunk
-	if rootChunkPosition.x < -chunkWidth:
+	if rootChunkPosition.x < -chunkWidth * 2:
 		# Remove the oldest chunk and adjust the rootChunkPosition
 		foreground.remove_child(currentChunks[0])
 		currentChunks = currentChunks.slice(1, len(currentChunks))
@@ -141,11 +139,12 @@ func _physics_process(delta):
 	
 	
 	# If the oldest background image is going offscreen
-	if background.get_children()[0].position.x < -chunkWidth:
-		# Remove that image from the scene and add a new one
-		background.remove_child(background.get_children()[0])
-		var newBackground = addBackground(backgoundImage)
-		newBackground.position.x = background.get_children()[0].position.x + chunkWidth
+	#if background.get_children()[0].position.x < -chunkWidth * 2:
+	#	# Remove that image from the scene and add a new one
+	#	background.remove_child(background.get_children()[0])
+	#	for i in range(0,5):
+	#		var newBackground = addBackground(backgoundImage)
+	#		newBackground.position.x = background.get_children()[-1].position.x + chunkWidth
 
 
 # Returns true if it is time to transition to a new movement state
