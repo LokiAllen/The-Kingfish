@@ -11,7 +11,6 @@ body {
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    overflow: hidden;
     text-align: center;
     margin: auto;
 }
@@ -172,6 +171,18 @@ button:focus {
   box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }
 
+button:disabled {
+    color: #333c57;
+    background-color: #c0c0c0;
+    box-shadow: none;
+}
+
+button:disabled:hover {
+    box-shadow: none;
+    transform: none;
+    cursor: default;
+}
+
 .primarybutton {
     transition: all 235ms ease-in-out;
     color: #333c57;
@@ -185,25 +196,251 @@ button:focus {
     transform: translate3d(0, 2px, 0);
   }
 
-table {
-    background-color: wheat;
-    color: white;
-    border-radius: 6px;
+.table {
     font-size: xx-large;
-    -webkit-text-stroke: 1px #40270e;
-    text-shadow: 0 2px 0px #40270e;
     border-collapse: collapse;
     margin: auto;
 }
 
-table th,
-table td {
-    padding: 12px 15px;
+.table th,
+.table td {
+    padding: 12px 10px;
 }
 
+<<<<<<< Updated upstream
 table .importantrow{
     background: rgb(255,241,218);
     background: linear-gradient(180deg, rgba(255,241,218,1) 2%, rgba(250,220,171,1) 17%, rgba(250,191,97,1) 87%, rgba(210,135,18,1) 99%);
+=======
+.table th {
+    text-align: left;
+    font-size: 0.6em;
+}
+
+.table a {
+    max-height: 48px;
+}
+
+.table tbody tr td:nth-child(2) img {
+    height: auto;
+    max-height: 48px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.table tbody tr td {
+    padding: 10px;
+}
+
+.table tbody tr td a {
+    text-decoration: none;
+    color: #333c57;
+}
+
+.table .importantrow {
+    background: rgb(255, 241, 218);
+    background: linear-gradient(180deg, rgba(255, 241, 218, 1) 2%, rgba(250, 220, 171, 1) 17%, rgba(250, 191, 97, 1) 87%, rgba(210, 135, 18, 1) 99%);
+>>>>>>> Stashed changes
     box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -2px 0px rgb(58 65 111 / 50%);
     border-radius: 6px;
+}
+
+.table tbody tr:last-child {
+    border-top: 1px solid black;
+}
+
+.leaderboardtype {
+    margin-bottom: 3%;
+}
+
+p.title {
+    margin: 0;
+    font-size: 0.36em;
+    text-shadow: none;
+    -webkit-text-stroke: initial;
+    color: black !important;
+    border-radius: 10px;
+    width: 100%;
+    text-align: left !important;
+}
+
+.name-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 48px;
+    max-height: 48px;
+    overflow: hidden;
+}
+
+.name-box img {
+    max-height: 100%;
+    margin-right: 20px !important;
+}
+
+.name-box div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    width: 100%;
+}
+
+
+/* 
+ * SEGMENTED CONTROLS LAYOUT
+ */
+
+/*
+ * Container
+ */
+.segmented-controls {
+    display: flex;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    transition: all .3s ease;
+}
+
+/*
+   * Vissualy hidden radiobuttons
+   */
+.segmented-controls input {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+    /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+    /* added line */
+}
+
+/* 
+   * Labels need to be the same size
+   */
+.segmented-controls label {
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    flex: 1 1 0px;
+    position: relative;
+    z-index: 2;
+    transition: inherit;
+}
+
+/* 
+   * Adjust z-index of last label since that contains 
+   * the paddle that needs to go beneath all other labels 
+   */
+.segmented-controls label:last-of-type {
+    z-index: 1;
+}
+
+/*
+   * Paddle 
+   */
+.segmented-controls label:last-of-type::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -2;
+    background-color: black;
+    transition: inherit;
+}
+
+/*
+   * Move paddle depending on which option is selected
+   */
+@for $i from 1 through 9 {
+    .segmented-controls input:nth-last-of-type(#{$i + 1}):checked~label:last-of-type::after {
+        transform: translateX($i * -100%);
+    }
+}
+
+
+/*
+   * IOS 13 Theme
+   * Special thanks to https://www.figma.com/community/file/768365747273056340
+   */
+
+body {
+    background: #f1f2f6;
+}
+
+/*
+   * Container
+   */
+.segmented-controls {
+    border-radius: 0.5rem;
+    background: #e2e2e9;
+    height: 2rem;
+    padding: 0.125rem;
+}
+
+/*
+   * Labels 
+   */
+.segmented-controls label {
+    font-size: 0.8125rem;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 500;
+    line-height: 1;
+}
+
+/*
+   * Dividers
+   */
+.segmented-controls label:not(:first-of-type)::before {
+    content: "";
+    position: absolute;
+    z-index: -3;
+    top: 0.5rem;
+    left: 0;
+    bottom: 0.5rem;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.15);
+    transition: inherit;
+}
+
+
+/*
+   * Selected option 
+   */
+.segmented-controls input:checked+label {
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+/*
+   * Hide dividers before and after the selected option
+   */
+.segmented-controls input:checked+label::before,
+.segmented-controls input:checked+label+input+label::before {
+    opacity: 0;
+}
+
+/*
+   * Focus style for keyboard navigation
+   */
+.segmented-controls:focus-within {
+    box-shadow: 0 0 0 .2rem rgba(0, 122, 255, 0.75);
+}
+
+
+/*
+   * Paddle
+   */
+.segmented-controls label:last-of-type::after {
+    background: white;
+    border-radius: 0.4275rem;
+    border: 0.5px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.04), 0px 3px 8px rgba(0, 0, 0, 0.12);
 }

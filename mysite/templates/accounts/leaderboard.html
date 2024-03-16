@@ -5,6 +5,7 @@
 
 {% block templatepage %}
 <html lang="en">
+<<<<<<< Updated upstream
 <head>
     <title>Leaderboard</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -17,18 +18,65 @@
     <button onclick="get_leaderboard_data()">Get the leaderboard</button>
     -->
     <h2>Leaderboard</h2>
+=======
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/leaderboard.css' %}">
+    <script src="{% static 'js/leaderboard.js' %}"></script>
+    <title>Leaderboard</title>
+    <script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+        const username = '{{ user.username }}';
+    </script>
+</head>
+
+<body>
+
+    <h2 style="margin-bottom: 3%;">Leaderboard</h2>
+    <div class="leaderboardtype">
+        <button value="global">Global</button>
+        <button value="friends">Friends</button>
+        <button value="cumulativeScore">Cumulative Score</button>
+        <button value="highscore">High Score</button>
+        <button value="coins">Coins</button>
+    </div>
+>>>>>>> Stashed changes
+
+    <div class="leaderboardtype">
+        <div class="segmented-controls">
+            <input id="three-1" name="three" type="radio" value="global" checked>
+            <label for="three-1">The Good</label>
+            <input id="three-2" name="three" type="radio">
+            <label for="three-2">The Bad</label>
+            <input id="three-3" name="three" type="radio">
+            <label for="three-3">The Ugly</label>
+        </div>
+    </div>
 
     <table class="table">
         <thead>
             <tr>
+<<<<<<< Updated upstream
                 <th>Position</th>
                 <th>Username</th>
                 <th>Coins</th>
+=======
+                <th></th>
+                <th>Username</th>
+                <th id="th-score-type">Cumulative Score</th>
+                <th> </th>
+>>>>>>> Stashed changes
             </tr>
         </thead>
         <tbody id="leaderboard-table">
         </tbody>
     </table>
 </body>
+<<<<<<< Updated upstream
 </html>
 {% endblock %}
+=======
+
+</html>
+{% endblock %}
+>>>>>>> Stashed changes
