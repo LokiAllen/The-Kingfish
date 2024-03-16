@@ -4,14 +4,15 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 
+from .models import Titles, UserOwnedTitles, UserOwnedBackgrounds, Backgrounds
 
-"""
- * Form for the login of a user, accepts both 'email' or 'username'
- * and a password
- *
- * @author Jasper
-"""
 class UserLogin(forms.Form):
+    """
+     * Form for the login of a user, accepts both 'email' or 'username'
+     * and a password
+     *
+     * @author Jasper
+    """
     username_or_email = forms.CharField(label='Username or Email')
     password = forms.CharField(label='Password', strip=False, widget=forms.PasswordInput)
 
@@ -50,12 +51,12 @@ class UserLogin(forms.Form):
 
         return password
 
-"""
- * Form for the register of a user
- *
- * @author Jasper
-"""
 class RegisterForm(UserCreationForm):
+    """
+     * Form for the register of a user
+     *
+     * @author Jasper
+    """
     profile_picture = forms.ImageField(required=False)
     class Meta:
         model = User
@@ -79,21 +80,28 @@ class RegisterForm(UserCreationForm):
 
         return email
 
-"""
- * Form for changing all current information of the user
- *
- * @author Jasper
-"""
 class ChangeInfo(forms.Form):
+    """
+     * Form for changing all current information of the user
+     *
+     * @author Jasper
+    """
     first_name = forms.CharField(label='First Name')
     last_name = forms.CharField(label='Last Name')
     username = forms.CharField(label='Username')
     email = forms.EmailField(label='Email')
     profile_picture = forms.ImageField(required=False)
+    title = forms.ChoiceField(label='Titles', choices=[])
+    background = forms.ChoiceField(label='Backgrounds', choices=[])
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
         super().__init__(*args, **kwargs)
+
+        titles = UserOwnedTitles.objects.filter(user=self.user)
+        backgrounds = UserOwnedBackgrounds.objects.filter(user=self.user)
+        self.fields['title'].choices = [(title.title.id, title.title.title_name) for title in titles]
+        self.fields['background'].choices = [(background.background.id, background.background.background_name) for background in backgrounds]
 
     # Gets and validates the email of the user
     def clean_email(self):
@@ -126,3 +134,30 @@ class ChangeInfo(forms.Form):
             raise ValidationError('Enter a new name, not the same')
 
         return first_name, last_name
+
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+
+        user_owned_titles = UserOwnedTitles.objects.filter(user=self.user, title=title)
+        if not user_owned_titles:
+            raise ValidationError('You do not own this title')
+
+        title_object = Titles.objects.filter(id=title)
+        if not title_object:
+            raise ValidationError('Title does not exist')
+
+        return title_object.first()
+
+    def clean_background(self):
+        background = self.cleaned_data['background']
+
+        user_owned_backgrounds = UserOwnedBackgrounds.objects.filter(user=self.user, background=background)
+        if not user_owned_backgrounds:
+            raise ValidationError('You do not own this title')
+
+        background_object = Backgrounds.objects.filter(id=background)
+        if not background_object:
+            raise ValidationError('Title does not exist')
+
+        return background_object.first()
