@@ -5,26 +5,86 @@
 
 {% block template %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
+
 <body>
-<h1>Penguin Game</h1>
 
-{% if user.is_authenticated %}
-    {% if user.is_superuser %}
-        <h1>Admin</h1>
-        <button onclick="location.href='{% url 'siteadmin:manageqr' %}'" type="button">Manage QR Codes</button>
-    {% else %}
-        <h2> Welcome back {{ user.username }}!</h2>
-    {% endif %}
+    <div style="height: 60vh; display: flex; justify-content: center; align-items: center;">
+        <div>
+            <h1>Penguin Game</h1>
 
-        <button onclick="location.href='{% url 'game' %}'" type="button" class="primarybutton">PLAY</button>
-{% else %}
-    <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
-    <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button" class="primarybutton">Login</button>
-{% endif %}
+            {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+            <h1>Admin</h1>
+            <button onclick="location.href='{% url 'siteadmin:manageqr' %}'" type="button">Manage QR Codes</button>
+            {% else %}
+            <h3> Welcome back {{ user.username }}!</h3>
+            {% endif %}
+
+            <button onclick="location.href='{% url 'game' %}'" type="button" class="primarybutton">PLAY</button>
+            {% else %}
+            <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
+            <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button"
+                class="primarybutton">Login</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="page" id="about">
+        <h2>About</h2>
+
+        <div class="carousel">
+            <img src="{{ user.userinfo.picture.url }}" class="slide">
+            <img src="{{ user.userinfo.picture.url }}" class="slide expanded">
+            <img src="{{ user.userinfo.picture.url }}" class="slide">
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const images = document.querySelectorAll(".slide");
+
+                images.forEach(image => {
+                    image.addEventListener("click", function () {
+                        images.forEach(img => img.classList.remove("expanded"));
+                        this.classList.add("expanded");
+                    });
+                });
+            });
+        </script>
+
+        <div style="max-width: 700px; margin: auto;">
+
+            <body>
+                About penguin game..... insert some copy here whoever is writing that stuff
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex
+                ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                mollit
+                anim id est laborum.
+            </body>
+        </div>
+
+        <h2 id="getcoins">How do I get coins?</h2>
+
+        <div style="max-width: 700px; margin: auto;">
+
+            <body>Some copy text about getting coins...Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                reprehenderit
+                in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</body>
+        </div>
+
+    </div>
 </body>
+
 </html>
 {% endblock %}

@@ -21,7 +21,9 @@ body {
     max-width: 1000px;
     margin: auto;
     margin-top: 50px;
+    margin-bottom: 50px;
     padding: 10px;
+    padding-bottom: 50px;
     background-color: #f4f4f4;
     background-position: 0 90%;
     background-repeat: repeat no-repeat;
@@ -38,6 +40,19 @@ body {
     border-top-right-radius: 15px 225px;
 }
 
+.footer {
+    padding: 10px;
+    background-color: #f4f4f4;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-style: solid;
+    border-width: 2px;
+    color: #333c57;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+}
+
 h1 {
     font-family: Actionman;
     color: #f4f4f4;
@@ -45,6 +60,7 @@ h1 {
     -webkit-text-stroke: 1px #333c57;
     text-shadow: 0 5px 0px #333c57;
     font-weight: bold;
+    line-height: 0%;
 }
 
 h2 {
@@ -53,6 +69,15 @@ h2 {
     font-size: 50px;
     -webkit-text-stroke: 1px #333c57;
     text-shadow: 0 3px 0px #333c57;
+    font-weight: bolder;
+}
+
+h3 {
+    font-family: Actionman;
+    color: white;
+    font-size: 40px;
+    -webkit-text-stroke: 1px #333c57;
+    text-shadow: 0 1px 0px #333c57;
     font-weight: bolder;
 }
 
@@ -251,10 +276,6 @@ button:disabled:hover {
     width: 1px;
     overflow: hidden;
     clip: rect(1px 1px 1px 1px);
-    /* IE6, IE7 */
-    clip: rect(1px, 1px, 1px, 1px);
-    white-space: nowrap;
-    /* added line */
 }
 
 .segmented-button label {
@@ -267,7 +288,6 @@ button:disabled:hover {
     flex: 1 1 0px;
     position: relative;
     z-index: 2;
-    transition: inherit;
 
     align-self: center;
     display: inline-block;
@@ -296,6 +316,10 @@ button:disabled:hover {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+}
+
+.segmented-button label:hover {
+    font-weight: 600;
 }
 
 /* --- FILE UPLOAD ---- */
@@ -356,9 +380,14 @@ select {
 /* ---- TABLE ---- */
 
 .table {
+    width: 700px;
     font-size: xx-large;
     border-collapse: collapse;
     margin: auto;
+}
+
+.leaderboard-table {
+    width: 100%;
 }
 
 .table th,
@@ -430,4 +459,52 @@ p.title {
     justify-content: center;
     text-align: left;
     width: 100%;
+}
+
+/* ---- CAROUSEL ---- */
+
+.carousel {
+    height: 500px;
+    max-height: 500px;
+    overflow: hidden;
+    align-content: center;
+    padding-bottom: 50px;
+}
+
+.slide {
+    object-fit: cover;
+    height: 450px;
+    width: 100px;
+    cursor: pointer;
+    transition: all 0.5s;
+
+    vertical-align: middle;
+
+    border-style: solid;
+    border-width: 2px;
+    border-color: #333c57;
+    box-sizing: border-box;
+
+    border-bottom-left-radius: 50px 500px;
+    border-bottom-right-radius: 50px 500px;
+    border-top-left-radius: 500px 50px;
+    border-top-right-radius: 500px 50px;
+}
+
+.slide:hover {
+    width: 150px;
+    height: 460px;
+    box-shadow: rgba(0, 0, 0, .2) 10px 15px 15px -10px;
+}
+
+.slide.expanded {
+    width: 600px;
+    height: 500px;
+
+    border-bottom-left-radius: 15px 250px;
+    border-bottom-right-radius: 15px 250px;
+    border-top-left-radius: 250px 15px;
+    border-top-right-radius: 250px 15px;
+
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
 }
