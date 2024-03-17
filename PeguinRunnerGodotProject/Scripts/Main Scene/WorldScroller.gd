@@ -8,13 +8,19 @@ WorldScroller script for the scrolling of the game world
 
 # List of chunks for the flipping movement state
 const flipChunks : Array[Resource] = [
-	preload("res://Scenes/Chunks/FlipChunks/flipChunk1.tscn")
+	preload("res://Scenes/Chunks/FlipChunks/flipChunk1.tscn"),
+	preload("res://Scenes/Chunks/FlipChunks/flipChunk2.tscn"),
+	preload("res://Scenes/Chunks/FlipChunks/flipChunk2 (2).tscn")
 ]
 
 
 # List of chunks for the jumping movement state
 const jumpChunks : Array[Resource] = [
-	preload("res://Scenes/Chunks/JumpChunks/jumpChunk1.tscn")
+	preload("res://Scenes/Chunks/JumpChunks/jumpChunk1.tscn"),
+	preload("res://Scenes/Chunks/JumpChunks/jumpChunk2.tscn"),
+	preload("res://Scenes/Chunks/JumpChunks/jumpChunk3.tscn"),
+	preload("res://Scenes/Chunks/JumpChunks/jumpChunk4.tscn"),
+	preload("res://Scenes/Chunks/JumpChunks/jumpChunk5.tscn")
 ]
 
 
@@ -44,6 +50,8 @@ var currentChunks : Array[TileMap]
 
 # Speed of chunk movement and chance of transition
 var speed : float = 400.0
+const MAXSPEED : float = 450
+const ACCELERATION : float = 0.5
 var transitionChance : float = 0.25
 
 
@@ -66,7 +74,11 @@ func _ready():
 	# Create new chunks on game start
 	rootChunkPosition.x = -chunkWidth * renderDistance
 	for i in range(0, renderDistance*2):
-		var newChunk = addChunk(startingChunk)
+		var newChunk
+		if rootChunkPosition.x > chunkWidth:
+			newChunk = addChunk(flipChunks.pick_random())
+		else:
+			newChunk = addChunk(startingChunk)
 		newChunk.position = rootChunkPosition
 		rootChunkPosition.x += chunkWidth
 	
@@ -86,6 +98,9 @@ func _physics_process(delta):
 	# Set the root chunk position to the first chunk of the current chunks
 	rootChunkPosition.x = currentChunks[0].position.x
 	
+	
+	speed += ACCELERATION * delta
+	speed = max(speed, MAXSPEED)
 	
 	# If the player isn't dead, move background and foreground children
 	if !dead:		

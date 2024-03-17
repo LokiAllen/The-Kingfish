@@ -186,12 +186,21 @@ pitch_scale = 0.82
 stream = ExtResource("8_eir8h")
 volume_db = -8.0
 
+[node name="JumpCheck" type="RayCast2D" parent="Player"]
+position = Vector2(-22, -5)
+rotation = 1.57079
+target_position = Vector2(0, -40)
+
 [node name="env" type="Node2D" parent="."]
 
 [node name="DeathPlane" type="Area2D" parent="env"]
 script = ExtResource("4_5kcvg")
 
 [node name="Polygon2D" type="Polygon2D" parent="env/DeathPlane"]
+texture_repeat = 2
+color = Color(0.101961, 0.109804, 0.172549, 1)
+texture_offset = Vector2(-3.69, 0)
+texture_rotation = 0.380482
 polygon = PackedVector2Array(-315, -702, -315, 287, 315, 287, 315, -701, 1507, -761, 1518, 1330, -1514, 1319, -1481, -1747, 1536, -1715, 1502, -706)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="env/DeathPlane"]
@@ -199,7 +208,7 @@ position = Vector2(340, -196)
 shape = SubResource("RectangleShape2D_cf6jl")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="env/DeathPlane"]
-position = Vector2(-340, -196)
+position = Vector2(-369, -196)
 shape = SubResource("RectangleShape2D_cf6jl")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="env/DeathPlane"]

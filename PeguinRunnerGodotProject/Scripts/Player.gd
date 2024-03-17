@@ -16,6 +16,7 @@ const ROTATIONSPEED = 0.1
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var currentGravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+@onready var jumpChecks : Array[RayCast2D] = [$JumpCheck]
 
 
 # Define an enum for the movement states and a variable for current state
@@ -26,7 +27,12 @@ var currentState : movementState = movementState.jumpGravity
 # Define varaibles related to whether the player is alive or can be killed
 var alive : bool = true
 const invinsiblePhysicsFrames : int = 30
-var invinsibleTimer = 0
+var invinsibleTimer : int = 0
+
+
+# Define variable related to koyote time
+const koyoteFrames : int = 10
+var koyoteTimer : int = 0
 
 
 # Reference to score and the variable counting the score
@@ -70,17 +76,20 @@ func _physics_process(delta):
 	handleRotation()
 	
 	
+	print(ceilingCheck())
+	
 	# If alive, behave as normal
 	if alive:
 		# Increment the score
 		score += 1
 		
 		# Apply the gravity if the player is not on floor or ceiling
-		if not (is_on_floor() or is_on_ceiling()):
+		if not (canJump()):
 			slidingParticles.emitting = false
 			velocity.y += currentGravity * delta
 		else:
 			slidingParticles.emitting = true
+			koyoteTimer += 1
 		
 		
 		# If the invinsible timer is active, decrement it
@@ -97,7 +106,7 @@ func _physics_process(delta):
 		match currentState:
 			movementState.flipGravity:
 				# Flip player if space is pressed
-				if Input.is_action_just_pressed("jump") and (is_on_floor() or is_on_ceiling()):
+				if Input.is_action_just_pressed("jump") and (canJump()):
 					# Play flip animation
 					if currentGravity > 0:
 						animationPlayer.play("flip")
@@ -105,7 +114,7 @@ func _physics_process(delta):
 						animationPlayer.play_backwards("flip")
 					# Invert gravity and apply force
 					currentGravity = -currentGravity
-					velocity.y += currentGravity * delta
+					velocity.y += sign(currentGravity) * JUMPFORCE / 4
 					#Player jump sound
 					jumpSoundPlayer.pitch_scale = randf_range(0.7, 1)
 					jumpSoundPlayer.play()
@@ -179,7 +188,7 @@ func changeGravity():
 		movementState.flipGravity:
 			currentGravity = gravity * 3
 		movementState.jumpGravity:
-			currentGravity = gravity * 2
+			currentGravity = gravity * 2.6
 
 
 # Get the current movement state of the player
@@ -207,3 +216,16 @@ func kill():
 		if OS.has_feature('web') and !worldScroller.isTutorial:
 			GameManager.setHighScore(score)
 			GameManager.pushSessionData()
+
+
+func ceilingCheck():
+	for raycast in jumpChecks:
+		if raycast.is_colliding():
+			return true
+	return false
+
+
+func canJump():
+	if is_on_ceiling() or is_on_floor() or ceilingCheck() or koyoteTimer < koyoteFrames:
+		return true
+

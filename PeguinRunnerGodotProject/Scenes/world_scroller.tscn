@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://7tgmof1l6gax"]
 
 [ext_resource type="Script" path="res://Scripts/Main Scene/WorldScroller.gd" id="1_wpvy5"]
-[ext_resource type="Texture2D" uid="uid://d2pxy6jnchp0s" path="res://Images/backgroundTest.png" id="2_d1iu6"]
+[ext_resource type="Texture2D" uid="uid://bu6heo521jnv" path="res://Images/icebackground2.png" id="2_7q6ly"]
 
 [sub_resource type="Animation" id="Animation_bidog"]
 length = 0.001
@@ -47,7 +47,7 @@ script = ExtResource("1_wpvy5")
 [node name="Background2" type="Polygon2D" parent="."]
 texture_filter = 1
 texture_repeat = 2
-texture = ExtResource("2_d1iu6")
+texture = ExtResource("2_7q6ly")
 texture_offset = Vector2(0, 750)
 polygon = PackedVector2Array(-2000, -1000, -2000, 700, 2000, 700, 2000, -1000)
 
