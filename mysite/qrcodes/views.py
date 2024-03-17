@@ -101,3 +101,7 @@ class QRCodeRedeem(LoggedInRequired, View):
         user.coins += 5
         user.save()
 
+
+
+def interactive_map(request):
+    return render(request, 'qrcodes/interactive_map.html')

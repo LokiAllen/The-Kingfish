@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% extends "../base.html" %}
+{% load static %}
+
+{% block templatepage %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""/>
+</head>
+<body>
+
+<div id="map" style="width: 100%; height: 800px;"></div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+<script>
+    // Initialize the map
+    var map = L.map('map', {
+        center: [50.735256, -3.533497], // Set the initial center of the map
+        zoom: 16,
+        maxBounds: [[50.725256, -3.523497], [50.745256, -3.543497]], // Prevent the user from viewing outside of Exeter campus
+        minZoom: 16, // Prevent the user from zooming out beyond the initial zoom level
+        maxZoom: 18, // Set a maximum zoom level to a reasonable level
+    });
+
+    // Add an OpenStreetMap layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Add marker for a bin
+    var Bin2 = L.marker([50.735260, -3.533286]).addTo(map);
+    Bin2.bindPopup("<b>Forum Bin 2</b><br>General Waste.");
+
+    var Bin1 = L.marker([50.735460, -3.533386]).addTo(map);
+    Bin1.bindPopup("<b>Forum Bin 1</b><br>Recycling Plastic and Cardboard");
+
+    // Set the map's view to the center with the normal zoom level
+    map.setView([50.735256, -3.533497], 16);
+
+</script>
+
+</body>
+</html>
+{% endblock %}
