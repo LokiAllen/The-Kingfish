@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     group.forEach(item => {
                         if (item.owned) {
-                            var button = createElement('button', { value: `${item.item_id}-${item.item_type}`, textContent: 'OWNED', 'classList': ['tt-buy']}, [])
+                            var button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: 'OWNED', 'classList': ['tt-buy']}, [])
                         }
                         else if (item.price > USER_COINS) {
                             var button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: 'BUY', 'classList': ['tt-buy']}, [])
