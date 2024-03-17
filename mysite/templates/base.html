@@ -41,14 +41,16 @@
     <div class="topnav-right">
         {% if user.is_authenticated %}
 
-        <button onclick="location.href='{% url 'accounts:logout' %}'" type="button">Logout</button>
-
-
-        <a href="{% url 'accounts:profile' username=user.username %}" class="nav-link">{{ user.username }} </a>
+        <div class="userinfo">
+            <a href="{% url 'accounts:profile' username=user.username %}" class="nav-link">{{ user.username }} </a>
+            COINS: {{ user.userinfo.coins }}
+        </div>
 
         <a id="pfp" href="{% url 'accounts:profile' username=user.username %}">
             <img class="account-img" src="{{ user.userinfo.picture.url }}" />
         </a>
+
+        <button onclick="location.href='{% url 'accounts:logout' %}'" type="button">Logout</button>
 
         {% else %}
 
