@@ -82,9 +82,13 @@ class ShopSerializer(serializers.ModelSerializer):
      *
      * @author Jasper
     """
+    owned = serializers.SerializerMethodField()
+
+    def get_owned(self, obj):
+        return getattr(obj, 'owned', False)
     class Meta:
         model = Shop
-        fields = ['name', 'description', 'price', 'item_id', 'item_type']
+        fields = ['name', 'description', 'price', 'item_id', 'item_type', 'owned']
 
 class UserTitleSerializer(serializers.ModelSerializer):
     """

@@ -14,20 +14,17 @@
             var USER_COINS = '{{ user.userinfo.coins }}'
         </script>
     </head>
-    <body>
-    <div class="page">
-        <h3 class="coins-title">COINS: {{ user.userinfo.coins }}</h3>
-        <table class="shop-table">
-            <thead>
-            <th>Name</th>
-            <th>Price</th>
-            <th>   </th>
-            </thead>
-            <tbody id="shop-table">
+    <body style="margin-top: 12vh;">
+    <div class="shop-title">
+        <h1 class="c-title" style="letter-spacing: -3px;">Coins: {{ user.userinfo.coins }}</h1>
+    </div>
+    <div id="shop-container">
+        <div id="shop-titles">
+        </div>
+        <div id="shop-backgrounds" class="container scroll-1">
+        </div>
+    </div>
 
-            </tbody>
-
-        </table></div>
     </body>
     </html>
 {% endblock %}

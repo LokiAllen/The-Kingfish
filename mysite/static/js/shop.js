@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const tableBody = document.getElementById('shop-table');
+    const backgroundsBody = document.getElementById('shop-backgrounds');
+    const titlesBody = document.getElementById('shop-titles');
     const types = {
         19: 'Title',
         23: 'Background',
@@ -21,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (key === 'textContent') {
                 element.textContent = value;
             } else if (key === 'classList') {
-                element.classList.add(value);
+                element.classList.add(...value);
             } else {
-                element[key] = value;
+                element[key] = value
             }
         });
         children.forEach(child => {
@@ -37,8 +38,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /**
+     * Groups titles together as they are shown in divs of two titles
+     *
+     * @author Jasper
+     * @param titles    The array of titles to group
+     * @returns {*[]}   An array of 2d arrays of titles
+     */
+    function groupTitles(titles) {
+        const grouped = [];
+
+        for (let i=0; i < titles.length; i+=2) {
+            grouped.push(titles.slice(i, i+2));
+        }
+
+        return grouped;
+    }
+
+    /**
      * Sends a request to the endpoint to retrieve all the shop data, creating the elements and
-     * setting them inside the shop table
+     * setting them inside the shop table respective of the item type
      *
      * @author Jasper
      */
@@ -46,27 +64,89 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`/api/shop/`)
             .then(response => response.json())
             .then(data => {
-                tableBody.innerHTML = '';
+                const titles = []
+                const backgrounds = []
+                const css_names = {
+                    'First Penguin': 'penguin_one',
+                    'Second Penguin': 'penguin_two',
+                };
 
                 data.forEach(item => {
-                    let button = createElement('button', { value: `${item.item_id}-${item.item_type}`, textContent: 'Buy' }, [])
-                    if (item.price > USER_COINS) {
-                        button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: 'Cannot afford' }, [])
+                    if (item.item_type == 19) {
+                        titles.push(item);
+                    } else if (item.item_type == 23) {
+                        backgrounds.push(item);
+                    }
+                });
+
+                groupedTitles = groupTitles(titles);
+
+                titlesBody.innerHTML = ''
+                backgroundsBody.innerHTML = ''
+
+                groupedTitles.forEach(group => {
+                    const titleSection = createElement('div', {'classList': ['tt-section']}, [])
+
+                    group.forEach(item => {
+                        if (item.owned) {
+                            var button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: 'OWNED', 'classList': ['tt-buy']}, [])
+                        }
+                        else if (item.price > USER_COINS) {
+                            var button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: 'BUY', 'classList': ['tt-buy']}, [])
+                        }
+                        else {
+                            var button = createElement('button', { value: `${item.item_id}-${item.item_type}`, textContent: 'BUY', 'classList': ['tt-buy']}, [])
+                        }
+
+                        const titleItem =
+                            createElement('div', {'classList': ['tt-card']}, [
+                                createElement('div', {'classList': ['tt-card-overlay']}),
+                                createElement('div', {'classList': ['tt-card-inner']}, [
+                                    createElement('p', {textContent: item.name.toUpperCase()}, []),
+                                    createElement('p', {textContent: `${item.price}Ȼ`}, []),
+                                    button,
+                                ])
+                            ]);
+
+                        titleSection.appendChild(titleItem);
+                    });
+
+                    titlesBody.appendChild(titleSection);
+                });
+
+                backgrounds.forEach(item => {
+                    let button = createElement('button', {textContent: 'BUY', 'classList': ['bg-buy'], value: `${item.item_id}-${item.item_type}`}, [])
+                    if (item.owned || item.price > USER_COINS) {
+                        if (item.owned) {
+                            text = 'OWNED'
+                        } else {
+                            text = 'BUY'
+                        }
+
+                        button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: text, 'classList': ['bg-buy']}, [])
                     }
 
-                    var item_shop_name = `${item.name} ${types[item.item_type]}`
-                    const row =
-                        createElement('tr', {}, [
-                            createElement('td', {}, [
-                                createElement('b', { textContent: item_shop_name})
-                            ]),
-                            createElement('td', {}, [
-                                createElement('b', { textContent: item.price})
-                            ]),
-                            button
-                        ]);
+                    var cssName = item.name;
+                    if (['First Penguin', 'Second Penguin'].includes(cssName)) {
+                        cssName = css_names[cssName];
+                        item.name = 'Penguin'
+                    }
 
-                    tableBody.appendChild(row);
+                    const background_item =
+                        createElement('div', {'classList': ['bg-card']}, [
+                            createElement('div', {'classList': ['card__image', cssName]}, []),
+                            createElement('div', {'classList': ['card__content']}, [
+                                createElement('div', {'classList': ['card__title']}, [
+                                    createElement('p', {textContent: item.name}, []),
+                                    createElement('p', {'classList': ['bg-cost'], textContent: `${item.price}Ȼ`}, [])
+                                ]),
+                                createElement('p', {'classList': ['card__describe']}, [
+                                    button
+                                ])
+                            ])
+                        ])
+
+                    backgroundsBody.appendChild(background_item);
                 });
 
             });
@@ -94,9 +174,8 @@ document.addEventListener('DOMContentLoaded', function() {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data['coins']);
                 USER_COINS = data['coins'];
-                document.getElementsByClassName('coins-title')[0].innerHTML = `COINS: ${data['coins']}`;
+                document.getElementsByClassName('c-title')[0].innerHTML = `Coins: ${data['coins']}`;
                 getData();
             });
     }

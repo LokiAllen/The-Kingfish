@@ -5,6 +5,7 @@
     font-size: xx-large;
     border-collapse: collapse;
     margin: auto;
+    text-shadow: none;
 }
 
 .table th,

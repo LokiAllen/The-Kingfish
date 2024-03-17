@@ -17,7 +17,7 @@
         <style>
             {% if user_data.userinfo.background.picture %}
             .page {
-                background-image: url("{% static 'media/profile_backgrounds/' %}{{ user_data.userinfo.background.picture }}")
+                background: url("{% static 'media/profile_backgrounds/' %}{{ user_data.userinfo.background.picture }}")
             }
             {% endif %}
         </style>
