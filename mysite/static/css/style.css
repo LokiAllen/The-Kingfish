@@ -42,6 +42,7 @@ body {
 }
 
 .footer {
+    position: static;
     padding: 10px;
     background-color: #f4f4f4;
     background-position: 0 90%;
@@ -122,6 +123,8 @@ h3 {
 
 .topnav-right {
     order: 3;
+    display: flex;
+    align-items: center;
 }
 
 .topnav-left {
@@ -157,6 +160,7 @@ h3 {
 .account-img {
     height: 50px;
     width: 50px;
+    margin-right: 10px;
     border-style: solid;
     border-width: 2px;
     border-color: #333c57;
