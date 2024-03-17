@@ -62,7 +62,7 @@
             // Sets the background if the user has one
             {% if user.userinfo.background.picture %}
                 let page = document.getElementsByClassName('page')[0];
-                page.style.backgroundImage = `url("{% static 'media/profile_backgrounds/' %}{{ user.userinfo.background.picture }}")`;
+                page.style.background = `url("{% static 'media/profile_backgrounds/' %}{{ user.userinfo.background.picture }}")`;
             {% endif %}
 
             // Changes the picture anytime a file is dragged or uploaded
@@ -86,7 +86,7 @@
                     return
                 }
 
-                page.style.backgroundImage = ` url("{% static 'media/profile_backgrounds/' %}${bg_filenames[selected]}")`;
+                page.style.background = ` url("{% static 'media/profile_backgrounds/' %}${bg_filenames[selected]}")`;
                 page.classList = `page ${selected}-background`;
             })
         });

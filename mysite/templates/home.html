@@ -2,29 +2,51 @@
 
 {% extends "./base.html" %}
 
-
+{% load static %}
 {% block template %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-<h1>Penguin Game</h1>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <script src="{% static 'js/home.js' %}"></script>
+        <title>Home</title>
+    </head>
+    <body>
+    <div class="fullscreen-bg">
+        <div class="home-title">
+            <h1 class="first-title">Sustainability</h1>
+            <div class="second-title-with-button">
+                {% if user.is_authenticated %}
+                    <button onclick="location.href='{% url 'game' %}'" type="button" class="button swap-button">Play</button>
+                {% else %}
+                    <button onclick="location.href='{% url 'home' %}'" type="button" class="button">Login</button>
+                {% endif %}
+                <h1 class="second-title">Slides</h1>
+            </div>
+        </div>
 
-{% if user.is_authenticated %}
-    {% if user.is_superuser %}
-        <h1>Admin</h1>
-        <button onclick="location.href='{% url 'siteadmin:manageqr' %}'" type="button">Manage QR Codes</button>
-    {% else %}
-        <h2> Welcome back {{ user.username }}!</h2>
-    {% endif %}
+        <div class="scroll-indicator">
+            <a href="#about-content" class="learn-more">Learn More</a>
+            <div class="arrow-down"></div>
+        </div>
+    </div>
 
-        <button onclick="location.href='{% url 'game' %}'" type="button" class="primarybutton">PLAY</button>
-{% else %}
-    <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
-    <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button" class="primarybutton">Login</button>
-{% endif %}
-</body>
-</html>
+    <div class="fullscreen-bg" id="second-background">
+        <section>
+            <div class="about-title">ABOUT</div>
+            <div class="about-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget mauris ultricies, consectetur dolor in, commodo ante. Donec sed aliquam lorem, eget ornare elit. Maecenas hendrerit sapien velit, sit amet tincidunt sapien semper in. Maecenas a sodales massa. Proin eu sollicitudin ex. Sed quis blandit ante, eu euismod magna. Etiam placerat, nibh eget facilisis gravida, arcu augue ultrices ligula, non consequat augue nisi quis turpis. Duis bibendum lorem tempor augue fermentum, at luctus eros posuere. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris ultricies consequat elit quis pharetra. Nunc arcu ligula, maximus eget lectus ut, eleifend blandit arcu.</div>
+            <div>
+                <button>Map</button>
+                <button>Carbon Footprint</button>
+                <button>Sustainability Course</button>
+            </div>
+        </section>
+        <div class="penguin">
+            <img src="{% static '/media/penguin_plastic.jpg' %}">
+            <img src="{% static '/media/penguins_walking_trash.png' %}">
+        </div>
+
+
+    </div>
+    </body>
+    </html>
 {% endblock %}

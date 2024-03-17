@@ -9,7 +9,7 @@ import base64
 from io import BytesIO
 
 
-from qrcodes.models import *
+from qrcodes.models import QrCodeModel, QrCodeVisit
 
 
 """
@@ -49,6 +49,8 @@ class QrCodeManager(SuperUserRequired, View):
         method = request.POST.get('method', None)
         if kwargs:
             self.code = kwargs['code']
+
+        print(method)
 
         match method:
             case 'add':
@@ -93,4 +95,9 @@ class QrCodeManager(SuperUserRequired, View):
 
     # Deletes a QR code from the database
     def delete_code(self):
-        QrCodeModel.objects.filter(id=self.code).delete()
+        qr_code_object = QrCodeModel.objects.filter(id=self.code).first()
+        QrCodeVisit.objects.filter(qrcode=qr_code_object).delete()
+
+        if qr_code_object:
+            qr_code_object.expired = True
+            qr_code_object.save()

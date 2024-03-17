@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import generics, status
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
-from django.core.cache import cache
+from django.db.models import Case, Value, When, BooleanField, Q
 
 # Non-static imports
 from .models import UserMessage
@@ -95,17 +95,25 @@ class ShopData(generics.GenericAPIView):
 
     def get_queryset(self):
         """
-        Removes currently owned items from the list before returning the list of shop items
+        Sets the 'owned' flag for each item whether the user owns it as otherwise cannot be found.
         """
-        user_owned_titles = UserOwnedTitles.objects.filter(user=self.request.user)
-        user_owned_title_ids = user_owned_titles.values_list('title_id', flat=True)
-        title_objects = Shop.objects.filter(item_type_id=19)
+        user = self.request.user
 
-        user_owned_backgrounds = UserOwnedBackgrounds.objects.filter(user=self.request.user)
-        user_owned_background_ids = user_owned_backgrounds.values_list('background_id', flat=True)
-        background_objects = Shop.objects.filter(item_type_id=23)
+        # Get a list of owned title and backgrounds
+        owned_title_ids = UserOwnedTitles.objects.filter(user=user).values_list('title_id', flat=True)
+        owned_background_ids = UserOwnedBackgrounds.objects.filter(user=user).values_list('background_id', flat=True)
 
-        return title_objects.exclude(item_id__in=user_owned_title_ids) | background_objects.exclude(item_id__in=user_owned_background_ids)
+        # Annotate the Shop queryset with an 'owned' flag relative to whether the user owns it
+        shop_items = Shop.objects.annotate(
+            owned=Case(
+                When(Q(item_id__in=owned_title_ids) & Q(item_type_id=19), then=Value(True)),
+                When(Q(item_id__in=owned_background_ids) & Q(item_type_id=23), then=Value(True)),
+                default=Value(False),
+                output_field=BooleanField(),
+            )
+        )
+
+        return shop_items
 
     def get(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -124,10 +132,10 @@ class ShopData(generics.GenericAPIView):
                     item to 'Shops' as its the easiest way. Otherwise title = 19, background = 23 """
                 match item_type:
                     case '19':
-                        queryset = {'user': request.user.id, 'title': shop_object.item_object.id}
+                        queryset = {'user': request.user.id, 'title': shop_object.item_id}
                         serializer = UserTitleSerializer(data=queryset, many=False)
                     case '23':
-                        queryset = {'user': request.user.id, 'background': shop_object.item_object.id}
+                        queryset = {'user': request.user.id, 'background': shop_object.item_id}
                         serializer = UserBackgroundSerializer(data=queryset, many=False)
 
                 if serializer.is_valid():
