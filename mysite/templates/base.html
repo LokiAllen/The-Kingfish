@@ -15,50 +15,52 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 
+
+
+<nav class="topnav">
+
+    <div class="topnav-left">
+        <a class="topnav-brand" href="{% url 'home' %}">Penguin Site</a>
+    </div>
+
+    <div class="topnav-center">
+
+        {% if user.is_authenticated %}
+
+        <a href="{% url 'leaderboard' %}" class="nav-link">Leaderboard</a>
+        <a href="{% url 'shop' %}" class="nav-link">Shop</a>
+
+        {% endif %}
+        <a href="{% url 'home' %}#about" class="nav-link">About</a>
+        <a href="{% url 'home' %}#getcoins" class="nav-link">Get Coins</a>
+
+
+
+    </div>
+
+    <div class="topnav-right">
+        {% if user.is_authenticated %}
+
+
+        <a href="{% url 'accounts:profile' username=user.username %}" class="nav-link">{{ user.username }} </a>
+
+        <a id="pfp" href="{% url 'accounts:profile' username=user.username %}">
+            <img class="account-img" src="{{ user.userinfo.picture.url }}" />
+        </a>
+
+
+        <button onclick="location.href='{% url 'accounts:logout' %}'" type="button">Logout</button>
+
+        {% endif %}
+        {% if user.is_superuser %}
+        <button style="margin-left: 10px;" onclick="location.href='{% url 'siteadmin:manageqr' %}'" type="button">Manage
+            QR Codes</button>
+        {% endif %}
+    </div>
+
+</nav>
+
 <body>
-
-    <nav class="topnav">
-
-        <div class="topnav-left">
-            <a class="topnav-brand" href="{% url 'home' %}">Penguin Site</a>
-        </div>
-
-        <div class="topnav-center">
-
-            {% if user.is_authenticated %}
-
-            <a href="{% url 'leaderboard' %}" class="nav-link">Leaderboard</a>
-            <a href="{% url 'shop' %}" class="nav-link">Shop</a>
-
-            {% endif %}
-            <a href="{% url 'home' %}#about" class="nav-link">About</a>
-            <a href="{% url 'home' %}#getcoins" class="nav-link">Get Coins</a>
-
-
-
-        </div>
-
-        <div class="topnav-right">
-            {% if user.is_authenticated %}
-
-
-            <a href="{% url 'accounts:profile' username=user.username %}" class="nav-link">{{ user.username }} </a>
-
-            <a id="pfp" href="{% url 'accounts:profile' username=user.username %}">
-                <img class="account-img" src="{{ user.userinfo.picture.url }}" />
-            </a>
-
-
-            <button onclick="location.href='{% url 'accounts:logout' %}'" type="button">Logout</button>
-
-            {% endif %}
-            {% if user.is_superuser %}
-            <button style="margin-left: 10px;" onclick="location.href='{% url 'siteadmin:manageqr' %}'"
-                type="button">Manage QR Codes</button>
-            {% endif %}
-        </div>
-
-    </nav>
 
     {% block template %}
     <div class="page">

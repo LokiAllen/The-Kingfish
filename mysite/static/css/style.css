@@ -13,6 +13,7 @@ body {
     background-repeat: no-repeat;
     text-align: center;
     margin: auto;
+    margin-top: 150px;
     font-family: "PT Sans", sans-serif;
 }
 
@@ -84,13 +85,35 @@ h3 {
 /* ---- NAVBAR ---- */
 
 .topnav {
-    max-width: 1500px;
-    margin: auto;
+    position: fixed;
+    top: 0;
+
+    width: calc(100% - 20px);
+    margin: 10px;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     color: #333c57;
+
+    background-color: #f4f4f4;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #333c57;
+
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
 }
 
 .topnav-center {
