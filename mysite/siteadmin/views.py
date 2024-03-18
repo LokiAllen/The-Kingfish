@@ -63,7 +63,7 @@ class QrCodeManager(SuperUserRequired, View):
     # Gets all current QR codes and returns a JsonResponse for the javascript to load it onto the page
     def get_all_codes(self):
         all_codes = QrCodeModel.objects.all()
-        codes_list = [{'id': code.id, 'expired': code.expired, 'longitude': code.longitude, 'latitude': code.latitude} for code in all_codes]
+        codes_list = [{'id': code.id, 'expired': code.expired, 'longitude': code.longitude, 'latitude': code.latitude, 'name': code.name, 'description': code.description} for code in all_codes]
         return JsonResponse({'values': codes_list})
 
     # Generates a QR code based on the code provided and returns a JsonResponse for the javascript to load it onto the page
