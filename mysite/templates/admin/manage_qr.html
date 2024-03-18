@@ -1,42 +1,47 @@
-<!-- template.html -->
+
 <!DOCTYPE html>
+{% extends "../base.html" %}
+
 {% load static %}
-<html lang="en">
-<head>
-    <title>QR Code Generator</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="{% static 'js/manage_qr.js' %}"></script>
-    <script>
-        var CSRF_TOKEN = '{{ csrf_token }}';
-    </script>
-        <style>
-        .qr-container {
-            display: none;
-        }
-    </style>
-</head>
-<body onload="refresh_values()">
-
-<input type="text" id="dataInput" placeholder="Enter data (leave blank to complete for you)" style="width:18rem">
-
-<button onclick="generateQRCode()">Generate QR Code</button>
-<button onclick="location.href='{% url 'home' %}'" type="button">Home</button>
-<div id="qrCodeContainer"></div>
-<br>
-<button onclick="showQRCodes()">Show All QR Codes</button>
-<br>
-<table>
-    <thead class="qr-table-head" style="display:none">
-        <tr>
-            <th>Code</th>
-            <th>Expired</th>
-            <th>Longitude</th>
-            <th>Latitude</th>
-        </tr>
-    </thead>
-    <tbody class="qr-container">
-    </tbody>
-</table>
-<br>
-</body>
-</html>
+{% block template %}
+    <html lang="en">
+    <head>
+        <title>QR Code Generator</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="{% static 'js/manage_qr.js' %}"></script>
+        <script>
+            var CSRF_TOKEN = '{{ csrf_token }}';
+        </script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+    </head>
+    <body onload="refresh_values()">
+    <div class="page">
+        <input type="text" id="dataInput" placeholder="Enter a code (leave blank to complete for you)" style="width:24rem">
+        <input type="text" id="nameInput" placeholder="Enter name" style="width:18rem">
+        <input type="text" id="descriptionInput" placeholder="Enter description" style="width:18rem">
+        <input type="text" id="longitudeInput" placeholder="Enter longitude" style="width:18rem">
+        <input type="text" id="latitudeInput" placeholder="Enter latitude" style="width:18rem">
+        <button onclick="generateQRCode()">Generate QR Code</button>
+        <div id="qrCodeContainer"></div>
+        <br>
+        <button onclick="showQRCodes()">Show All QR Codes</button>
+        <br>
+        <table>
+            <thead class="qr-table-head" style="display:none">
+            <tr>
+                <th>Code</th>
+                <th>Expired</th>
+                <th>Longitude</th>
+                <th>Latitude</th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody class="qr-container">
+            </tbody>
+        </table>
+        <br>
+    </div>
+    </body>
+    </html>
+{% endblock %}

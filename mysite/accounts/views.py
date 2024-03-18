@@ -182,6 +182,8 @@ class OwnProfileView(FormView):
         user.userinfo.title = form.cleaned_data['title']
         user.userinfo.background = form.cleaned_data['background']
 
+        print(user.email, user.username, user.first_name, user.last_name, user.userinfo.title, user.userinfo.background)
+
         # Deletes and updates the profile picture if it has changed
         if form.cleaned_data['profile_picture']:
             default_storage.delete(user.userinfo.picture.path)

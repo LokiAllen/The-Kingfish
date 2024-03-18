@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+{% extends "../base.html" %}
+
+{% load static %}
+{% block template %}
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+        <script src="{% static 'js/manage_users.js' %}"></script>
+        <script>
+            var CSRF_TOKEN = '{{ csrf_token }}';
+        </script>
+        <title>Title</title>
+    </head>
+    <body>
+    <div>
+        <h1 class="search-title" style="letter-spacing: -3px;">User Score Editor</h1>
+        <p id="error" style="display: none;">User does not exist</p>
+    </div>
+    <div class="user-search">
+        <input type="text" id="dataInput" placeholder="Enter username or email" style="width:18rem">
+        <button onclick="getUserInfo()">Find</button>
+    </div>
+
+    <div class="profile-board" style="display: none;">
+        <div class="info">
+            <h1 id="username"></h1>
+            <div class="stats">
+                <div class="stat">
+                    <p>Coins</p>
+                    <input type="text" id="coins"></input>
+                </div>
+                <div class="stat">
+                    <p>Highscore</p>
+                    <input type="text" id="highscore"></input>
+                </div>
+                <div class="stat">
+                    <p>Total Score</p>
+                    <input type="text" id="totalscore"></input>
+                </div>
+            </div>
+            <button id="updateValues" onclick="updateValues()" type="button" class="update-button">Update</button>
+        </div>
+    </div>
+    </body>
+    </html>
+{% endblock %}

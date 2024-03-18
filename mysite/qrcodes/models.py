@@ -5,13 +5,15 @@ from django.db import models
 """
  * Model for information regarding the QR codes
  *
- * @author Jasper
+ * @author Jasper And Loki
 """
 class QrCodeModel(models.Model):
     id = models.CharField(primary_key=True, max_length=30)
     latitude = models.IntegerField(default=0)
     longitude = models.IntegerField(default=0)
     expired = models.BooleanField(default=False)
+    name = models.CharField(max_length=255, default="new bin")
+    description = models.TextField(default="new description")
 
     def __str__(self):
         return self.id

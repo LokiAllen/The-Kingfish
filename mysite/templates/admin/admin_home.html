@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+{% extends "../base.html" %}
+
+{% load static %}
+{% block template %}
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+    </head>
+    <body>
+    <div class="home-title">
+        <h1 class="first-title">Welcome</h1>
+        <div class="second-title-with-button">
+            <div class="adminlogo">
+                <a href="{% url 'home' %}"><img src="{% static '/media/logo.png' %}" alt="Sustainability Slides"></a>
+            </div>
+            <h1 class="second-title">Admin</h1>
+        </div>
+    </div>
+        <button onclick="location.href='{% url 'siteadmin:manageqr' %}'">Manage QR Codes</button>
+        <button onclick="location.href='{% url 'siteadmin:managescores' %}'">Manage Users Scores</button>
+        <button onclick="location.href='{% url 'siteadmin:manageqr' %}'">Manage Shop Items</button>
+    </body>
+    </html>
+{% endblock %}

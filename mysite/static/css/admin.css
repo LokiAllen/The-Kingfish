@@ -1,0 +1,120 @@
+.qr-container {
+    display: none;
+}
+
+.page {
+    border: 3px solid red;
+}
+
+table {
+    background: white;
+}
+
+table * {
+    font-family: NimbusLight;
+    -webkit-text-stroke: initial;
+    text-shadow: none;
+    color: black;
+}
+
+tbody * {
+    font-size: smaller;
+}
+
+tr {
+    border-bottom: 1px solid red;
+}
+
+tr td {
+    padding: 10px 0;
+}
+
+button {
+    border-color: red;
+}
+
+.adminlogo {
+    transform: translate(-10px, -15px);
+}
+
+input {
+    background-color: #f4f4f4;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-color: red;
+    border-style: solid;
+    border-width: 2px;
+    box-sizing: border-box;
+    color: #333c57;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Neucha, sans-serif;
+    font-size: 1rem;
+    line-height: 23px;
+    outline: none;
+    padding: .75rem;
+    text-decoration: none;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+}
+
+.search-title {
+    font-family: NimbusLight;
+    color: #2E2E2E;
+    -webkit-text-stroke: initial;
+    text-shadow: none;
+    font-weight: normal;
+    letter-spacing: -10px;
+    font-weight: 400;
+    font-size: 100px;
+    margin: 6% auto 0;
+}
+
+.profile-board {
+    width: 100%;
+    max-width: 30vw;
+    margin: 1% auto 15%;
+    border: 1px solid #ddd;
+    position: relative;
+    text-align: center;
+    border-color: red;
+    background-color: #fff;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+}
+
+.profile-board p {
+    margin-bottom: 0;
+}
+
+#username {
+    font-family: NimbusLight;
+    -webkit-text-stroke: initial;
+    text-shadow: none;
+    color: black;
+    margin: 5% 0;
+}
+
+#updateValues {
+    margin: 10% auto;
+    width: 50%;
+}
+
+.profile-board input {
+    text-align: center;
+}
+
+#error {
+    color: red;
+}

@@ -9,7 +9,7 @@ import base64
 from io import BytesIO
 
 
-from qrcodes.models import *
+from qrcodes.models import QrCodeModel, QrCodeVisit
 
 
 """
@@ -50,6 +50,8 @@ class QrCodeManager(SuperUserRequired, View):
         if kwargs:
             self.code = kwargs['code']
 
+        print(method)
+
         match method:
             case 'add':
                 self.add_code()
@@ -61,7 +63,7 @@ class QrCodeManager(SuperUserRequired, View):
     # Gets all current QR codes and returns a JsonResponse for the javascript to load it onto the page
     def get_all_codes(self):
         all_codes = QrCodeModel.objects.all()
-        codes_list = [{'id': code.id, 'expired': code.expired, 'longitude': code.longitude, 'latitude': code.latitude} for code in all_codes]
+        codes_list = [{'id': code.id, 'expired': code.expired, 'longitude': code.longitude, 'latitude': code.latitude, 'name': code.name, 'description': code.description} for code in all_codes]
         return JsonResponse({'values': codes_list})
 
     # Generates a QR code based on the code provided and returns a JsonResponse for the javascript to load it onto the page
@@ -93,4 +95,27 @@ class QrCodeManager(SuperUserRequired, View):
 
     # Deletes a QR code from the database
     def delete_code(self):
-        QrCodeModel.objects.filter(id=self.code).delete()
+        qr_code_object = QrCodeModel.objects.filter(id=self.code).first()
+
+        if qr_code_object:
+            qr_code_object.expired = True
+            qr_code_object.save()
+
+
+class SiteAdminHome(SuperUserRequired, View):
+    """
+     * Redirects the admin to the admin home page
+     *
+     * @author Jasper
+    """
+    def get(self, request, *args, **kwargs):
+        return render(request, "admin/admin_home.html")
+
+class ManageScores(SuperUserRequired, View):
+    """
+     * Redirects the admin to the admin manage scores page
+     *
+     * @author Jasper
+    """
+    def get(self, request, *args, **kwargs):
+        return render(request, "admin/manage_scores.html")
