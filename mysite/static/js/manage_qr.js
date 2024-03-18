@@ -39,11 +39,20 @@ function generateQRCode(code=null) {
 
 // Sends a POST request to add the new QR code to the database
 function add_to_database(code) {
+    var name = $('#nameInput').val();
+    var description = $('#descriptionInput').val();
+    var longitude = $('#longitudeInput').val();
+    var latitude = $('#latitudeInput').val();
+
     $.ajax({
         url: `/siteadmin/manageqr/${code}/`,
         type: 'POST',
         data: {
             data: code,
+            longitude:longitude,
+            latitude:latitude,
+            name: name,
+            description: description,
             csrfmiddlewaretoken: CSRF_TOKEN,
             'method': 'add'
         },
@@ -94,6 +103,8 @@ function refresh_values() {
                     '<td>' + value.expired + '</td>' +
                     '<td>' + value.longitude + '</td>' +
                     '<td>' + value.latitude + '</td>' +
+                    '<td>' + value.name + '</td>' +
+                    '<td>' + value.description + '</td>' +
                     '<td>' +
                     '<button onclick="generateQRCode(\'' + value.id + '\')">Get QR Code</button>' +
                     '<button onclick="deleteQRCode(\'' + value.id + '\')">Delete</button>' +

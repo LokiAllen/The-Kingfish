@@ -18,6 +18,10 @@
 <body onload="refresh_values()">
 
 <input type="text" id="dataInput" placeholder="Enter data (leave blank to complete for you)" style="width:18rem">
+<input type="text" id="nameInput" placeholder="Enter name" style="width:18rem">
+<input type="text" id="descriptionInput" placeholder="Enter description" style="width:18rem">
+<input type="text" id="longitudeInput" placeholder="Enter longitude" style="width:18rem">
+<input type="text" id="latitudeInput" placeholder="Enter latitude" style="width:18rem">
 
 <button onclick="generateQRCode()">Generate QR Code</button>
 <button onclick="location.href='{% url 'home' %}'" type="button">Home</button>
@@ -32,6 +36,8 @@
             <th>Expired</th>
             <th>Longitude</th>
             <th>Latitude</th>
+            <th>Name</th>
+            <th>Description</th>
         </tr>
     </thead>
     <tbody class="qr-container">
