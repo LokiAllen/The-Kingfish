@@ -84,7 +84,7 @@ func _physics_process(delta):
 		score += 1
 		
 		# Apply the gravity if the player is not on floor or ceiling
-		if not (canJump()):
+		if not (is_on_ceiling() or is_on_floor()):
 			slidingParticles.emitting = false
 			velocity.y += currentGravity * delta
 		else:

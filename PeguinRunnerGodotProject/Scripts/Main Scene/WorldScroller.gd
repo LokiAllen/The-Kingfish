@@ -49,8 +49,8 @@ var currentChunks : Array[TileMap]
 
 
 # Speed of chunk movement and chance of transition
-var speed : float = 400.0
-const MAXSPEED : float = 450
+var speed : float = 380.0
+const MAXSPEED : float = 410.0
 const ACCELERATION : float = 0.5
 var transitionChance : float = 0.25
 
