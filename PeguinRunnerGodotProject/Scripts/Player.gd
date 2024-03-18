@@ -75,9 +75,6 @@ func _physics_process(delta):
 	# Handle the rotation of the player sprite
 	handleRotation()
 	
-	
-	print(ceilingCheck())
-	
 	# If alive, behave as normal
 	if alive:
 		# Increment the score
@@ -213,7 +210,7 @@ func kill():
 		musicPlayer.stop()
 		
 		# Set the highscore and push the data to the server
-		if OS.has_feature('web') and !worldScroller.isTutorial:
+		if OS.has_feature('web'):
 			GameManager.setHighScore(score)
 			GameManager.pushSessionData()
 

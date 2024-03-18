@@ -57,10 +57,7 @@ func _ready():
 		django_bridge = JavaScriptBridge.get_interface("djangoBridge")
 		django_bridge.setCallback(my_callback)
 		django_bridge.getUserData()
-		
-		print("Django bridge has been established")
-	else:
-		print("The JavaScriptBridge singleton is NOT available")
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -77,7 +74,6 @@ func getCoinCount():
 
 
 func pushSessionData():
-	print("pushing to server")
 	var csrfToken = django_bridge.getCookieValue("csrftoken")
 	
 	sessionUserData["coins"] -= 5
@@ -91,8 +87,6 @@ func pushSessionData():
 	
 	django_bridge.setUserData(csrfToken, sessionUserData["coins"], sessionUserData["highscore"], 
 		sessionUserData["cumulativeScore"])
-	print("pushed to server")
-	
 
 func djangoCallback(args):
 	var jsonParser = JSON.new()

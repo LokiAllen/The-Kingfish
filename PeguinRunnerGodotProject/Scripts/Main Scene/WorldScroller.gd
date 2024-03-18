@@ -87,7 +87,6 @@ func _ready():
 # Adds a chunk to the foreground and list of chunks
 func addChunk(targetChunk : Resource):
 	var newChunk = targetChunk.instantiate()
-	print(newChunk.get_used_rect().size)
 	foreground.add_child(newChunk)
 	currentChunks.append(newChunk)
 	return newChunk
