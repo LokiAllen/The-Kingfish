@@ -19,28 +19,33 @@
     <!-- Rest of your form -->
     <form method="POST" action="" enctype="multipart/form-data" class="dropzone" id="RegisterForm">
         {% csrf_token %}
-        <div class="subform">
-            <div class="column">{{ form.email.label_tag }}
-                {{ form.email }}</div>
 
-            <div class="column">{{ form.username.label_tag }}
-                {{ form.username }}</div>
-        </div>
+        <div style="display: flex;
+        flex-direction:column; width:fit-content; margin: auto;">
 
-        <div class="subform">
-            <div class="column">{{ form.first_name.label_tag }}
-                {{ form.first_name }}</div>
+            <div style="display: flex; flex-direction:row; width:fit-content">
+                {{ form.email.label_tag }}
+                {{ form.email }}
 
-            <div class="column">{{ form.last_name.label_tag }}
-                {{ form.last_name }}</div>
-        </div>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
 
-        <div class="subform">
-            <div class="column">{{ form.password1.label_tag }}
-                {{ form.password1 }}</div>
+            <div style="display: flex; flex-direction:row; width:fit-content">
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
 
-            <div class="column">{{ form.password2.label_tag }}
-                {{ form.password2 }}</div>
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+            </div>
+
+            <div style="display: flex; flex-direction:row; width:fit-content">
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+            </div>
         </div>
 
         <input type="submit" value="Register" class="primarybutton">
