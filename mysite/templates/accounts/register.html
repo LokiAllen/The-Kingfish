@@ -19,28 +19,45 @@
     <!-- Rest of your form -->
     <form method="POST" action="" enctype="multipart/form-data" class="dropzone" id="RegisterForm">
         {% csrf_token %}
-        <div class="subform">
-            <div class="column">{{ form.email.label_tag }}
-                {{ form.email }}</div>
 
-            <div class="column">{{ form.username.label_tag }}
-                {{ form.username }}</div>
-        </div>
+        <div style="width:fit-content; margin: auto;">
 
-        <div class="subform">
-            <div class="column">{{ form.first_name.label_tag }}
-                {{ form.first_name }}</div>
+            <div style="display: flex; flex-direction:row; width:fit-content">
 
-            <div class="column">{{ form.last_name.label_tag }}
-                {{ form.last_name }}</div>
-        </div>
+                <div class="textfield">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                </div>
 
-        <div class="subform">
-            <div class="column">{{ form.password1.label_tag }}
-                {{ form.password1 }}</div>
+                <div class="textfield">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                </div>
+            </div>
 
-            <div class="column">{{ form.password2.label_tag }}
-                {{ form.password2 }}</div>
+            <div style="display: flex; flex-direction:row; width:fit-content">
+                <div class="textfield">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name }}
+                </div>
+
+                <div class="textfield">
+                    {{ form.last_name.label_tag }}
+                    {{ form.last_name }}
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction:row; width:fit-content">
+                <div class="textfield">
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
+                </div>
+
+                <div class="textfield">
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
+                </div>
+            </div>
         </div>
 
         <input type="submit" value="Register" class="primarybutton">
