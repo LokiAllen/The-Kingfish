@@ -9,44 +9,63 @@
         <title>Your Profile</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'css/edit_profile.css' %}">
-        <!--<link rel="stylesheet" type="text/css" href="{% static 'css/background_styles.css' %}"> -->
     </head>
     <body>
-    <h1>Your Profile!</h1>
     <form method="POST" action="" enctype="multipart/form-data" class="dropzone" id="RegisterForm">
         {% csrf_token %}
-        <div class="subform">
-            <div class="column">{{ form.email.label_tag }}
-                {{ form.email }}</div>
+        <div class="profile-board">
+            <div class="background-image"></div>
+            <div class="profile-picture-container">
+                <img src="{{ user.userinfo.picture.url }}" alt="Profile Picture" class="profile-picture">
+                <input type="file" name="profile_picture" id="id_profile_picture" style="display: none;">
+            </div>
+            <div class="info">
+                <div class="input-container">
+                    <h2>Username</h2>
+                    <input name="username" placeholder="{{ form.username.initial }}" class="input-field" type="text">
+                    <label for="input-field" class="input-label"></label>
+                    <span class="input-highlight"></span>
+                </div>
+                <div class="input-container">
+                    <h2>Email</h2>
+                    <input name="email" placeholder="{{ form.email.initial }}" class="input-field" type="text">
+                    <label for="input-field" class="input-label"></label>
+                    <span class="input-highlight"></span>
+                </div>
 
-            <div class="column">{{ form.username.label_tag }}
-                {{ form.username }}</div>
-        </div><div class="subform">
+                <div class="pairs-container">
+                    <div class="paired-names">
+                        <h2>First name</h2>
+                        <div class="input-container">
+                            <input name="first_name" placeholder="{{ form.first_name.initial }}" class="input-field" type="text">
+                            <label for="input-field" class="input-label"></label>
+                            <span class="input-highlight"></span>
+                        </div>
+                        <h2>Background</h2>
+                        <h2>{{ form.background }}</h2>
+                    </div>
 
-        <div class="column">{{ form.first_name.label_tag }}
-            {{ form.first_name }}</div>
-
-        <div class="column">{{ form.last_name.label_tag }}
-            {{ form.last_name }}</div>
-    </div>
-
-        <div class="subform">
-            <div class="column">{{ form.title.label_tag }}
-                {{ form.title }}</div>
-
-            <div class="column">{{ form.background.label_tag }}
-                {{ form.background }}</div>
+                    <div class="paired-radio">
+                        <h2>Last name</h2>
+                        <div class="input-container">
+                            <input name="last_name" placeholder="{{ form.last_name.initial }}" class="input-field" type="text">
+                            <label for="input-field" class="input-label"></label>
+                            <span class="input-highlight"></span>
+                        </div>
+                        <h2>Title</h2>
+                        <h2>{{ form.title }}</h2>
+                    </div>
+                </div>
+                <button type="submit" class="button profile-button">Change</button>
+                {{ form.username.errors }}
+                {{ form.email.errors }}
+                {{ form.first_name.errors }}
+                {{ form.last_name.errors }}
+                {{ form.title.errors }}
+                {{ form.background.errors }}
+                {{ form.profile_picture.errors }}
+            </div>
         </div>
-
-        <label for="id_profile_picture">Profile Picture</label>
-        <div class="sideDiv" id="previewDiv">
-            <input type="file" name="profile_picture" id="id_profile_picture" class="dropzone custom-file-input">
-            <img src="{{ user.userinfo.picture.url }}" id="pfp" style="display: block;">
-        </div>
-
-        <input type="submit" value="Change" class="primarybutton">
-        {{ form.username.errors }}
-        {{ form.email.errors }}
     </form>
 
     <script>
@@ -61,16 +80,22 @@
         $('document').ready(function () {
             // Sets the background if the user has one
             {% if user.userinfo.background.picture %}
-                let page = document.getElementsByClassName('page')[0];
-                page.style.background = `url("{% static 'media/profile_backgrounds/' %}{{ user.userinfo.background.picture }}")`;
+                let bg_img = document.getElementsByClassName('background-image')[0];
+                bg_img.style.background = `url("{% static 'media/profile_backgrounds/' %}{{ user.userinfo.background.picture }}")`;
+                bg_img.style.backgroundSize = 'cover';
             {% endif %}
 
-            // Changes the picture anytime a file is dragged or uploaded
+            document.querySelector('.profile-picture').addEventListener('click', function() {
+                document.getElementById('id_profile_picture').click();
+            });
+
+            // Changes the picture anytime a file is uploaded
             $("#id_profile_picture").change(function () {
+                console.log(this.files)
                 if (this.files && this.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                        $('.sideDiv #pfp').attr('src', e.target.result);
+                        $('.profile-picture-container img').attr('src', e.target.result);
                     }
                     reader.readAsDataURL(this.files[0]);
                 }
@@ -78,16 +103,18 @@
 
             // Changes the background if a new one is selected
             $("#id_background").change(function () {
+                console.log('Hello')
                 var selected = $(this).children("option:selected").text();
-                let page = document.getElementsByClassName('page')[0];
+                let bg_img = document.getElementsByClassName('background-image')[0];
 
                 if (selected == 'Default') {
-                    page.removeAttribute('style');
+                    bg_img.removeAttribute('style');
                     return
                 }
 
-                page.style.background = ` url("{% static 'media/profile_backgrounds/' %}${bg_filenames[selected]}")`;
-                page.classList = `page ${selected}-background`;
+                bg_img.style.background = ` url("{% static 'media/profile_backgrounds/' %}${bg_filenames[selected]}")`;
+                bg_img.style.backgroundSize = 'cover';
+                bg_img.classList = `background-image ${selected}-background`;
             })
         });
     </script>

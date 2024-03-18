@@ -16,40 +16,46 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/background_styles.css' %}">
         <style>
             {% if user_data.userinfo.background.picture %}
-            .page {
-                background: url("{% static 'media/profile_backgrounds/' %}{{ user_data.userinfo.background.picture }}")
-            }
+                .background-image {
+                    background: url("{% static 'media/profile_backgrounds/' %}{{ user_data.userinfo.background.picture }}");
+                    background-size: cover;
+                }
             {% endif %}
         </style>
         <title>Profile</title>
     </head>
     <body>
-    <div id="profileboard">
+    </div>
 
-        <div id="imagename">
-            <img src="{{ user_data.userinfo.picture.url }}" id="pfp" style="display: block;">
-            <h1> {{ user_data.username }}</h1>
+    <div class="profile-board">
+        <div class="background-image"></div>
+        <div class="profile-picture-container">
+            <img src="{{ user_data.userinfo.picture.url }}" alt="Profile Picture" class="profile-picture">
         </div>
-        <h3>{{ title }}</h3>
-
-        <p> First Name: {{ user_data.first_name }}</p>
-        <p> Last Name: {{ user_data.first_name }}</p>
-        <p> uid: {{ user_data.id }}</p>
-        <p> coins: {{ user_data.userinfo.coins }}</p>
-
-        <div id="buttons">
-            <button onclick="location.href='{% url 'accounts:profile' username=user.username %}'" type="button">Your Profile</button>
-            <button onclick="location.href='{% url 'home' %}'" type="button">Home</button>
-
+        <div class="info">
+            <h1>{{ user_data.username }}</h1>
+            <h2>{{ title }}</h2>
+            <div class="stats">
+                <div class="stat">
+                    <p>Coins</p>
+                    <p>{{ user_data.userinfo.coins }}</p>
+                </div>
+                <div class="stat">
+                    <p>Highscore</p>
+                    <p>{{ user_data.userinfo.highscore }}</p>
+                </div>
+                <div class="stat">
+                    <p>Total Score</p>
+                    <p>{{ user_data.userinfo.cumulativeScore }}</p>
+                </div>
+            </div>
             {% if not following %}
-                <button id="addfriend" onclick="addFriend('{{ user_data.username }}')" type="button">Add friend</button>
-
+                <button onclick="addFriend('{{ user_data.username }}')" class="profile-button">Add Friend</button>
             {% elif friend %}
-                <button id="message" onclick="location.href='{% url 'accounts:message' username=user_data.username %}'" type="button">Message</button>
+                <button onclick="location.href='{% url 'accounts:message' username=user_data.username %}'" type="button" class="profile-button">Message</button>
             {% endif %}
-
             {% if following %}
-                <button id="removefriend" onclick="removeFriend('{{ user_data.username }}')" type="button">Remove friend</button>
+                <button id="removefriend" onclick="removeFriend('{{ user_data.username }}')" type="button" class="profile-button">Remove friend</button>
             {% endif %}
         </div>
     </div>

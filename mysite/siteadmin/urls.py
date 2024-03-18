@@ -5,6 +5,8 @@ from .views import *
 app_name = 'siteadmin'
 
 urlpatterns = [
+    path('home/', SiteAdminHome.as_view(), name='adminhome'),
+    path('manage/scores', ManageScores.as_view(), name='managescores'),
     path('manageqr/', QrCodeManager.as_view(), name='manageqr'),
     path('manageqr/<str:code>/', QrCodeManager.as_view(), name='generateqrcode'),
 ]

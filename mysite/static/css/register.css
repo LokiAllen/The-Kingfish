@@ -1,0 +1,189 @@
+.register-title {
+    font-family: NimbusLight;
+    color: #2E2E2E;
+    -webkit-text-stroke: initial;
+    text-shadow: none;
+    letter-spacing: -10px;
+    font-weight: 400;
+    font-size: 90px;
+    margin: 0;
+}
+
+.register-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr repeat(5, 0.75fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    margin: 20vh auto;
+    width: 30vw;
+    min-height: 60vh;
+
+    /*background: rgba(253, 253, 253, 0.6);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;*/
+
+    background-color: #f4f4f4;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    color: #333c57;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+}
+
+.register-container .navbtn {
+    color: white !important;
+}
+
+.register-container * {
+    font-family: NimbusLight;
+    color: #2E2E2E;
+    -webkit-text-stroke: initial;
+    text-shadow: none;
+    font-weight: 400;
+}
+
+.input-container {
+    position: relative;
+    margin: 5% auto;
+    width: 100%;
+}
+
+.input-container input {
+    font-size: 20px;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    padding: 5px 0;
+    background-color: transparent;
+    outline: none;
+    text-align: center;
+}
+
+.input-container .label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 100%;
+    color: #ccc;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.input-container input:focus ~ .label,
+.input-container input.has-value ~ .label,
+.input-container input:valid ~ .label {
+    top: -20px;
+    font-size: 16px;
+    color: #333;
+}
+
+.input-container .underline {
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background-color: #333;
+    transform: scaleX(0);
+    transition: all 0.3s ease;
+}
+
+.input-container input:focus ~ .underline,
+.input-container input.has-value ~ .underline,
+.input-container input:valid ~ .underline {
+    transform: scaleX(1);
+}
+
+.register-container button {
+    width: 30%;
+}
+
+.register-btn {
+    margin-right: 3%;
+}
+
+.errorlist {
+    display: flex;
+    list-style-type: none;
+    padding-left: 0;
+    border: none;
+    margin: -30px;
+}
+
+.errorlist li {
+    color: indianred;
+    text-align: center;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+.register-container p {
+    color: indianred;
+    margin: 0;
+}
+
+.register-title {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row: 1;
+}
+
+.-username {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row: 2;
+}
+
+.username-error {
+    font-size: smaller;
+    transform: translateY(-10%);
+}
+
+.error {
+    font-size: smaller;
+    transform: translateY(-30%);
+}
+
+.-email {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row: 3;
+}
+
+.-password {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row: 4;
+}
+
+.-confirm-pwd {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row: 5;
+}
+
+.buttons {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-row: 6;
+}
+
+.username-login {
+    margin-top: 20%;
+}
+
+.login-error {
+    transform: none;
+}

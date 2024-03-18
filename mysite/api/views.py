@@ -8,7 +8,7 @@ from django.db.models import Case, Value, When, BooleanField, Q
 # Non-static imports
 from .models import UserMessage
 from .serializers import MessageSerializer, ScoreSerializer, ShopSerializer, UserTitleSerializer, \
-    UserBackgroundSerializer
+    UserBackgroundSerializer, UserInfoSerializer
 from accounts.models import UserInfo, UserFriends, Titles, Backgrounds, UserOwnedTitles, UserOwnedBackgrounds
 from shop.models import Shop
 
@@ -146,3 +146,33 @@ class ShopData(generics.GenericAPIView):
                     return Response({'coins': request.user.userinfo.coins}, status=200)
 
         return Response({}, status=400)
+
+
+class UserData(generics.GenericAPIView):
+    """
+     * Returns a list of a users username, coins, highscore and cumulativeScore
+     *
+     * @author Jasper
+    """
+    serializer_class = UserInfoSerializer
+    def get(self, request, *args, **kwargs):
+        user_object = User.objects.filter(username__iexact=kwargs['username']).first()
+        if user_object:
+            queryset = UserInfo.objects.get(user=user_object)
+            serializer = UserInfoSerializer(queryset, many=False)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({}, status=status.HTTP_404_NOT_FOUND)
+    def post(self, request, *args, **kwargs):
+        user_object = User.objects.filter(username__iexact=self.request.user).first()
+        if not user_object:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        user_info_object = UserInfo.objects.get(user=user_object)
+        serializer = self.get_serializer(user_info_object, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

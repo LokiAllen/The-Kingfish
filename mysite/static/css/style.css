@@ -54,6 +54,7 @@
     height: auto;
     width: auto;
     max-height: 50px;
+    margin-left: 12%;
 }
 
 .nav-links {
@@ -125,7 +126,7 @@
     padding: 0 10px;
 }
 
-/* plus sign */
+
 .sign {
     width: 100%;
     transition-duration: .3s;
@@ -181,7 +182,9 @@ a#pfp {
 }
 
 img.rounded-circle.account-img{
-    max-height: 48px;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
 }
 
 body {
@@ -239,7 +242,7 @@ h2 {
     text-shadow: 0 3px 0px #02050C;
     font-weight: bolder;
 }
-
+/*
 input {
     background-color: #f4f4f4;
     background-position: 0 90%;
@@ -262,7 +265,7 @@ input {
     border-bottom-right-radius: 225px 15px;
     border-top-left-radius: 255px 15px;
     border-top-right-radius: 15px 225px;
-}
+}*/
 
 /* CSS */
 button {
@@ -303,6 +306,7 @@ button:hover {
 button:focus {
     box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }
+
 
 .primarybutton {
     transition: all 235ms ease-in-out;
@@ -476,16 +480,6 @@ p.title {
     font-size: xx-large;
 }
 
-.swap-button, .second-title {
-    transition: transform 0.5s ease;
-}
-
-.swap-button {
-    margin-right: 20px;
-    position: relative;
-    z-index: 1;
-}
-
 .second-title {
     position: relative;
     left: 0;
@@ -631,6 +625,7 @@ section {
     margin: 5% 10% 25%;
 }
 
+/* Basic responsiveness atm, will make actually responsive soon */
 @media (max-width: 1350px) {
     #pfp {
         visibility: hidden;
