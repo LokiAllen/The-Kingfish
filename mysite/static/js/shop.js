@@ -88,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const titleSection = createElement('div', {'classList': ['tt-section']}, [])
 
                     group.forEach(item => {
+
                         if (item.owned) {
                             var button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: 'OWNED', 'classList': ['tt-buy']}, [])
                         }

@@ -16,9 +16,9 @@
             <h1 class="first-title">Sustainability</h1>
             <div class="second-title-with-button">
                 {% if user.is_authenticated %}
-                    <button onclick="location.href='{% url 'game' %}'" type="button" class="button swap-button">Play</button>
+                    <button onclick="location.href='{% url 'game' %}'" type="button" class="button">Play</button>
                 {% else %}
-                    <button onclick="location.href='{% url 'home' %}'" type="button" class="button">Login</button>
+                    <button onclick="location.href='{% url 'accounts:register' %}'" type="button" class="button">Get Started</button>
                 {% endif %}
                 <h1 class="second-title">Slides</h1>
             </div>
@@ -32,7 +32,7 @@
 
     <div class="fullscreen-bg" id="second-background">
         <section>
-            <div class="about-title">ABOUT</div>
+            <div id="about-content" class="about-title">ABOUT</div>
             <div class="about-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget mauris ultricies, consectetur dolor in, commodo ante. Donec sed aliquam lorem, eget ornare elit. Maecenas hendrerit sapien velit, sit amet tincidunt sapien semper in. Maecenas a sodales massa. Proin eu sollicitudin ex. Sed quis blandit ante, eu euismod magna. Etiam placerat, nibh eget facilisis gravida, arcu augue ultrices ligula, non consequat augue nisi quis turpis. Duis bibendum lorem tempor augue fermentum, at luctus eros posuere. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris ultricies consequat elit quis pharetra. Nunc arcu ligula, maximus eget lectus ut, eleifend blandit arcu.</div>
             <div>
                 <button>Map</button>
