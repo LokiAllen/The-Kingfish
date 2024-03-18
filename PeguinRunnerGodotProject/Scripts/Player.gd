@@ -16,7 +16,7 @@ const ROTATIONSPEED = 0.1
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var currentGravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-@onready var jumpChecks : Array[RayCast2D] = [$JumpCheck]
+@onready var jumpChecks : Array[RayCast2D] = [$JumpCheck, $JumpCheck2]
 
 
 # Define an enum for the movement states and a variable for current state

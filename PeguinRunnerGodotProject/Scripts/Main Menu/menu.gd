@@ -15,7 +15,7 @@ Menu script for the Main Menu Scene
 
 # Reference to the world scene
 const WORLD = preload("res://Scenes/world.tscn")
-const TUTORIAL = preload("res://Scenes/tutorial.tscn")
+const TUTORIAL = preload("res://Scenes/tutorial/tutorial.tscn")
 
 func _ready():
 	titleAnimaiton.play("title")
