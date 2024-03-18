@@ -52,6 +52,12 @@ var score : int = 0
 @onready var returnButton = $"../CanvasLayer/ColorRect/VBoxContainer/ReturnButton"
 @onready var finalScoreLabel = $"../CanvasLayer/ColorRect/VBoxContainer/FinalScoreLabel"
 
+@onready var slidingParticles = $Penguin/SlidingParticles
+@onready var jumpSoundPlayer = $jumpSoundPlayer
+@onready var gameOverSound = $gameOverSound
+
+@onready var musicPlayer = $"../MusicPlayer"
+
 
 # Always start the player in the flipGravity movement state
 func _ready():
@@ -70,9 +76,15 @@ func _physics_process(delta):
 		score += 1
 		
 		
+		print(is_on_ceiling())
+		
+		
 		# Apply the gravity if the player is not on floor or ceiling
-		if not is_on_floor() or not is_on_ceiling():
+		if not (is_on_floor() or is_on_ceiling()):
+			slidingParticles.emitting = false
 			velocity.y += currentGravity * delta
+		else:
+			slidingParticles.emitting = true
 		
 		
 		# If the invinsible timer is active, decrement it
@@ -89,7 +101,7 @@ func _physics_process(delta):
 		match currentState:
 			movementState.flipGravity:
 				# Flip player if space is pressed
-				if Input.is_action_just_pressed("ui_accept") and (is_on_floor() or is_on_ceiling()):
+				if Input.is_action_just_pressed("jump") and (is_on_floor() or is_on_ceiling()):
 					# Play flip animation
 					if currentGravity > 0:
 						animationPlayer.play("flip")
@@ -98,10 +110,17 @@ func _physics_process(delta):
 					# Invert gravity and apply force
 					currentGravity = -currentGravity
 					velocity.y += currentGravity * delta
+					#Player jump sound
+					jumpSoundPlayer.pitch_scale = randf_range(0.7, 1)
+					jumpSoundPlayer.play()
 			movementState.jumpGravity:
 				# Jump if space is pressed
-				if Input.is_action_just_pressed("ui_accept"):
+				if Input.is_action_just_pressed("jump"):
 					velocity.y = -JUMPFORCE
+					#Player jump sound
+					jumpSoundPlayer.pitch_scale = randf_range(0.8, 1.1)
+					jumpSoundPlayer.play()
+		
 		
 		
 		# Check if there is a collision and kill the player if they're in jump state
@@ -181,5 +200,14 @@ func kill():
 		alive = false
 		
 		# Introduce death screen and set text of final score
+		returnButton.disabled = false
 		deathAnimationPlayer.play("endGame")
 		finalScoreLabel.text = "Final Score: %d" % score
+		
+		gameOverSound.play()
+		musicPlayer.stop()
+		
+		# Set the highscore and push the data to the server
+		if OS.has_feature('web'):
+			GameManager.setHighScore(score)
+			GameManager.pushSessionData()

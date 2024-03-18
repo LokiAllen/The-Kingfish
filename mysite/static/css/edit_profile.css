@@ -1,44 +1,225 @@
-#RegisterForm {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+.profile-board * {
+    font-family: NimbusLight;
+    -webkit-text-stroke: initial;
+    text-shadow: none;
+    color: black;
 }
 
-.column input {
-    width: 50%;
-    align-self: center;
-}
-
-.subform {
-    display: flex;
-    justify-content: space-between;
-    width: 50%;
-}
-
-.column {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 50%;
-    text-align: center;
-    width: 20%;
-}
-
-#id_profile_picture {
-    background: None;
-    text-align: center;
-    height: auto;
-}
-
-#previewDiv {
+.profile-board {
+    width: 100%;
+    max-width: 30vw;
+    margin: 18vh auto auto;
+    border: 1px solid #ddd;
     position: relative;
+    text-align: center;
+
+    background-color: #fff;
+    border-color: black;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
 }
 
-.sideDiv #pfp {
-    display: none;
+.profile-board h1 {
+    margin: 0;
+}
+
+.profile-board h2 {
+    margin: 0 auto 6%;
+    font-size: x-large;
+}
+
+.background-image {
+    height: 150px;
+    background-size: cover;
+    background: radial-gradient(circle at bottom center, #f6f6f6 20%, #96c5df 60%, #0fa3f0 100%);
+    border-bottom: 1px solid black;
+    border-top-left-radius: 255px 20px;
+    border-top-right-radius: 19px 225px;
+}
+
+.profile-picture-container {
+    width: 100px;
+    height: 100px;
+    overflow: visible;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 150px;
+    margin-top: -50px;
+}
+
+.profile-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    background: white;
+}
+
+.errorlist {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.errorlist li {
+    color: indianred;
+}
+
+.info {
+    padding: 60px 20px 20px;
+}
+
+.stats {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.stat {
+    margin-bottom: 10px;
+}
+
+.stat p:first-child {
+    border-bottom: 1px solid lightgray;
+    width: 50%;
+    margin: auto auto;
+    padding-bottom: 5px;
+    font-size: x-large;
+}
+
+.stat p {
+    font-size: large;
+}
+
+.profile-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    max-width: 60%;
+    min-width: 40%;
+}
+
+.info .profile-button:first-child {
+    margin-right: 5%;
+}
+
+
+.input-container {
+    position: relative;
+    margin: 20px;
+}
+
+
+.input-field {
+    display: block;
+    width: 50%;
+    margin: auto;
+    font-size: 16px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+    background-color: transparent;
+    text-align: center;
+}
+
+.input-field::placeholder {
+    text-align: center;
+    color: #525151;
+}
+
+
+.input-label {
     position: absolute;
     top: 0;
-    left: calc(100% + 10px);
-    width: 48px;
+    left: 0;
+    font-size: 16px;
+    color: rgba(204, 204, 204, 0);
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+
+.input-highlight {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    left: 25%;
+    right: 25%;
+    background-color: #007bff;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus + .input-label {
+    width: 50%;
+    left: 25%;
+    right: 25%;
+    top: -20px;
+    font-size: 12px;
+    color: #007bff;
+}
+
+.input-field:focus + .input-label + .input-highlight {
+    width: 50%;
+    left: 25%;
+    right: 25%;
+}
+
+.pairs-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 0 auto;
+    max-width: 80%;
+}
+
+.pairs-container .input-container .input-field:focus {
+    width: 100%;
+}
+
+.paired-names,
+.paired-radio {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.paired-names .input-field,
+.paired-radio .input-field {
+    width: 100%;
+}
+
+select {
+    border: none;
+    font-family: NimbusLight;
+    font-size: medium;
+}
+
+select:hover {
+    border: none;
+}
+
+select option {
+    list-style: none;
+    margin: 0 auto;
+    border-left: 2px solid #3ca0e7;
+    display: inline-block;
+    padding: 0 30px;
+    position: relative;
+    text-decoration: none;
+    text-align: center;
+}
+
+option[selected] {
+    color: #3ca0e7;
+}
+
+option:hover {
+    cursor: pointer;
 }

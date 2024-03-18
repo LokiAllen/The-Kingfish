@@ -82,9 +82,13 @@ class ShopSerializer(serializers.ModelSerializer):
      *
      * @author Jasper
     """
+    owned = serializers.SerializerMethodField()
+
+    def get_owned(self, obj):
+        return getattr(obj, 'owned', False)
     class Meta:
         model = Shop
-        fields = ['name', 'description', 'price', 'item_id', 'item_type']
+        fields = ['name', 'description', 'price', 'item_id', 'item_type', 'owned']
 
 class UserTitleSerializer(serializers.ModelSerializer):
     """
@@ -105,3 +109,19 @@ class UserBackgroundSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserOwnedBackgrounds
         fields = ['user', 'background']
+
+class UserInfoSerializer(serializers.ModelSerializer):
+    """
+     * An endpoint to serialize the user information - Admin use only
+     *
+     * @author Jasper
+    """
+    user_username = serializers.SerializerMethodField()
+
+    def get_user_username(self, obj):
+        return obj.user.username
+
+    class Meta:
+        model = UserInfo
+        fields = ['id', 'user_username', 'coins', 'highscore', 'cumulativeScore']
+
