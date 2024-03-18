@@ -57,6 +57,8 @@ class QrCodeManager(SuperUserRequired, View):
                 self.add_code()
             case 'delete':
                 self.delete_code()
+            case 'undo_delete':
+                self.undo_delete_code()
 
         return self.get_all_codes()
 
@@ -89,9 +91,26 @@ class QrCodeManager(SuperUserRequired, View):
 
     # Adds a new QR code to the database
     def add_code(self):
-        if not QrCodeModel.objects.filter(id=self.code).exists():
-            instance = QrCodeModel.objects.create(longitude=0, latitude=0, expired=False, id=self.code)
-            instance.save()
+        # Extracting additional data from POST request
+        name = self.request.POST.get('name', '')
+        description = self.request.POST.get('description', '')
+        longitude = self.request.POST.get('longitude', 0)
+        latitude = self.request.POST.get('latitude', 0)
+
+        # Check if the QR code already exists
+        qr_code_object, created = QrCodeModel.objects.get_or_create(id=self.code,
+                                                                    defaults={'longitude': longitude,
+                                                                              'latitude': latitude,
+                                                                              'name': name,
+                                                                              'description': description,
+                                                                              'expired': False})
+        if not created:
+            # If the QR code exists, update it with the new values
+            qr_code_object.longitude = longitude
+            qr_code_object.latitude = latitude
+            qr_code_object.name = name
+            qr_code_object.description = description
+            qr_code_object.save()
 
     # Deletes a QR code from the database
     def delete_code(self):
@@ -99,6 +118,14 @@ class QrCodeManager(SuperUserRequired, View):
 
         if qr_code_object:
             qr_code_object.expired = True
+            qr_code_object.save()
+
+    # Sets the expired status to false
+    def undo_delete_code(self):
+        qr_code_object = QrCodeModel.objects.filter(id=self.code).first()
+
+        if qr_code_object:
+            qr_code_object.expired = False
             qr_code_object.save()
 
 

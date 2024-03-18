@@ -39,10 +39,10 @@ function generateQRCode(code=null) {
 
 // Sends a POST request to add the new QR code to the database
 function add_to_database(code) {
-    var name = $('#nameInput').val();
-    var description = $('#descriptionInput').val();
-    var longitude = $('#longitudeInput').val();
-    var latitude = $('#latitudeInput').val();
+    var name = $('#nameInput').val() || 'New Bin';
+    var description = $('#descriptionInput').val() || 'New Description';
+    var longitude = $('#longitudeInput').val() || -3.533497;
+    var latitude = $('#latitudeInput').val() || 50.735256;
 
     $.ajax({
         url: `/siteadmin/manageqr/${code}/`,
@@ -85,6 +85,24 @@ function deleteQRCode(code) {
     });
 }
 
+function activateQRCode(code) {
+    $.ajax({
+        url: `/siteadmin/manageqr/${code}/`,
+        type: 'POST',
+        data: {
+            data: code,
+            csrfmiddlewaretoken: CSRF_TOKEN,
+            'method': 'undo_delete',
+        },
+        success: function(response) {
+            refresh_values();
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
+}
+
 // Sends a GET request to retrieve all the current QR codes and fills the table with those
 function refresh_values() {
     var qrContainer = $('.qr-container');
@@ -98,6 +116,10 @@ function refresh_values() {
         success: function(data) {
             qrContainer.html('');
             data.values.forEach(function(value) {
+                var actionButton = value.expired ?
+                    `<button onclick="activateQRCode('${value.id}')">Make Active</button>` :
+                    `<button onclick="deleteQRCode('${value.id}')">Deactivate</button>`;
+
                 qrContainer.append('<tr>' +
                     '<td>' + value.id + '</td>' +
                     '<td>' + value.expired + '</td>' +
@@ -107,7 +129,7 @@ function refresh_values() {
                     '<td>' + value.description + '</td>' +
                     '<td>' +
                     '<button onclick="generateQRCode(\'' + value.id + '\')">Get QR Code</button>' +
-                    '<button onclick="deleteQRCode(\'' + value.id + '\')">Delete</button>' +
+                    actionButton +
                     '</td>' +
                     '</tr>');
             });
