@@ -208,6 +208,12 @@ input {
     border-top-right-radius: 15px 225px;
 }
 
+.subform {
+    width: max-content;
+    display: flex;
+    flex-direction: row;
+}
+
 button {
     align-self: center;
     background-color: #f4f4f4;

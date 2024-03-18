@@ -60,8 +60,9 @@
 
         {% endif %}
         {% if user.is_superuser %}
-        <button style="margin-left: 10px;" onclick="location.href='{% url 'siteadmin:manageqr' %}'" type="button">Manage
-            QR Codes</button>
+        <button class="primarybutton" style="margin-left: 10px;"
+            onclick="location.href='{% url 'siteadmin:adminhome' %}'" type="button">Admin
+            Panel</button>
         {% endif %}
     </div>
 
