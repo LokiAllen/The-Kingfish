@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const backgroundsBody = document.getElementById('shop-backgrounds');
     const titlesBody = document.getElementById('shop-titles');
     const types = {
@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function groupTitles(titles) {
         const grouped = [];
 
-        for (let i=0; i < titles.length; i+=2) {
-            grouped.push(titles.slice(i, i+2));
+        for (let i = 0; i < titles.length; i += 2) {
+            grouped.push(titles.slice(i, i + 2));
         }
 
         return grouped;
@@ -85,28 +85,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 backgroundsBody.innerHTML = ''
 
                 groupedTitles.forEach(group => {
-                    const titleSection = createElement('div', {'classList': ['tt-section']}, [])
+                    const titleSection = createElement('div', { 'classList': ['tt-section'] }, [])
 
                     group.forEach(item => {
 
                         if (item.owned) {
-                            var button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: 'OWNED', 'classList': ['tt-buy']}, [])
+                            var button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: 'OWNED' }, [])
                         }
                         else if (item.price > USER_COINS) {
-                            var button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: 'BUY', 'classList': ['tt-buy']}, [])
+                            var button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: 'BUY' }, [])
                         }
                         else {
-                            var button = createElement('button', { value: `${item.item_id}-${item.item_type}`, textContent: 'BUY', 'classList': ['tt-buy']}, [])
+                            var button = createElement('button', { value: `${item.item_id}-${item.item_type}`, textContent: 'BUY', 'classList': ['primarybutton'] }, [])
                         }
 
                         const titleItem =
-                            createElement('div', {'classList': ['tt-card']}, [
-                                createElement('div', {'classList': ['tt-card-overlay']}),
-                                createElement('div', {'classList': ['tt-card-inner']}, [
-                                    createElement('p', {textContent: item.name.toUpperCase()}, []),
-                                    createElement('p', {textContent: `${item.price}Ȼ`}, []),
-                                    button,
-                                ])
+                            createElement('div', { 'classList': ['tt-card'] }, [
+
+                                createElement('p', { textContent: `${item.price}Ȼ` }, []),
+                                createElement('p', { textContent: item.name.toUpperCase() }, []),
+                                button,
+
                             ]);
 
                         titleSection.appendChild(titleItem);
@@ -116,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 backgrounds.forEach(item => {
-                    let button = createElement('button', {textContent: 'BUY', 'classList': ['bg-buy'], value: `${item.item_id}-${item.item_type}`}, [])
+                    let button = createElement('button', { textContent: 'BUY', 'classList': ['primarybutton'], value: `${item.item_id}-${item.item_type}` }, [])
                     if (item.owned || item.price > USER_COINS) {
                         if (item.owned) {
                             text = 'OWNED'
@@ -124,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             text = 'BUY'
                         }
 
-                        button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: text, 'classList': ['bg-buy']}, [])
+                        button = createElement('button', { disabled: true, value: `${item.item_id}-${item.item_type}`, textContent: text }, [])
                     }
 
                     var cssName = item.name;
@@ -134,18 +133,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
 
                     const background_item =
-                        createElement('div', {'classList': ['bg-card']}, [
-                            createElement('div', {'classList': ['card__image', cssName]}, []),
-                            createElement('div', {'classList': ['card__content']}, [
-                                createElement('div', {'classList': ['card__title']}, [
-                                    createElement('p', {textContent: item.name}, []),
-                                    createElement('p', {'classList': ['bg-cost'], textContent: `${item.price}Ȼ`}, [])
-                                ]),
-                                createElement('p', {'classList': ['card__describe']}, [
-                                    button
-                                ])
-                            ])
+                        createElement('div', { 'classList': ['bg-card'] }, [
+                            createElement('div', { 'classList': ['card__image', cssName] }, []),
+                            createElement('p', { textContent: item.name }, []),
+                            createElement('p', { 'classList': ['bg-cost'], textContent: `${item.price}Ȼ` }, []),
+                            button
+
                         ])
+
 
                     backgroundsBody.appendChild(background_item);
                 });
@@ -185,9 +180,9 @@ document.addEventListener('DOMContentLoaded', function() {
      * Event listener instead of direct on press functions for the buttons to allow the other
      * functions to more easily set the button types
      */
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         if (event.target.nodeName == 'BUTTON') {
-            purchaseItem(event.srcElement.value);
+            purchaseItem(event.target.value);
         }
     });
 });
