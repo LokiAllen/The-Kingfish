@@ -12,18 +12,12 @@
 .register-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr repeat(5, 0.75fr);
+    grid-template-rows: 1fr repeat(4, 0.75fr) 0.1fr 0.75fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     margin: 20vh auto;
     width: 30vw;
     min-height: 60vh;
-
-    /*background: rgba(253, 253, 253, 0.6);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 10px;*/
-
     background-color: #f4f4f4;
     background-position: 0 90%;
     background-repeat: repeat no-repeat;
@@ -177,7 +171,7 @@
 .buttons {
     grid-column-start: 1;
     grid-column-end: 5;
-    grid-row: 6;
+    grid-row: 7;
 }
 
 .username-login {
@@ -186,4 +180,35 @@
 
 .login-error {
     transform: none;
+}
+
+.terms-conditions-cont {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    gird-row: 6;
+    margin-bottom: 4%;
+}
+
+input[type="checkbox"] {
+    width: 10px;
+    height: 10px;
+}
+
+@media (max-width: 450px) {
+    .register-container {
+        width: 90vw !important;
+    }
+
+    .register-title {
+        grid-column-start: 1;
+        grid-column-end: 5;
+    }
+
+    .login-container {
+        grid-template-rows: 1fr 0.75fr 0.42fr 0.75fr 0.75fr !important;
+    }
+
+    .login-container .buttons {
+        grid-row: 5;
+    }
 }

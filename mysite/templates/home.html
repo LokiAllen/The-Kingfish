@@ -2,45 +2,46 @@
 
 {% extends "./base.html" %}
 
-
+{% load static %}
 {% block template %}
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-
-<body>
-
-    <div style="height: 50vh; display: flex; justify-content: center; align-items: center;">
-        <div>
-            <h1>Penguin Game</h1>
-
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <script src="{% static 'js/home.js' %}"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+    </head>
+    <body>
+    <div class="fullscreen-bg">
+        <div class="home-title">
+            <a class="mobile-only" href="{% url 'home' %}"><img src="{% static '/media/logo.png' %}" alt="Sustainability Slides"></a>
+            <h1 class="first-title">Sustainability</h1>
+            <h1 class="second-title">Slide</h1>
             {% if user.is_authenticated %}
-            {% if user.is_superuser %}
-            <h1>Admin</h1>
-            <button onclick="location.href='{% url 'siteadmin:manageqr' %}'" type="button">Manage QR Codes</button>
+                <button onclick="location.href='{% url 'game' %}'" type="button" class="buttons">Play</button>
             {% else %}
-            <h3> Welcome back {{ user.username }}!</h3>
+                <button onclick="location.href='{% url 'accounts:register' %}'" type="button" class="buttons">Get Started</button>
             {% endif %}
+        </div>
 
-            <button onclick="location.href='{% url 'game' %}'" type="button" class="primarybutton">PLAY</button>
-            {% else %}
-            <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
-            <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button"
-                class="primarybutton">Login</button>
-            {% endif %}
+        <div class="scroll-indicator">
+            <a href="#about-content" class="learn-more">Learn More</a>
+            <div class="arrow-down"></div>
         </div>
     </div>
 
-    <div class="page" id="about">
+    <div class="page" id="about-content">
         <h2>About</h2>
 
-        <div class="carousel">
+        <div class="carousel web-only">
             <img src="{{ user.userinfo.picture.url }}" class="slide">
             <img src="{{ user.userinfo.picture.url }}" class="slide expanded">
             <img src="{{ user.userinfo.picture.url }}" class="slide">
+        </div>
+
+        <div class="mobile-images mobile-only">
+            <img src="{% static '/media/penguin_plastic.jpg' %}" class="">
+            <!--<img src="{% static '/media/penguins_walking_trash.png' %}" class="">-->
         </div>
 
         <script>
@@ -82,9 +83,21 @@
             in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </div>
-
     </div>
-</body>
-
-</html>
+    <div class="fullscreen-bg web-only" id="second-background">
+        <section>
+            <div id="about" class="about-title">ABOUT</div>
+            <div class="about-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget mauris ultricies, consectetur dolor in, commodo ante. Donec sed aliquam lorem, eget ornare elit. Maecenas hendrerit sapien velit, sit amet tincidunt sapien semper in. Maecenas a sodales massa. Proin eu sollicitudin ex. Sed quis blandit ante, eu euismod magna. Etiam placerat, nibh eget facilisis gravida, arcu augue ultrices ligula, non consequat augue nisi quis turpis. Duis bibendum lorem tempor augue fermentum, at luctus eros posuere. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris ultricies consequat elit quis pharetra. Nunc arcu ligula, maximus eget lectus ut, eleifend blandit arcu.</div>
+            <div>
+                <button>Map</button>
+                <button>Carbon Footprint</button>
+                <button>Sustainability Course</button>
+            </div>
+        </section>
+        <div class="penguin">
+            <img src="{% static '/media/penguin_plastic.jpg' %}">
+            <img src="{% static '/media/penguins_walking_trash.png' %}">
+        </div>
+    </body>
+    </html>
 {% endblock %}

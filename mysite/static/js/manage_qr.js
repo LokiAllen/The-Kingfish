@@ -1,3 +1,8 @@
+const values = {
+    true: 'Yes',
+    false: 'No',
+}
+
 // Generates a strong random QR code value
 function random_code() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -67,7 +72,6 @@ function add_to_database(code) {
 
 // Sends a POST request to delete the QR code from the database
 function deleteQRCode(code) {
-    console.log(CSRF_TOKEN);
     $.ajax({
         url: `/siteadmin/manageqr/${code}/`,
         type: 'POST',
@@ -100,13 +104,11 @@ function refresh_values() {
             data.values.forEach(function(value) {
                 qrContainer.append('<tr>' +
                     '<td>' + value.id + '</td>' +
-                    '<td>' + value.expired + '</td>' +
+                    '<td>' + values[value.expired] + '</td>' +
                     '<td>' + value.longitude + '</td>' +
                     '<td>' + value.latitude + '</td>' +
-                    '<td>' + value.name + '</td>' +
-                    '<td>' + value.description + '</td>' +
                     '<td>' +
-                    '<button onclick="generateQRCode(\'' + value.id + '\')">Get QR Code</button>' +
+                    '<button onclick="generateQRCode(\'' + value.id + '\')">Get QR</button>' +
                     '<button onclick="deleteQRCode(\'' + value.id + '\')">Delete</button>' +
                     '</td>' +
                     '</tr>');

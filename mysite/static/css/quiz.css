@@ -39,7 +39,6 @@ h2 {
 .question h2 {
     grid-column-start: 1;
     grid-column-end: 4;
-
 }
 
 .question div {
@@ -58,4 +57,20 @@ h2 {
     margin: 5%;
     width: 30%;
     height: 30%;
+}
+
+@media (max-width: 450px) {
+    .question h2 {
+        margin-bottom: 4%;
+    }
+
+    .question div {
+        grid-column-start: 1;
+        grid-column-end: 4;
+        margin-left: 5%;
+    }
+
+    .page {
+        margin-bottom: 20vh;
+    }
 }

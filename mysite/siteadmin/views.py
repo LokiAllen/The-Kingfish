@@ -24,12 +24,20 @@ class SuperUserRequired(View):
 
         return redirect('/home/')
 
+class GameKeeperRequired(View):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_staff or request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+
+        return redirect('/home/')
+
+
 """
  * A class based view to handle everything related to managing the QR codes
  * 
  * @author Jasper
 """
-class QrCodeManager(SuperUserRequired, View):
+class QrCodeManager(GameKeeperRequired, View):
     # GET requests are for generating and refreshing the codes (and initial page load)
     def get(self, request, *args, **kwargs):
         method = request.GET.get('method', None)
@@ -102,7 +110,7 @@ class QrCodeManager(SuperUserRequired, View):
             qr_code_object.save()
 
 
-class SiteAdminHome(SuperUserRequired, View):
+class SiteAdminHome(GameKeeperRequired, View):
     """
      * Redirects the admin to the admin home page
      *
@@ -119,3 +127,12 @@ class ManageScores(SuperUserRequired, View):
     """
     def get(self, request, *args, **kwargs):
         return render(request, "admin/manage_scores.html")
+
+class ManageShop(GameKeeperRequired, View):
+    """
+     * Redirects the admin to the admin manage shop page
+     *
+     * @author Jasper
+    """
+    def get(self, request, *args, **kwargs):
+        return render(request, "admin/manage_shop.html")

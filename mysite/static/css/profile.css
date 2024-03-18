@@ -99,3 +99,10 @@
 .info .profile-button:first-child {
     margin-right: 5%;
 }
+
+@media (max-width: 450px) {
+    .profile-board {
+        max-width: 90vw;
+        margin-bottom: 21vh;
+    }
+}
