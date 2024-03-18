@@ -96,8 +96,26 @@ class QrCodeManager(SuperUserRequired, View):
     # Deletes a QR code from the database
     def delete_code(self):
         qr_code_object = QrCodeModel.objects.filter(id=self.code).first()
-        QrCodeVisit.objects.filter(qrcode=qr_code_object).delete()
 
         if qr_code_object:
             qr_code_object.expired = True
             qr_code_object.save()
+
+
+class SiteAdminHome(SuperUserRequired, View):
+    """
+     * Redirects the admin to the admin home page
+     *
+     * @author Jasper
+    """
+    def get(self, request, *args, **kwargs):
+        return render(request, "admin/admin_home.html")
+
+class ManageScores(SuperUserRequired, View):
+    """
+     * Redirects the admin to the admin manage scores page
+     *
+     * @author Jasper
+    """
+    def get(self, request, *args, **kwargs):
+        return render(request, "admin/manage_scores.html")

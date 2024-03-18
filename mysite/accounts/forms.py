@@ -86,13 +86,13 @@ class ChangeInfo(forms.Form):
      *
      * @author Jasper
     """
-    first_name = forms.CharField(label='First Name')
-    last_name = forms.CharField(label='Last Name')
-    username = forms.CharField(label='Username')
-    email = forms.EmailField(label='Email')
+    first_name = forms.CharField(label='First Name', required=False)
+    last_name = forms.CharField(label='Last Name', required=False)
+    username = forms.CharField(label='Username', required=False)
+    email = forms.EmailField(label='Email', required=False)
     profile_picture = forms.ImageField(required=False)
-    title = forms.ChoiceField(label='Titles', choices=[])
-    background = forms.ChoiceField(label='Backgrounds', choices=[])
+    title = forms.ChoiceField(label='Titles', choices=[], required=False)
+    background = forms.ChoiceField(label='Backgrounds', choices=[], required=False)
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
@@ -107,6 +107,9 @@ class ChangeInfo(forms.Form):
     def clean_email(self):
         email = self.cleaned_data['email']
 
+        if not email:
+            return self.user.email
+
         if email != self.user.email:
             user = User.objects.filter(email__iexact=email).exists()
             if user:
@@ -118,6 +121,9 @@ class ChangeInfo(forms.Form):
     def clean_username(self):
         username = self.cleaned_data['username']
 
+        if not username:
+            return self.user.username
+
         if username != self.user.username:
             user = User.objects.filter(username__iexact=username).exists()
             if user:
@@ -126,18 +132,27 @@ class ChangeInfo(forms.Form):
         return username
 
     # Gets and validates the first and last name of the user
-    def clean_info(self):
+    def clean_first_name(self):
         first_name = self.cleaned_data['first_name']
+
+        if not first_name:
+            first_name = self.user.first_name
+
+        return first_name
+
+    def clean_last_name(self):
         last_name = self.cleaned_data['last_name']
 
-        if first_name == self.user.first_name or last_name == self.user.last_name:
-            raise ValidationError('Enter a new name, not the same')
+        if not last_name:
+            last_name = self.user.last_name
 
-        return first_name, last_name
-
+        return last_name
 
     def clean_title(self):
         title = self.cleaned_data['title']
+
+        if not title:
+            return self.user.title
 
         user_owned_titles = UserOwnedTitles.objects.filter(user=self.user, title=title)
         if not user_owned_titles:
@@ -151,6 +166,9 @@ class ChangeInfo(forms.Form):
 
     def clean_background(self):
         background = self.cleaned_data['background']
+
+        if not background:
+            return self.user.background
 
         user_owned_backgrounds = UserOwnedBackgrounds.objects.filter(user=self.user, background=background)
         if not user_owned_backgrounds:

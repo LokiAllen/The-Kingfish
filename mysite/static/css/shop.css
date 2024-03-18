@@ -4,7 +4,7 @@ button[disabled] {
     pointer-events: none;
 }
 
-.shop-title * {
+.c-title {
     font-family: NimbusLight;
     color: #2E2E2E;
     -webkit-text-stroke: initial;
@@ -13,7 +13,20 @@ button[disabled] {
     letter-spacing: -10px;
     font-weight: 400;
     font-size: 100px;
-    margin-bottom: 6vh;
+    margin: 3vh auto 0;
+}
+
+h2 {
+    font-family: NimbusLight;
+    color: #2E2E2E;
+    -webkit-text-stroke: initial;
+    text-shadow: none;
+    text-align: left;
+    margin-bottom: 0;
+}
+
+h2:first-child {
+    margin-top: 0;
 }
 
 .scroll-1::-webkit-scrollbar {
@@ -45,7 +58,7 @@ button[disabled] {
 .container {
     display: flex;
     overflow-x: scroll;
-    padding: 50px 0 10px;
+    padding: 0 0 10px;
     width: 50vw;
     scroll-snap-type: x mandatory;
     scroll-padding-top: 24px;
@@ -55,18 +68,33 @@ button[disabled] {
 }
 
 .container .bg-card {
-    flex: 0 0 30%;
+    flex: 0 0 21%;
     overflow: hidden;
     border-radius: 15px;
-    background: #F1EBE6;
-    background: radial-gradient(at left top, #b9b8b4 20%, #d4d5d7 40%, #F6F6F6 100%);
+    /*background: #F1EBE6;
+    background: radial-gradient(at left top, #b9b8b4 20%, #d4d5d7 40%, #F6F6F6 100%);*/
+    background: #f4f4f4;
     scroll-snap-align: start;
     max-width: 15vw;
+    background-color: #f4f4f4;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    color: #333c57;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
 }
 
 .bg-card .card__image {
     flex: 1;
-    height: 140px;
+    height: 15vh;
     background-size: cover;
 }
 
@@ -80,7 +108,7 @@ button[disabled] {
 .bg-card .card__content .card__title {
     display: flex;
     justify-content: space-between;
-    font-size: 32px;
+    font-size: 1.5rem;
     color: black;
     text-transform: capitalize;
 }
@@ -116,7 +144,22 @@ button[disabled] {
     width: 40vw;
     height: 50px;
     border-radius: 8px;
+    /*background: #f4f4f4;
     background: radial-gradient(at left top, #d0cfcf 20%, #d4d5d7 40%, #F6F6F6 100%);
+    background-color: #f4f4f4;*/
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    color: #333c57;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
 }
 
 .tt-card-overlay {
@@ -141,7 +184,7 @@ button[disabled] {
     text-align: left;
     font-family: monospace;
     display: grid;
-    grid-template-columns: 0.6fr 0.2fr 0.25fr;
+    grid-template-columns: 0.7fr 0.2fr 0.3fr;
     grid-template-rows: 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
@@ -165,4 +208,22 @@ button[disabled] {
 
 .penguin_two {
     background: url('../media/profile_backgrounds/penguin_two.jpg')
+}
+
+#shop-backgrounds {
+    margin-bottom: 20% !important;
+}
+
+/* Basic responsiveness atm, will make actually responsive soon */
+@media (max-width: 1500px) {
+    .bg-card .card__content .card__title {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 1100px) {
+    .bg-card .card__content .card__title {
+        font-size: 1rem;
+        flex-direction: column;
+    }
 }
