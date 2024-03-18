@@ -20,31 +20,43 @@
     <form method="POST" action="" enctype="multipart/form-data" class="dropzone" id="RegisterForm">
         {% csrf_token %}
 
-        <div style="display: flex;
-        flex-direction:column; width:fit-content; margin: auto;">
+        <div style="width:fit-content; margin: auto;">
 
             <div style="display: flex; flex-direction:row; width:fit-content">
-                {{ form.email.label_tag }}
-                {{ form.email }}
 
-                {{ form.username.label_tag }}
-                {{ form.username }}
+                <div class="textfield">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                </div>
+
+                <div class="textfield">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                </div>
             </div>
 
             <div style="display: flex; flex-direction:row; width:fit-content">
-                {{ form.first_name.label_tag }}
-                {{ form.first_name }}
+                <div class="textfield">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name }}
+                </div>
 
-                {{ form.last_name.label_tag }}
-                {{ form.last_name }}
+                <div class="textfield">
+                    {{ form.last_name.label_tag }}
+                    {{ form.last_name }}
+                </div>
             </div>
 
             <div style="display: flex; flex-direction:row; width:fit-content">
-                {{ form.password1.label_tag }}
-                {{ form.password1 }}
+                <div class="textfield">
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
+                </div>
 
-                {{ form.password2.label_tag }}
-                {{ form.password2 }}
+                <div class="textfield">
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
+                </div>
             </div>
         </div>
 

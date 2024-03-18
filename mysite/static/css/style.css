@@ -208,6 +208,12 @@ input {
     border-top-right-radius: 15px 225px;
 }
 
+.textfield {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 8px 16px 16px;
+}
+
 button {
     align-self: center;
     background-color: #f4f4f4;
