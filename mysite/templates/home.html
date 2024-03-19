@@ -1,3 +1,5 @@
+<!--Author: Daniel Banks-->
+
 <!DOCTYPE html>
 
 {% extends "./base.html" %}
@@ -14,16 +16,25 @@
 
 <body>
 
-    <div style="height: 60vh; display: flex; justify-content: center; align-items: center;">
+    <div style="height: 56vh; display: flex; justify-content: center; align-items: center;">
         <div>
-            <h1>Penguin Game</h1>
+
+            <div class="desktop-logo">
+                <h1 style="margin:0;">Sustainability</h1>
+                <div class="display-large">Slide</div>
+            </div>
+
+            <div class="mobile-logo">
+                <h2 style="margin:0;">Sustainability</h2>
+                <div class="display-regular">Slide</div>
+            </div>
 
             {% if user.is_authenticated %}
             {% if user.is_superuser %}
             <h2 style="margin-top: 8px;">Admin</h2>
             <button onclick="location.href='{% url 'siteadmin:manageqr' %}'" type="button">Manage QR Codes</button>
             {% else %}
-            <h3 style="margin-top: 8px;"> Welcome back {{ user.username }}!</h3>
+            <h3 style="margin: 8px 16px;"> Welcome back {{ user.username }}!</h3>
             {% endif %}
 
             <button onclick="location.href='{% url 'game' %}'" type="button" class="primarybutton">PLAY</button>

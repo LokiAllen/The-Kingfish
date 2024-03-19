@@ -7,7 +7,7 @@
 
 
 body {
-    background: rgb(244, 244, 244);
+    background-color: 2;
     background: linear-gradient(0deg, rgba(244, 244, 244, 1) 21%, rgba(236, 254, 255, 1) 54%, rgba(219, 253, 255, 1) 100%);
     background-size: contain;
     background-position: center;
@@ -60,6 +60,26 @@ body {
     width: 80%;
     max-width: 700px;
     margin: auto;
+}
+
+.display-large {
+    font-family: Actionman;
+    color: white;
+    font-size: 160px;
+    -webkit-text-stroke: 3px #333c57;
+    text-shadow: 0 7px 0px #333c57;
+    font-weight: bolder;
+    margin: 0px;
+}
+
+.display-regular {
+    font-family: Actionman;
+    color: white;
+    font-size: 128px;
+    -webkit-text-stroke: 2px #333c57;
+    text-shadow: 0 5px 0px #333c57;
+    font-weight: bolder;
+    margin: 0px;
 }
 
 h1 {
@@ -120,6 +140,22 @@ h6 {
     color: royalblue;
 }
 
+/* ---- HOME PAGE LOGO ---- */
+
+/* For desktop view */
+@media screen and (min-width: 1000px) {
+    .mobile-logo {
+        display: none;
+    }
+}
+
+/* For mobile view */
+@media screen and (max-width: 1000px) {
+    .desktop-logo {
+        display: none;
+    }
+}
+
 /* ---- NAVBAR ---- */
 
 .topnav {
@@ -166,6 +202,16 @@ h6 {
 @media screen and (max-width: 1000px) {
     .desktop-navlinks {
         display: none;
+    }
+
+    .topnav {
+        margin: 0;
+        width: 100%;
+        height: 64px;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
     }
 }
 
@@ -242,10 +288,13 @@ h6 {
 .topnav-brand {
     color: #333c57;
     text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
     font-size: 20px;
     list-style-type: none;
+}
+
+.topnav-brand img {
+    height: 55px;
 }
 
 .nav-link {
@@ -268,7 +317,6 @@ h6 {
 .account-img {
     height: 50px;
     width: 50px;
-    margin-right: 10px;
     border-style: solid;
     border-width: 2px;
     border-color: #333c57;
@@ -476,8 +524,10 @@ button:disabled:hover {
 /* --- FILE UPLOAD ---- */
 
 input[type=file] {
+    margin: auto;
     text-align: center;
     line-height: 52px;
+    width: 256px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -509,6 +559,7 @@ input[type=file] {
 
 select {
 
+    padding: 16px;
     background-color: #f4f4f4;
     background-position: 0 90%;
     background-repeat: repeat no-repeat;
@@ -668,6 +719,21 @@ p.title {
     border-top-right-radius: 250px 15px;
 
     box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+}
+
+/* For mobile view */
+@media screen and (max-width: 700px) {
+    .slide {
+        height: 225px;
+    }
+
+    .slide:hover {
+        height: 230px;
+    }
+
+    .slide.expanded {
+        height: 250px;
+    }
 }
 
 /* ---- SHOP ---- */
@@ -835,4 +901,18 @@ p.title {
         font-size: 1rem;
         flex-direction: column;
     }
+}
+
+/* ---- PROFILE ---- */
+
+.account-img-profile {
+    height: 100px;
+    width: 100px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #333c57;
+    border-bottom-left-radius: 50px 45px;
+    border-bottom-right-radius: 45px 50px;
+    border-top-left-radius: 45px 50px;
+    border-top-right-radius: 50px 45px;
 }

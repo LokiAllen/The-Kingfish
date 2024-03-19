@@ -1,71 +1,83 @@
+<!--Author: Daniel Banks-->
+
 <!DOCTYPE html>
 {% extends "../base.html" %}
 {% load static %}
 {% block templatepage %}
 
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Your Profile</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/edit_profile.css' %}">
-    </head>
-    <body>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Your Profile</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+<body>
     <form method="POST" action="" enctype="multipart/form-data" class="dropzone" id="RegisterForm">
         {% csrf_token %}
-        <div class="profile-board">
-            <div class="background-image"></div>
-            <div class="profile-picture-container">
-                <img src="{{ user.userinfo.picture.url }}" alt="Profile Picture" class="profile-picture">
-                <input type="file" name="profile_picture" id="id_profile_picture" style="display: none;">
+
+        <div class="background-image"></div>
+
+        <h2>Your Profile</h2>
+
+        <img class="account-img-profile" src="{{ user.userinfo.picture.url }}">
+
+
+        <div style="display: flex; flex-direction:row; width:fit-content; margin: auto;">
+            <div class="textfield">
+                Username:
+                <input name="username" placeholder="{{ form.username.initial }}" class="input-field" type="text">
             </div>
-            <div class="info">
-                <div class="input-container">
-                    <h2>Username</h2>
-                    <input name="username" placeholder="{{ form.username.initial }}" class="input-field" type="text">
-                    <label for="input-field" class="input-label"></label>
-                    <span class="input-highlight"></span>
-                </div>
-                <div class="input-container">
-                    <h2>Email</h2>
-                    <input name="email" placeholder="{{ form.email.initial }}" class="input-field" type="text">
-                    <label for="input-field" class="input-label"></label>
-                    <span class="input-highlight"></span>
-                </div>
 
-                <div class="pairs-container">
-                    <div class="paired-names">
-                        <h2>First name</h2>
-                        <div class="input-container">
-                            <input name="first_name" placeholder="{{ form.first_name.initial }}" class="input-field" type="text">
-                            <label for="input-field" class="input-label"></label>
-                            <span class="input-highlight"></span>
-                        </div>
-                        <h2>Background</h2>
-                        <h2>{{ form.background }}</h2>
-                    </div>
-
-                    <div class="paired-radio">
-                        <h2>Last name</h2>
-                        <div class="input-container">
-                            <input name="last_name" placeholder="{{ form.last_name.initial }}" class="input-field" type="text">
-                            <label for="input-field" class="input-label"></label>
-                            <span class="input-highlight"></span>
-                        </div>
-                        <h2>Title</h2>
-                        <h2>{{ form.title }}</h2>
-                    </div>
-                </div>
-                <button type="submit" class="button profile-button">Change</button>
-                {{ form.username.errors }}
-                {{ form.email.errors }}
-                {{ form.first_name.errors }}
-                {{ form.last_name.errors }}
-                {{ form.title.errors }}
-                {{ form.background.errors }}
-                {{ form.profile_picture.errors }}
+            <div class="textfield">
+                Email:
+                <input name="email" placeholder="{{ form.email.initial }}" class="input-field" type="text">
             </div>
         </div>
+
+        <div style="display: flex; flex-direction:row; width:fit-content; margin: auto;">
+            <div class="textfield">
+                First name:
+                <input name="first_name" placeholder="{{ form.first_name.initial }}" class="input-field" type="text">
+                <label for="input-field" class="input-label"></label>
+            </div>
+
+
+            <div class="textfield">
+                Last Name:
+                <input name="last_name" placeholder="{{ form.last_name.initial }}" class="input-field" type="text">
+
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction:row; width:fit-content; margin: auto;">
+            <div class="textfield">
+                Background:
+                {{ form.background }}
+            </div>
+
+            <div class="textfield">
+                Title:
+                {{ form.title }}
+            </div>
+        </div>
+
+        <div class="textfield">
+            Profile Picture:
+            <input type="file" name="profile_picture" id="id_profile_picture">
+        </div>
+
+        <button type="submit" class="primarybutton">Change</button>
+        {{ form.username.errors }}
+        {{ form.email.errors }}
+        {{ form.first_name.errors }}
+        {{ form.last_name.errors }}
+        {{ form.title.errors }}
+        {{ form.background.errors }}
+        {{ form.profile_picture.errors }}
+
     </form>
 
     <script>
@@ -80,12 +92,12 @@
         $('document').ready(function () {
             // Sets the background if the user has one
             {% if user.userinfo.background.picture %}
-                let bg_img = document.getElementsByClassName('background-image')[0];
-                bg_img.style.background = `url("{% static 'media/profile_backgrounds/' %}{{ user.userinfo.background.picture }}")`;
-                bg_img.style.backgroundSize = 'cover';
+            let bg_img = document.getElementsByClassName('background-image')[0];
+            bg_img.style.background = `url("{% static 'media/profile_backgrounds/' %}{{ user.userinfo.background.picture }}")`;
+            bg_img.style.backgroundSize = 'cover';
             {% endif %}
 
-            document.querySelector('.profile-picture').addEventListener('click', function() {
+            document.querySelector('.profile-picture').addEventListener('click', function () {
                 document.getElementById('id_profile_picture').click();
             });
 
@@ -118,6 +130,7 @@
             })
         });
     </script>
-    </body>
-    </html>
+</body>
+
+</html>
 {% endblock %}
