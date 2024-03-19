@@ -103,6 +103,7 @@ function activateQRCode(code) {
     });
 }
 
+var qrCodeMarkers = {};
 // Sends a GET request to retrieve all the current QR codes and fills the table with those
 function refresh_values() {
     var qrContainer = $('.qr-container');
@@ -115,7 +116,17 @@ function refresh_values() {
         },
         success: function(data) {
             qrContainer.html('');
+                for (var key in qrCodeMarkers) {
+                    map.removeLayer(qrCodeMarkers[key]);
+                    delete qrCodeMarkers[key];
+                }
             data.values.forEach(function(value) {
+            // Only add non-expired QR codes
+            if (!value.expired) {
+                var marker = L.marker([value.latitude, value.longitude]).addTo(map);
+                marker.bindPopup(`<b>${value.name}</b><br>${value.description}`);
+                qrCodeMarkers[value.id] = marker; // Store the marker reference
+            }
                 var actionButton = value.expired ?
                     `<button onclick="activateQRCode('${value.id}')">Make Active</button>` :
                     `<button onclick="deleteQRCode('${value.id}')">Deactivate</button>`;
