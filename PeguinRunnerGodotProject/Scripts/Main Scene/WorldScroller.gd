@@ -19,7 +19,7 @@ const STARTING_CHUNK : Resource = preload("res://Scenes/Chunks/testChunk2.tscn")
 
 # Varaibles for handling the chunks
 var rootChunkPosition = Vector2(0,0)
-var chunkWidth = 512
+const CHUNK_WIDTH = 512
 var currentChunks : Array[TileMap]
 
 
@@ -27,7 +27,7 @@ var currentChunks : Array[TileMap]
 var speed : float = 380.0
 const MAX_SPEED : float = 410.0
 const ACCELERATION : float = 0.5
-var transitionChance : float = 0.25
+var transitionChance : float = 0.2
 
 
 # Current target state for chunks current being spawned in
@@ -55,19 +55,19 @@ func _ready():
 	# Create new chunks on game start, if not started as dead
 	if !dead:
 		# Set the starting position according to the renderdistance
-		rootChunkPosition.x = -chunkWidth * renderDistance
+		rootChunkPosition.x = -CHUNK_WIDTH * renderDistance
 		
 		# Iterating through the render distance, spawn in chunks
 		for i in range(0, renderDistance*2):
 			var newChunk
 			# If the chunk is ahead of the player, spawn in a flip chunk, otherwise spawn in a starting chunk
-			if rootChunkPosition.x > chunkWidth:
+			if rootChunkPosition.x > CHUNK_WIDTH:
 				newChunk = addChunk(flipChunks.pick_random())
 			else:
 				newChunk = addChunk(STARTING_CHUNK)
 			# Set the position of the new chunk and increment the root position
 			newChunk.position = rootChunkPosition
-			rootChunkPosition.x += chunkWidth
+			rootChunkPosition.x += CHUNK_WIDTH
 
 
 # Adds a chunk to the foreground and list of chunks
@@ -93,7 +93,7 @@ func _physics_process(delta):
 		
 		
 		# If the oldest chunk is off screen by more than the width of a chunk
-		if rootChunkPosition.x < -chunkWidth * 2:
+		if rootChunkPosition.x < -CHUNK_WIDTH * 2:
 			# Remove the oldest chunk and adjust the rootChunkPosition
 			foreground.remove_child(currentChunks[0])
 			currentChunks = currentChunks.slice(1, len(currentChunks))
@@ -119,7 +119,7 @@ func _physics_process(delta):
 			
 			
 			# Set the position of the new chunk to be 1 chunk in front of the previously added chunk
-			newChunk.position.x = currentChunks[len(currentChunks)-2].position.x + chunkWidth 
+			newChunk.position.x = currentChunks[len(currentChunks)-2].position.x + CHUNK_WIDTH 
 
 
 # Returns true if it is time to transition to a new movement state
