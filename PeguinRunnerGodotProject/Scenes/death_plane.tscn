@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5k2nua4uqjs2"]
+
+[ext_resource type="Script" path="res://Scripts/Main Scene/DeathPlane.gd" id="1_v5bbf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cf6jl"]
+size = Vector2(50, 1100)
+
+[node name="DeathPlane" type="Area2D"]
+script = ExtResource("1_v5bbf")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+texture_repeat = 2
+scale = Vector2(1.08, 1)
+color = Color(0.101961, 0.109804, 0.172549, 1)
+texture_offset = Vector2(-3.69, 0)
+texture_rotation = 0.380482
+polygon = PackedVector2Array(-315, -702, -315, 287, 315, 287, 315, -701, 1507, -761, 1518, 1330, -1514, 1319, -1481, -1747, 1536, -1715, 1502, -706)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(340, -196)
+shape = SubResource("RectangleShape2D_cf6jl")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-395, -196)
+shape = SubResource("RectangleShape2D_cf6jl")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(6, -726)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_cf6jl")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+position = Vector2(6, 311)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_cf6jl")
+
+[connection signal="body_entered" from="." to="." method="onBodyEntered"]

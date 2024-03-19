@@ -1,0 +1,299 @@
+[gd_scene load_steps=25 format=3 uid="uid://cl1ek7w072eqc"]
+
+[ext_resource type="PackedScene" uid="uid://7tgmof1l6gax" path="res://Scenes/world_scroller.tscn" id="1_3xbdg"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_7ptju"]
+[ext_resource type="Texture2D" uid="uid://d008klt1xb05d" path="res://Images/Penguins/defaultPenguin.png" id="2_boi32"]
+[ext_resource type="Material" uid="uid://b8n7eyb3xs74e" path="res://Shaders/smoothPixelMat.tres" id="3_5pkw1"]
+[ext_resource type="Texture2D" uid="uid://dqyu42c3mlt0h" path="res://Images/Penguins/defaultPenguinFlipper.png" id="3_80t2g"]
+[ext_resource type="Script" path="res://Scripts/DeathPlane.gd" id="4_5kcvg"]
+[ext_resource type="FontFile" uid="uid://1sivoi5pj24a" path="res://Fonts/FFFFORWA.TTF" id="4_yr7ex"]
+[ext_resource type="Script" path="res://Scripts/DeathButton.gd" id="6_85ase"]
+[ext_resource type="Texture2D" uid="uid://c5u4734icj4vi" path="res://Images/particle.png" id="6_jfpb2"]
+[ext_resource type="Theme" uid="uid://be8pcaengcs42" path="res://UI Themes/menu.tres" id="6_rj4t7"]
+[ext_resource type="AudioStream" uid="uid://dhvr2n3gph7p8" path="res://Sound Effects/jump01.ogg" id="7_gpfun"]
+[ext_resource type="AudioStream" uid="uid://byrysw06tlrv7" path="res://Sound Effects/game_over.wav" id="8_eir8h"]
+[ext_resource type="AudioStream" uid="uid://de3mtdf20hi0d" path="res://Music/flowerbed_fields.ogg" id="11_rp1ql"]
+
+[sub_resource type="Animation" id="Animation_nlnd3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_p84c4"]
+resource_name = "flip"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(2, -2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 12)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sp0kc"]
+_data = {
+"RESET": SubResource("Animation_nlnd3"),
+"flip": SubResource("Animation_p84c4")
+}
+
+[sub_resource type="Curve" id="Curve_p1i28"]
+_data = [Vector2(0, 1), 0.0, -0.0869353, 0, 0, Vector2(0.97191, 0), -2.75069, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxks0"]
+size = Vector2(52, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cf6jl"]
+size = Vector2(50, 1100)
+
+[sub_resource type="LabelSettings" id="LabelSettings_eel1b"]
+font = ExtResource("4_yr7ex")
+font_color = Color(0, 0, 0, 1)
+outline_size = 4
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ov2n"]
+size = Vector2(3000, 3000)
+
+[sub_resource type="Animation" id="Animation_pdbjg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bg0x8"]
+resource_name = "endGame"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_riorx"]
+_data = {
+"RESET": SubResource("Animation_pdbjg"),
+"endGame": SubResource("Animation_bg0x8")
+}
+
+[node name="World" type="Node2D"]
+
+[node name="WorldScroller" parent="." instance=ExtResource("1_3xbdg")]
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
+script = ExtResource("1_7ptju")
+
+[node name="Penguin" type="Sprite2D" parent="Player"]
+texture_filter = 2
+material = ExtResource("3_5pkw1")
+scale = Vector2(2, 2)
+texture = ExtResource("2_boi32")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/Penguin"]
+libraries = {
+"": SubResource("AnimationLibrary_sp0kc")
+}
+
+[node name="WingPivot" type="Node2D" parent="Player/Penguin"]
+
+[node name="Wing" type="Sprite2D" parent="Player/Penguin/WingPivot"]
+texture_filter = 2
+material = ExtResource("3_5pkw1")
+position = Vector2(-5, 0)
+texture = ExtResource("3_80t2g")
+
+[node name="SlidingParticles" type="CPUParticles2D" parent="Player/Penguin"]
+texture_filter = 2
+material = ExtResource("3_5pkw1")
+position = Vector2(0, 7)
+scale = Vector2(0.5, 0.5)
+amount = 32
+texture = ExtResource("6_jfpb2")
+direction = Vector2(-1, 0)
+spread = 5.0
+gravity = Vector2(0, 20)
+initial_velocity_min = 343.44
+initial_velocity_max = 393.94
+scale_amount_min = 0.5
+scale_amount_max = 0.55
+scale_amount_curve = SubResource("Curve_p1i28")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_fxks0")
+
+[node name="jumpSoundPlayer" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("7_gpfun")
+volume_db = -5.0
+pitch_scale = 0.82
+
+[node name="gameOverSound" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("8_eir8h")
+volume_db = -8.0
+
+[node name="env" type="Node2D" parent="."]
+
+[node name="DeathPlane" type="Area2D" parent="env"]
+script = ExtResource("4_5kcvg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="env/DeathPlane"]
+position = Vector2(340, -196)
+shape = SubResource("RectangleShape2D_cf6jl")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="env/DeathPlane"]
+position = Vector2(-340, -196)
+shape = SubResource("RectangleShape2D_cf6jl")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="env/DeathPlane"]
+position = Vector2(6, -726)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_cf6jl")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="env/DeathPlane"]
+position = Vector2(6, 311)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_cf6jl")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -200)
+position_smoothing_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+layer = 3
+
+[node name="Control" type="Control" parent="Camera2D/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="ScoreCounter" type="Label" parent="Camera2D/CanvasLayer/Control"]
+texture_filter = 1
+layout_mode = 0
+offset_top = 7.0
+offset_right = 84.0
+offset_bottom = 30.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_eel1b")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Camera2D/CanvasLayer"]
+position = Vector2(0, -200)
+shape = SubResource("RectangleShape2D_2ov2n")
+action = "jump"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 4
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DeathLabel" type="Label" parent="CanvasLayer/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("6_rj4t7")
+text = "You died!"
+
+[node name="FinalScoreLabel" type="Label" parent="CanvasLayer/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("6_rj4t7")
+text = "Final Score: 0"
+
+[node name="ReturnButton" type="Button" parent="CanvasLayer/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("6_rj4t7")
+disabled = true
+text = "Return to Main Menu"
+script = ExtResource("6_85ase")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+libraries = {
+"": SubResource("AnimationLibrary_riorx")
+}
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_rp1ql")
+volume_db = -5.0
+autoplay = true
+
+[connection signal="body_entered" from="env/DeathPlane" to="env/DeathPlane" method="_on_body_entered"]
+[connection signal="pressed" from="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" to="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" to="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" method="_on_pressed"]
