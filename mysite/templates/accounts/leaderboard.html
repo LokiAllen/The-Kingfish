@@ -1,4 +1,5 @@
-<!-- template.html -->
+<!--Author: Daniel Banks-->
+
 <!DOCTYPE html>
 {% extends "../base.html" %}
 {% load static %}
@@ -20,23 +21,23 @@
 
     <h2>Leaderboard</h2>
 
-    <div class="leaderboardtype">
-        <div class="segmented-button">
-            <input type="radio" name="leaderboardtype" value="global" id="global" checked="checked">
-            <label for="global">Global</label>
-            <input type="radio" name="leaderboardtype" value="friends" id="friends">
-            <label for="friends">Friends</label>
-        </div>
 
-        <div class="segmented-button">
-            <input type="radio" name="scoretype" value="cumulativeScore" id="cumulativeScore">
-            <label for="cumulativeScore">Cumulative Score</label>
-            <input type="radio" name="scoretype" value="highscore" id="highscore">
-            <label for="highscore">High Score</label>
-            <input type="radio" name="scoretype" value="coins" id="coins" checked="checked">
-            <label for="coins">Coins</label>
-        </div>
+    <div class="segmented-button">
+        <input type="radio" name="leaderboardtype" value="global" id="global" checked="checked">
+        <label for="global">Global</label>
+        <input type="radio" name="leaderboardtype" value="friends" id="friends">
+        <label for="friends">Friends</label>
     </div>
+
+    <div class="segmented-button">
+        <input type="radio" name="scoretype" value="cumulativeScore" id="cumulativeScore">
+        <label for="cumulativeScore">Cumulative Score</label>
+        <input type="radio" name="scoretype" value="highscore" id="highscore">
+        <label for="highscore">High Score</label>
+        <input type="radio" name="scoretype" value="coins" id="coins" checked="checked">
+        <label for="coins">Coins</label>
+    </div>
+
 
     <table class="table">
         <thead>

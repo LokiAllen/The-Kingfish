@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
      * Sends a request to the endpoint to retrieve all the shop data, creating the elements and
      * setting them inside the shop table respective of the item type
      *
-     * @author Jasper
+     * @author Jasper, Daniel Banks
      */
     function getData() {
         fetch(`/api/shop/`)

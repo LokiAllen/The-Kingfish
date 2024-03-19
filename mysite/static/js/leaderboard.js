@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
      * Gets the leaderboard data relative to the parameters, creates the required elements
      * and sets them inside the leaderboard table
      *
-     * @author Jasper
+     * @author Jasper, Daniel Banks
      * @param leaderboard_type  The leaderboard type to show (global/friends)
      * @param score_type        The score type to show (I.E highscore)
      */
@@ -58,24 +58,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     const row =
                         createElement('tr', {}, [
                             createElement('td', {}, [
-                                createElement('b', { textContent: user.position })
+                                createElement('h5', { textContent: user.position })
                             ]),
                             createElement('td', { classList: ['name-box'] }, [
                                 createElement('img', { src: user.picture }),
                                 createElement('div', {}, [
-                                    createElement('a', {
-                                        href: `../accounts/profile/${user.user_username}`,
-                                        textContent: user.user_username
-                                    }, [
-                                        createElement('b')
-                                    ]),
                                     createElement('a', { href: `../accounts/profile/${user.user_username}` }, [
-                                        createElement('p', { textContent: user.title_name, classList: ['title'] })
+                                        createElement('h5', { textContent: user.user_username }),
+                                        createElement('h6', { textContent: user.title_name })
                                     ])
                                 ])
                             ]),
                             createElement('td', {}, [
-                                createElement('b', { textContent: user.value })
+                                createElement('h3', { textContent: user.value })
                             ])
                         ]);
 
