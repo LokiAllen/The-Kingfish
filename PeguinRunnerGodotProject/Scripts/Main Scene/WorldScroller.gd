@@ -1,7 +1,6 @@
 extends Node2D
 '''
-WorldScroller script for the scrolling of the game world
-
+WorldScroller script for the endless scrolling of the game world
 @author Daniel Hibbin
 '''
 

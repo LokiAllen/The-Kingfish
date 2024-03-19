@@ -68,7 +68,7 @@ var sessionUserData : Dictionary = {"coins" : -1, "highscore" : -1, "cumulativeS
 var serverUserData : Dictionary = {"coins" : -1, "highscore" : -1, "cumulativeScore" : -1}
 
 
-# Called when the node enters the scene tree for the first time.
+# Called when the node enters the scene tree for the first time
 func _ready():
 	# If the game is running in a browser
 	if OS.has_feature('web'):
