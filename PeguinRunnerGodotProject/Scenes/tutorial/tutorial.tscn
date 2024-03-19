@@ -3,10 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://7tgmof1l6gax" path="res://Scenes/world_scroller.tscn" id="1_kn2hx"]
 [ext_resource type="PackedScene" uid="uid://72oaic16ejuq" path="res://Scenes/Chunks/tutorialChunk.tscn" id="2_saqrl"]
 [ext_resource type="PackedScene" uid="uid://ddygpq0qh2u12" path="res://Scenes/player.tscn" id="3_et6mo"]
-[ext_resource type="Script" path="res://Scripts/DeathPlane.gd" id="4_atqt6"]
+[ext_resource type="Script" path="res://Scripts/Main Scene/DeathPlane.gd" id="4_atqt6"]
 [ext_resource type="FontFile" uid="uid://1sivoi5pj24a" path="res://Fonts/FFFFORWA.TTF" id="5_3cy8q"]
 [ext_resource type="Theme" uid="uid://be8pcaengcs42" path="res://UI Themes/menu.tres" id="6_jj27y"]
-[ext_resource type="Script" path="res://Scripts/DeathButton.gd" id="7_1j4iu"]
+[ext_resource type="Script" path="res://Scripts/Main Scene/DeathButton.gd" id="7_1j4iu"]
 [ext_resource type="AudioStream" uid="uid://bw47m5dj1omj8" path="res://Music/tutorial.ogg" id="8_o0jde"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cf6jl"]

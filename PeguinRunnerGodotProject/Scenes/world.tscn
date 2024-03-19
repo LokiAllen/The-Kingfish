@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://7tgmof1l6gax" path="res://Scenes/world_scroller.tscn" id="1_3xbdg"]
 [ext_resource type="PackedScene" uid="uid://ddygpq0qh2u12" path="res://Scenes/player.tscn" id="2_ljeph"]
-[ext_resource type="Script" path="res://Scripts/DeathPlane.gd" id="4_5kcvg"]
+[ext_resource type="Script" path="res://Scripts/Main Scene/DeathPlane.gd" id="4_5kcvg"]
 [ext_resource type="FontFile" uid="uid://1sivoi5pj24a" path="res://Fonts/FFFFORWA.TTF" id="4_yr7ex"]
-[ext_resource type="Script" path="res://Scripts/DeathButton.gd" id="6_85ase"]
+[ext_resource type="Script" path="res://Scripts/Main Scene/DeathButton.gd" id="6_85ase"]
 [ext_resource type="Theme" uid="uid://be8pcaengcs42" path="res://UI Themes/menu.tres" id="6_rj4t7"]
 [ext_resource type="AudioStream" uid="uid://de3mtdf20hi0d" path="res://Music/flowerbed_fields.ogg" id="11_rp1ql"]
 

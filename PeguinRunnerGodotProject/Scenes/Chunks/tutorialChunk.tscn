@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://72oaic16ejuq"]
 
-[ext_resource type="Script" path="res://Scripts/TutorialLevel.gd" id="1_b1txh"]
+[ext_resource type="Script" path="res://Scripts/Tutorial/TutorialLevel.gd" id="1_b1txh"]
 [ext_resource type="Material" uid="uid://b8n7eyb3xs74e" path="res://Shaders/smoothPixelMat.tres" id="1_kwbkq"]
 [ext_resource type="TileSet" uid="uid://btbeonu4o5xjs" path="res://Gridmaps/iceSet.tres" id="2_0mes2"]
 [ext_resource type="Theme" uid="uid://be8pcaengcs42" path="res://UI Themes/menu.tres" id="4_ly1wr"]
