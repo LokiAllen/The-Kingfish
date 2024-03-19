@@ -3,7 +3,7 @@ Menu script for the Main Menu Scene
 @author Daniel Hibbin
 '''
 extends Control
-class_name Menu
+class_name CustomGameMenu
 
 
 # Define references to all necessary objects in the main menu scene

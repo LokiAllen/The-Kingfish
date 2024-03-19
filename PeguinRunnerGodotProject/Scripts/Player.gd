@@ -67,6 +67,10 @@ var score : int = 0
 @onready var musicPlayer = $"../MusicPlayer"
 
 
+# Variable to check whether the level is the tutorial when the player dies
+@export var isTutorial : bool = false
+
+
 # Always start the player in the flipGravity movement state
 func _ready():
 	changeState(movementState.flipGravity)
@@ -205,7 +209,7 @@ func kill():
 		musicPlayer.stop()
 		
 		# Set the highscore and push the data to the server if in browser
-		if OS.has_feature('web'):
+		if OS.has_feature('web') and !isTutorial:
 			GameManager.setHighScore(score)
 			GameManager.pushSessionData()
 

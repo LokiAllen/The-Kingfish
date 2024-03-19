@@ -55,7 +55,7 @@ _data = {
 "endGame": SubResource("Animation_bg0x8")
 }
 
-[node name="World" type="Node2D"]
+[node name="World2" type="Node2D"]
 
 [node name="WorldScroller" parent="." instance=ExtResource("1_kn2hx")]
 dead = true
@@ -69,6 +69,7 @@ position = Vector2(384, 0)
 [node name="TutorialChunk" parent="WorldScroller" instance=ExtResource("2_saqrl")]
 
 [node name="Player" parent="." instance=ExtResource("3_et6mo")]
+isTutorial = true
 
 [node name="env" type="Node2D" parent="."]
 
