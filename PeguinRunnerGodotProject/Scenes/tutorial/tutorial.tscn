@@ -3,14 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://7tgmof1l6gax" path="res://Scenes/world_scroller.tscn" id="1_kn2hx"]
 [ext_resource type="PackedScene" uid="uid://72oaic16ejuq" path="res://Scenes/Chunks/tutorialChunk.tscn" id="2_saqrl"]
 [ext_resource type="PackedScene" uid="uid://ddygpq0qh2u12" path="res://Scenes/player.tscn" id="3_et6mo"]
-[ext_resource type="Script" path="res://Scripts/Main Scene/DeathPlane.gd" id="4_atqt6"]
+[ext_resource type="PackedScene" uid="uid://c3mvuu0l618cs" path="res://Scenes/Chunks/testChunk2.tscn" id="3_lmlu7"]
 [ext_resource type="FontFile" uid="uid://1sivoi5pj24a" path="res://Fonts/FFFFORWA.TTF" id="5_3cy8q"]
+[ext_resource type="PackedScene" uid="uid://c5k2nua4uqjs2" path="res://Scenes/death_plane.tscn" id="5_ben7u"]
 [ext_resource type="Theme" uid="uid://be8pcaengcs42" path="res://UI Themes/menu.tres" id="6_jj27y"]
 [ext_resource type="Script" path="res://Scripts/Main Scene/DeathButton.gd" id="7_1j4iu"]
 [ext_resource type="AudioStream" uid="uid://bw47m5dj1omj8" path="res://Music/tutorial.ogg" id="8_o0jde"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cf6jl"]
-size = Vector2(50, 1100)
 
 [sub_resource type="LabelSettings" id="LabelSettings_eel1b"]
 font = ExtResource("5_3cy8q")
@@ -62,35 +60,19 @@ _data = {
 [node name="WorldScroller" parent="." instance=ExtResource("1_kn2hx")]
 dead = true
 
+[node name="TileMap" parent="WorldScroller" instance=ExtResource("3_lmlu7")]
+position = Vector2(-128, 0)
+
+[node name="TileMap2" parent="WorldScroller" instance=ExtResource("3_lmlu7")]
+position = Vector2(384, 0)
+
 [node name="TutorialChunk" parent="WorldScroller" instance=ExtResource("2_saqrl")]
 
 [node name="Player" parent="." instance=ExtResource("3_et6mo")]
 
 [node name="env" type="Node2D" parent="."]
 
-[node name="DeathPlane" type="Area2D" parent="env"]
-script = ExtResource("4_atqt6")
-
-[node name="Polygon2D" type="Polygon2D" parent="env/DeathPlane"]
-polygon = PackedVector2Array(-315, -702, -315, 287, 315, 287, 315, -701, 1507, -761, 1518, 1330, -1514, 1319, -1481, -1747, 1536, -1715, 1502, -706)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="env/DeathPlane"]
-position = Vector2(340, -196)
-shape = SubResource("RectangleShape2D_cf6jl")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="env/DeathPlane"]
-position = Vector2(-340, -196)
-shape = SubResource("RectangleShape2D_cf6jl")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="env/DeathPlane"]
-position = Vector2(6, -726)
-rotation = 1.57079
-shape = SubResource("RectangleShape2D_cf6jl")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="env/DeathPlane"]
-position = Vector2(6, 311)
-rotation = 1.57079
-shape = SubResource("RectangleShape2D_cf6jl")
+[node name="DeathPlane" parent="env" instance=ExtResource("5_ben7u")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -200)
@@ -178,6 +160,4 @@ stream = ExtResource("8_o0jde")
 volume_db = -5.0
 autoplay = true
 
-[connection signal="body_entered" from="env/DeathPlane" to="env/DeathPlane" method="_on_body_entered"]
-[connection signal="pressed" from="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" to="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" method="_on_pressed"]
-[connection signal="pressed" from="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" to="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" to="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" method="onButtonPressed"]

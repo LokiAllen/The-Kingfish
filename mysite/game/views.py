@@ -29,7 +29,6 @@ class GameFileView(View):
 
         if os.path.exists(file_path):
             file = open(file_path, 'rb')
-
             response = FileResponse(file)
             response["Cross-Origin-Opener-Policy"] = "same-origin"
             response["Cross-Origin-Resource-Policy"] = "cross-origin"

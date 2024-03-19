@@ -7,6 +7,6 @@ class_name DeathPlane
 
 
 # When the player enters the death plane, the plane attempts to kill the player
-func _on_body_entered(body):
+func onBodyEntered(body):
 	if body.is_in_group("player"):
 		body.kill()

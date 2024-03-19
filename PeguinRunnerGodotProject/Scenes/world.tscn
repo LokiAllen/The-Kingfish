@@ -1,15 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://cl1ek7w072eqc"]
+[gd_scene load_steps=13 format=3 uid="uid://cl1ek7w072eqc"]
 
 [ext_resource type="PackedScene" uid="uid://7tgmof1l6gax" path="res://Scenes/world_scroller.tscn" id="1_3xbdg"]
 [ext_resource type="PackedScene" uid="uid://ddygpq0qh2u12" path="res://Scenes/player.tscn" id="2_ljeph"]
-[ext_resource type="Script" path="res://Scripts/Main Scene/DeathPlane.gd" id="4_5kcvg"]
+[ext_resource type="PackedScene" uid="uid://c5k2nua4uqjs2" path="res://Scenes/death_plane.tscn" id="3_ogekh"]
 [ext_resource type="FontFile" uid="uid://1sivoi5pj24a" path="res://Fonts/FFFFORWA.TTF" id="4_yr7ex"]
 [ext_resource type="Script" path="res://Scripts/Main Scene/DeathButton.gd" id="6_85ase"]
 [ext_resource type="Theme" uid="uid://be8pcaengcs42" path="res://UI Themes/menu.tres" id="6_rj4t7"]
 [ext_resource type="AudioStream" uid="uid://de3mtdf20hi0d" path="res://Music/flowerbed_fields.ogg" id="11_rp1ql"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cf6jl"]
-size = Vector2(50, 1100)
 
 [sub_resource type="LabelSettings" id="LabelSettings_eel1b"]
 font = ExtResource("4_yr7ex")
@@ -64,34 +61,7 @@ _data = {
 
 [node name="env" type="Node2D" parent="."]
 
-[node name="DeathPlane" type="Area2D" parent="env"]
-script = ExtResource("4_5kcvg")
-
-[node name="Polygon2D" type="Polygon2D" parent="env/DeathPlane"]
-texture_repeat = 2
-scale = Vector2(1.08, 1)
-color = Color(0.101961, 0.109804, 0.172549, 1)
-texture_offset = Vector2(-3.69, 0)
-texture_rotation = 0.380482
-polygon = PackedVector2Array(-315, -702, -315, 287, 315, 287, 315, -701, 1507, -761, 1518, 1330, -1514, 1319, -1481, -1747, 1536, -1715, 1502, -706)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="env/DeathPlane"]
-position = Vector2(340, -196)
-shape = SubResource("RectangleShape2D_cf6jl")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="env/DeathPlane"]
-position = Vector2(-395, -196)
-shape = SubResource("RectangleShape2D_cf6jl")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="env/DeathPlane"]
-position = Vector2(6, -726)
-rotation = 1.57079
-shape = SubResource("RectangleShape2D_cf6jl")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="env/DeathPlane"]
-position = Vector2(6, 311)
-rotation = 1.57079
-shape = SubResource("RectangleShape2D_cf6jl")
+[node name="DeathPlane" parent="env" instance=ExtResource("3_ogekh")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -200)
@@ -179,5 +149,4 @@ stream = ExtResource("11_rp1ql")
 volume_db = -5.0
 autoplay = true
 
-[connection signal="body_entered" from="env/DeathPlane" to="env/DeathPlane" method="_on_body_entered"]
 [connection signal="pressed" from="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" to="CanvasLayer/ColorRect/VBoxContainer/ReturnButton" method="onButtonPressed"]
