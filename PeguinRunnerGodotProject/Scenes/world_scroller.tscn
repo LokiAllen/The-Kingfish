@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://7tgmof1l6gax"]
+
+[ext_resource type="Script" path="res://Scripts/Main Scene/WorldScroller.gd" id="1_wpvy5"]
+[ext_resource type="Texture2D" uid="uid://bu6heo521jnv" path="res://Images/icebackground2.png" id="2_7q6ly"]
+
+[sub_resource type="Animation" id="Animation_bidog"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 750)]
+}
+
+[sub_resource type="Animation" id="Animation_kjrm7"]
+resource_name = "scroll"
+length = 3.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-512, 750), Vector2(0, 750)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qx8jm"]
+_data = {
+"RESET": SubResource("Animation_bidog"),
+"scroll": SubResource("Animation_kjrm7")
+}
+
+[node name="WorldScroller" type="Node2D"]
+script = ExtResource("1_wpvy5")
+
+[node name="Background2" type="Polygon2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("2_7q6ly")
+texture_offset = Vector2(0, 750)
+polygon = PackedVector2Array(-2000, -1000, -2000, 700, 2000, 700, 2000, -1000)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Background2"]
+libraries = {
+"": SubResource("AnimationLibrary_qx8jm")
+}
+
+[node name="Foreground" type="Node2D" parent="."]

@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=3 uid="uid://72oaic16ejuq"]
+
+[ext_resource type="Script" path="res://Scripts/Tutorial/TutorialLevel.gd" id="1_b1txh"]
+[ext_resource type="Theme" uid="uid://be8pcaengcs42" path="res://UI Themes/menu.tres" id="4_ly1wr"]
+[ext_resource type="PackedScene" uid="uid://dp1vd2b7yenfi" path="res://Scenes/tutorial/areatextprompt.tscn" id="4_wi4u0"]
+[ext_resource type="PackedScene" uid="uid://dbeqvani8qkjb" path="res://Scenes/Chunks/JumpTransitionChunks/testStartJump.tscn" id="5_rt5wr"]
+[ext_resource type="PackedScene" uid="uid://c3mvuu0l618cs" path="res://Scenes/Chunks/testChunk2.tscn" id="6_d2a8m"]
+[ext_resource type="PackedScene" uid="uid://bni1khwd6rl7c" path="res://Scenes/Chunks/FlipTransitionChunks/testStartFlip.tscn" id="6_w16gx"]
+
+[node name="TutorialScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TutorialPosition" type="Node2D" parent="."]
+script = ExtResource("1_b1txh")
+
+[node name="AreaTextPrompt" parent="TutorialPosition" node_paths=PackedStringArray("targetLabel") instance=ExtResource("4_wi4u0")]
+position = Vector2(1168, 0)
+targetLabel = NodePath("../../Label")
+textPrompt = "This is how the game begins"
+
+[node name="AreaTextPrompt2" parent="TutorialPosition" node_paths=PackedStringArray("targetLabel") instance=ExtResource("4_wi4u0")]
+position = Vector2(2000, 0)
+targetLabel = NodePath("../../Label")
+textPrompt = "Up arrows switch you to jumping gravity"
+
+[node name="AreaTextPrompt3" parent="TutorialPosition" node_paths=PackedStringArray("targetLabel") instance=ExtResource("4_wi4u0")]
+position = Vector2(5088, 0)
+targetLabel = NodePath("../../Label")
+textPrompt = "Down arrows switch you to flip-gravity"
+
+[node name="AreaTextPrompt4" parent="TutorialPosition" node_paths=PackedStringArray("targetLabel") instance=ExtResource("4_wi4u0")]
+position = Vector2(6528, 0)
+targetLabel = NodePath("../../Label")
+textPrompt = "Touching the screen edge causes a game over"
+
+[node name="AreaTextPrompt5" parent="TutorialPosition" node_paths=PackedStringArray("targetLabel") instance=ExtResource("4_wi4u0")]
+position = Vector2(7904, 0)
+targetLabel = NodePath("../../Label")
+textPrompt = "Have fun! (:"
+
+[node name="AreaTextPrompt6" parent="TutorialPosition" node_paths=PackedStringArray("targetLabel") instance=ExtResource("4_wi4u0")]
+position = Vector2(2992, 0)
+targetLabel = NodePath("../../Label")
+textPrompt = "Hitting walls while jumping causes a game over"
+
+[node name="TileMap7" parent="TutorialPosition" instance=ExtResource("5_rt5wr")]
+position = Vector2(3576, 0)
+
+[node name="TileMap8" parent="TutorialPosition" instance=ExtResource("6_w16gx")]
+position = Vector2(5728, 0)
+
+[node name="TileMap" parent="TutorialPosition" instance=ExtResource("6_d2a8m")]
+position = Vector2(8896, -832)
+scale = Vector2(3, 3)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = 30.465
+offset_right = 150.0
+offset_bottom = 315.465
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_ly1wr")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 24
+text = "Tap the screen to flip the penguin's gravity"
+horizontal_alignment = 1
+autowrap_mode = 2
+metadata/_edit_use_anchors_ = true

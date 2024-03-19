@@ -1,0 +1,138 @@
+[gd_scene load_steps=13 format=3 uid="uid://ddygpq0qh2u12"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_1kk1q"]
+[ext_resource type="Material" uid="uid://b8n7eyb3xs74e" path="res://Shaders/smoothPixelMat.tres" id="2_1tdoq"]
+[ext_resource type="Texture2D" uid="uid://d008klt1xb05d" path="res://Images/Penguins/defaultPenguin.png" id="3_jjlvc"]
+[ext_resource type="Texture2D" uid="uid://dqyu42c3mlt0h" path="res://Images/Penguins/defaultPenguinFlipper.png" id="4_5duu8"]
+[ext_resource type="Texture2D" uid="uid://c5u4734icj4vi" path="res://Images/particle.png" id="5_7mcui"]
+[ext_resource type="AudioStream" uid="uid://dhvr2n3gph7p8" path="res://Sound Effects/jump01.ogg" id="6_grwqi"]
+[ext_resource type="AudioStream" uid="uid://byrysw06tlrv7" path="res://Sound Effects/game_over.wav" id="7_1nonn"]
+
+[sub_resource type="Animation" id="Animation_nlnd3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_p84c4"]
+resource_name = "flip"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(2, -2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 12)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sp0kc"]
+_data = {
+"RESET": SubResource("Animation_nlnd3"),
+"flip": SubResource("Animation_p84c4")
+}
+
+[sub_resource type="Curve" id="Curve_p1i28"]
+_data = [Vector2(0, 1), 0.0, -0.0869353, 0, 0, Vector2(0.97191, 0), -2.75069, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxks0"]
+size = Vector2(52, 20)
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_1kk1q")
+
+[node name="Penguin" type="Sprite2D" parent="."]
+texture_filter = 2
+material = ExtResource("2_1tdoq")
+scale = Vector2(2, 2)
+texture = ExtResource("3_jjlvc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Penguin"]
+libraries = {
+"": SubResource("AnimationLibrary_sp0kc")
+}
+
+[node name="WingPivot" type="Node2D" parent="Penguin"]
+
+[node name="Wing" type="Sprite2D" parent="Penguin/WingPivot"]
+texture_filter = 2
+material = ExtResource("2_1tdoq")
+position = Vector2(-5, 0)
+texture = ExtResource("4_5duu8")
+
+[node name="SlidingParticles" type="CPUParticles2D" parent="Penguin"]
+texture_filter = 2
+material = ExtResource("2_1tdoq")
+position = Vector2(0, 7)
+scale = Vector2(0.5, 0.5)
+amount = 32
+texture = ExtResource("5_7mcui")
+direction = Vector2(-1, 0)
+spread = 5.0
+gravity = Vector2(0, 20)
+initial_velocity_min = 343.44
+initial_velocity_max = 393.94
+scale_amount_min = 0.5
+scale_amount_max = 0.55
+scale_amount_curve = SubResource("Curve_p1i28")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_fxks0")
+
+[node name="jumpSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_grwqi")
+volume_db = -5.0
+pitch_scale = 0.82
+
+[node name="gameOverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_1nonn")
+volume_db = -8.0
+
+[node name="JumpCheck" type="RayCast2D" parent="."]
+position = Vector2(-24, -5)
+rotation = 1.57079
+target_position = Vector2(0, -50)
+
+[node name="JumpCheck2" type="RayCast2D" parent="."]
+position = Vector2(-24, 17)
+rotation = 1.57079
+target_position = Vector2(0, -50)
