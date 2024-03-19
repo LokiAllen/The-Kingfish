@@ -12,5 +12,5 @@ class_name DeathButton
 
 
 # When the death button is pressed, the target scene is opened
-func _on_pressed():
+func onButtonPressed():
 	get_tree().change_scene_to_file(targetScene)
