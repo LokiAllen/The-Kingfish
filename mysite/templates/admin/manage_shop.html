@@ -13,6 +13,23 @@
             var CSRF_TOKEN = '{{ csrf_token }}';
         </script>
         <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+        <style>
+            {% if user.is_superuser %}
+                .page {
+                    border: 3px solid red;
+                }
+                button {
+                    border-color: red;
+                }
+            {% elif user.is_staff %}
+                .page {
+                    border: 3px solid lightgreen;
+                }
+                button {
+                    border-color: lightgreen;
+                }
+            {% endif %}
+        </style>
     </head>
     <body onload="getShopInfo()">
     <div class="page">

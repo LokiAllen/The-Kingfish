@@ -13,6 +13,23 @@
             var CSRF_TOKEN = '{{ csrf_token }}';
         </script>
         <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+        <style>
+            {% if user.is_superuser %}
+                .page {
+                    border: 3px solid red;
+                }
+                button, input {
+                    border-color: red;
+                }
+            {% elif user.is_staff %}
+                .page {
+                    border: 3px solid lightgreen;
+                }
+                button, input {
+                    border-color: lightgreen;
+                }
+            {% endif %}
+        </style>
     </head>
     <body onload="refresh_values()">
     <div class="page">
