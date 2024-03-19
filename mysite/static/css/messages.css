@@ -1,4 +1,3 @@
-/* style.css */
 body, html {
     margin: 0;
     padding: 0;
@@ -136,4 +135,11 @@ input {
     border-bottom-right-radius: 225px 15px;
     border-top-left-radius: 255px 15px;
     border-top-right-radius: 15px 225px;
+}
+
+
+@media (max-width: 450px) {
+    #message-form {
+        margin-bottom: 12vh;
+    }
 }

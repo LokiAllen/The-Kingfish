@@ -9,20 +9,62 @@
         <meta charset="UTF-8">
         <title>Title</title>
         <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+        <style>
+            {% if user.is_superuser %}
+                .page {
+                    border: 3px solid red;
+                }
+                button {
+                    border-color: red;
+                }
+            {% elif user.is_staff %}
+                .page {
+                    border: 3px solid lightgreen;
+                }
+                button {
+                    border-color: lightgreen;
+                }
+            {% endif %}
+        </style>
     </head>
     <body>
-    <div class="home-title">
-        <h1 class="first-title">Welcome</h1>
-        <div class="second-title-with-button">
-            <div class="adminlogo">
-                <a href="{% url 'home' %}"><img src="{% static '/media/logo.png' %}" alt="Sustainability Slides"></a>
+    <div class="home-title web-only">
+        {% if user.is_superuser %}
+            <h1 class="first-title">Welcome</h1>
+            <div class="second-title-with-button">
+                <div class="adminlogo">
+                    <a href="{% url 'home' %}"><img src="{% static '/media/logo.png' %}" alt="Sustainability Slides"></a>
+                </div>
+                <h1 class="second-title">Admin</h1>
             </div>
-            <h1 class="second-title">Admin</h1>
-        </div>
+
+        {% elif user.is_staff %}
+            <div class="second-title-with-button" style="margin-bottom: 0 !important;">
+                <div class="adminlogo">
+                    <a href="{% url 'home' %}"><img src="{% static '/media/logo.png' %}" alt="Sustainability Slides"></a>
+                </div>
+                <h1 class="first-title">Welcome</h1>
+            </div>
+
+            <h1 class="second-title" style="margin-bottom: 10% !important;">Gamekeeper</h1>
+        {% endif %}
     </div>
-        <button onclick="location.href='{% url 'siteadmin:manageqr' %}'">Manage QR Codes</button>
-        <button onclick="location.href='{% url 'siteadmin:managescores' %}'">Manage Users Scores</button>
-        <button onclick="location.href='{% url 'siteadmin:manageqr' %}'">Manage Shop Items</button>
+
+    <div class="mobile-title">
+        <a href="{% url 'home' %}"><img src="{% static '/media/logo.png' %}" alt="Sustainability Slides"></a>
+        <h1 class="first-title">Welcome</h1>
+        {% if user.is_superuser %}
+            <h1 class="second-title">Admin</h1>
+        {% elif user.is_staff %}
+            <h1 class="second-title">Gamekeeper</h1>
+        {% endif %}
+    </div>
+
+    <button onclick="location.href='{% url 'siteadmin:manageqr' %}'">Manage QR Codes</button>
+    {% if user.is_superuser %}
+        <button onclick="location.href='{% url 'siteadmin:managescores' %}'">Manage Users</button>
+    {% endif %}
+    <button onclick="location.href='{% url 'siteadmin:manageshop' %}'">Manage Shop Items</button>
     </body>
     </html>
 {% endblock %}

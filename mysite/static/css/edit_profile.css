@@ -223,3 +223,17 @@ option[selected] {
 option:hover {
     cursor: pointer;
 }
+
+
+@media (max-width: 450px) {
+
+    .profile-board {
+        max-width: 90vw;
+        margin: 10vh auto 25vh;
+    }
+
+    .pairs-container {
+        max-width: initial;
+        margin: 0 auto;
+    }
+}

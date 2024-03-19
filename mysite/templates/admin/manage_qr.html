@@ -24,7 +24,8 @@
         <button onclick="generateQRCode()">Generate QR Code</button>
         <div id="qrCodeContainer"></div>
         <br>
-        <button onclick="showQRCodes()">Show All QR Codes</button>
+        <button class="show-qr" onclick="showQRCodes()">Show All QR Codes</button>
+
         <br>
         <table>
             <thead class="qr-table-head" style="display:none">
@@ -33,8 +34,6 @@
                 <th>Expired</th>
                 <th>Longitude</th>
                 <th>Latitude</th>
-                <th>Name</th>
-                <th>Description</th>
             </tr>
             </thead>
             <tbody class="qr-container">

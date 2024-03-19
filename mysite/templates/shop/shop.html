@@ -2,34 +2,32 @@
 {% extends "../base.html" %}
 
 {% load static %}
-{% block templatepage %}
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Shop</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/shop.css' %}">
-    <script src="{% static 'js/shop.js' %}"></script>
-    <script>
-        var CSRF_TOKEN = '{{ csrf_token }}';
-        var USER_COINS = '{{ user.userinfo.coins }}'
-    </script>
-</head>
-
-<body>
-    <h2>Shop</h2>
-    <h3 class="c-title" style="letter-spacing: -3px;">Coins: {{ user.userinfo.coins }}</h3>
-
-    <div id="shop-container">
-        <h3>Titles</h3>
-        <div id="shop-titles">
+{% block template %}
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Shop</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/shop.css' %}">
+        <script src="{% static 'js/shop.js' %}"></script>
+        <script>
+            var CSRF_TOKEN = '{{ csrf_token }}';
+            var USER_COINS = '{{ user.userinfo.coins }}'
+        </script>
+    </head>
+    <body style="margin-top: 12vh;">
+    <div class="page">
+        <div class="shop-title">
+            <h1 class="c-title" style="letter-spacing: -3px;">Coins: {{ user.userinfo.coins }}</h1>
         </div>
-        <h3>Backgrounds</h3>
-        <div id="shop-backgrounds" class="container scroll-1">
+        <div id="shop-container">
+            <h2>Titles</h2>
+            <div id="shop-titles">
+            </div>
+            <h2>Backgrounds</h2>
+            <div id="shop-backgrounds" class="container scroll-1">
+            </div>
         </div>
     </div>
-
-</body>
-
-</html>
+    </body>
+    </html>
 {% endblock %}
