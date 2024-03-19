@@ -5,19 +5,22 @@
 {% block templatepage %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/quiz.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>Quiz Result</title>
 </head>
+
 <body>
     <!--Display the results of user's quiz and resulting number of coins gained-->
-    <h1>Quiz result</h1>
-    <h2>{{result_text}}</h2>
-    <p>+{{score}} coins</p>
+    <h2>Quiz result</h2>
+    <h3>{{result_text}}</h3>
+    <h4>+{{score}} coins</h4>
     <button onclick="location.href='{% url 'home' %}'" type="button" class="primarybutton">HOME</button>
 
 </body>
+
 </html>
 {% endblock %}

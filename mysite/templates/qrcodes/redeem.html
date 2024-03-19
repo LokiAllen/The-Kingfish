@@ -4,6 +4,7 @@
 
 {% block templatepage %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Redeem QR Code</title>
@@ -11,11 +12,18 @@
     <script src="{% static 'js/location.js' %}"></script>
     <script> var CSRF_TOKEN = '{{ csrf_token }}' </script>
 </head>
+
 <body onload=getLocation()>
-        <h2 style="margin-top: 15vh;">You found a code!</h2>
-        <p id='status'></p>
-        <button onclick="location.href='{% url 'quiz:QuizAttempt' %}'" type="button">Extra Coins? BONUS QUIZ</button>
-        <button onclick="location.href='{% url 'home' %}'" type="button" class="primarybutton">PLAY</button>
+    <h2>You found a code!</h2>
+    <p id='status'></p>
+    <div style="display: flex;
+    flex-direction: column; gap: 8px">
+        Earn Bonus Coins?
+        <button onclick="location.href='{% url 'quiz:QuizAttempt' %}'" type="button">BONUS QUIZ</button>
+        Or
+        <button onclick="location.href='{% url 'home' %}'" type="button" class="primarybutton">PLAY NOW</button>
+    </div>
 </body>
+
 </html>
 {% endblock %}
