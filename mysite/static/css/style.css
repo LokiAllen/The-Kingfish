@@ -506,17 +506,17 @@ p.title {
 /* ---- CAROUSEL ---- */
 
 .carousel {
-    height: 500px;
     max-height: 500px;
-    overflow: hidden;
+    overflow: visible;
     align-content: center;
+    margin: auto;
     padding-bottom: 50px;
 }
 
 .slide {
     object-fit: cover;
     height: 450px;
-    width: 100px;
+    width: 10%;
     cursor: pointer;
     transition: all 0.5s;
 
@@ -534,13 +534,13 @@ p.title {
 }
 
 .slide:hover {
-    width: 150px;
+    width: 15%;
     height: 460px;
     box-shadow: rgba(0, 0, 0, .2) 10px 15px 15px -10px;
 }
 
 .slide.expanded {
-    width: 600px;
+    width: 70%;
     height: 500px;
 
     border-bottom-left-radius: 15px 250px;
