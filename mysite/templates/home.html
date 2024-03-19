@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 {% extends "./base.html" %}
+{% load static %}
 
 
 {% block template %}
@@ -13,16 +14,16 @@
 
 <body>
 
-    <div style="height: 50vh; display: flex; justify-content: center; align-items: center;">
+    <div style="height: 60vh; display: flex; justify-content: center; align-items: center;">
         <div>
             <h1>Penguin Game</h1>
 
             {% if user.is_authenticated %}
             {% if user.is_superuser %}
-            <h1>Admin</h1>
+            <h2 style="margin-top: 8px;">Admin</h2>
             <button onclick="location.href='{% url 'siteadmin:manageqr' %}'" type="button">Manage QR Codes</button>
             {% else %}
-            <h3> Welcome back {{ user.username }}!</h3>
+            <h3 style="margin-top: 8px;"> Welcome back {{ user.username }}!</h3>
             {% endif %}
 
             <button onclick="location.href='{% url 'game' %}'" type="button" class="primarybutton">PLAY</button>
@@ -37,54 +38,92 @@
     <div class="page" id="about">
         <h2>About</h2>
 
+        <div class="para">More than 2 million pieces of litter are dropped in the UK every day. That’s around 30 million
+            tonnes a
+            year. The amount of litter dropped has increased by 500% since the 1960s. A lot of this litter ends up
+            in
+            the sea, affecting sea life more than we know.</div>
+
+        <a href="https://planetearthgames.org
+            ">https://planetearthgames.org</a>
+
+
         <div class="carousel">
-            <img src="{{ user.userinfo.picture.url }}" class="slide">
-            <img src="{{ user.userinfo.picture.url }}" class="slide expanded">
-            <img src="{{ user.userinfo.picture.url }}" class="slide">
+            <img src="{% static '/media/penguins_walking_trash.png' %}" class="slide">
+            <img src="{% static '/media/penguin_plastic.jpg' %}" class="slide expanded">
+            <img src="{% static '/media/penguin-fishing-net-chile.png' %}" class="slide">
         </div>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const images = document.querySelectorAll(".slide");
-
-                images.forEach(image => {
-                    image.addEventListener("click", function () {
-                        images.forEach(img => img.classList.remove("expanded"));
-                        this.classList.add("expanded");
-                    });
-                });
-            });
-        </script>
-
-        <div style="max-width: 700px; margin: auto;">
+        <a
+            href="https://wwf.org.au/blogs/in-photos-drowning-in-plastics/">https://wwf.org.au/blogs/in-photos-drowning-in-plastics/</a>
 
 
-            About penguin game..... insert some copy here whoever is writing that stuff
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-            ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-            fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit
-            anim id est laborum.
+        <h3>Who We Are</h3>
+        <div class="para">We are a dedicated team of individuals driven by our passion to devise an enjoyable solution
+            that encourages
+            and
+            enhances recycling efforts.</div>
 
-        </div>
+        <h3>Our Mission</h3>
 
-        <h2 id="getcoins">How do I get coins?</h2>
+        <div class="para">Our mission is to develop an engaging game aimed at raising awareness of littering among
+            students on campus.
+            We
+            aspire to address the issue of littering in a manner that is both enjoyable and environmentally sustainable.
+            To
+            realise this vision, our game incorporates an innovative approach – users can scan QR codes located on bins,
+            to
+            give themselves coins they can play with. Additionally, they can answer a quiz on sustainability for extra
+            coins
+            if they answer correctly. To further promote sustainability, players can compete for the best high score,
+            encouraging them to think more about sustainable waste disposal.</div>
 
-        <div style="max-width: 700px; margin: auto;">
+        <h2 id="getcoins">FAQ</h2>
 
-            Some copy text about getting coins...Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit
-            in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </div>
+        <h4>How do I earn coins?</h4>
+
+        <div class="para">You can earn coins by scanning QR codes on bins around campus. You get a base amount from
+            that, and you also
+            have the option to take a sustainability quiz to earn additional coins.</div>
+
+        <h4>What can I spend my coins on?</h4>
+
+        <div class="para">You can spend your coins on the Sustainability Slide game, try and get a new highscore to
+            compare with
+            friends.</div>
+
+        <h4>Is there a limit on scanning QR codes?</h4>
+
+        <div class="para">You can only scan the same QR code once a day. However, there are multiple QR codes around
+            campus, so there
+            is
+            no limit on how many different QR codes you scan a day!</div>
+
+        <h4>How does this help the environment?</h4>
+
+        <div class="para">Our aim with this game is to make people more aware of locations of bins around campus. By
+            enhancing this
+            awareness, we aim to reduce instances of littering and promote a cleaner, more environmentally conscious
+            campus
+            community. Incorporating a quiz component into the game serves as a clever mechanism to encourage ongoing
+            engagement with sustainable practices beyond just waste disposal.</div>
+
 
     </div>
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const images = document.querySelectorAll(".slide");
+
+        images.forEach(image => {
+            image.addEventListener("click", function () {
+                images.forEach(img => img.classList.remove("expanded"));
+                this.classList.add("expanded");
+            });
+        });
+    });
+</script>
 
 </html>
 {% endblock %}
