@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import generics, status
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from django.db.models import Case, Value, When, BooleanField, Q
 
 # Non-static imports
@@ -12,12 +13,32 @@ from .serializers import MessageSerializer, ScoreSerializer, ShopSerializer, Use
 from accounts.models import UserInfo, UserFriends, Titles, Backgrounds, UserOwnedTitles, UserOwnedBackgrounds
 from shop.models import Shop
 
-class MessageData(generics.GenericAPIView):
+class SuperUserCheck(IsAdminUser):
     """
-     * Returns a list of all the messages sent and retrieved for a user and their friend
+     * Checks whether a user is a super user to access the endpoint
      *
      * @author Jasper
     """
+    def has_permission(self, request, view):
+        return request.user and request.user.is_superuser
+
+class GameKeeperCheck(IsAdminUser):
+    """
+     * Checks whether a user is a super user to access the endpoint
+     *
+     * @author Jasper
+    """
+    def has_permission(self, request, view):
+        return request.user and (request.user.is_staff or request.user.is_superuser)
+
+class MessageData(generics.GenericAPIView):
+    """
+     * Returns a list of all the messages sent and retrieved for a user and their friend
+     * Post requests will send a message from the user to the user being messaged
+     *
+     * @author Jasper
+    """
+    permission_classes = [IsAuthenticated]
     serializer_class = MessageSerializer
 
     # Gets the queryset used for the view, which is the messages sent and received between the users
@@ -50,9 +71,11 @@ class MessageData(generics.GenericAPIView):
 class LeaderboardData(ListAPIView):
     """
      * Returns a list of all users leaderboard values
+     * Post requests are not accepted
      *
      * @author Jasper
     """
+    permission_classes = [IsAuthenticated]
     serializer_class = ScoreSerializer
 
     def get_queryset(self):
@@ -88,9 +111,11 @@ class LeaderboardData(ListAPIView):
 class ShopData(generics.GenericAPIView):
     """
      * Returns a list of all the current shop data excluding the users currently owned items
+     * Post requests will purchase the specified item id and type for the user sending the request
      *
      * @author Jasper
     """
+    permission_classes = [IsAuthenticated]
     serializer_class = ShopSerializer
 
     def get_queryset(self):
@@ -121,9 +146,14 @@ class ShopData(generics.GenericAPIView):
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
-        if 'item' in request.data:
+        if 'item' in request.data and request.data['item']:
             item_id_type = request.data['item'].split('-')
-            item_id, item_type = item_id_type[0], item_id_type[1]
+
+            try:
+                item_id, item_type = item_id_type[0], item_id_type[1]
+            except IndexError:
+                return Response({'error': 'Invalid item'}, status=status.HTTP_400_BAD_REQUEST)
+
             shop_object = Shop.objects.filter(item_id=item_id, item_type=item_type).first()
 
             if shop_object and request.user.userinfo.coins > shop_object.price:
@@ -151,9 +181,11 @@ class ShopData(generics.GenericAPIView):
 class UserData(generics.GenericAPIView):
     """
      * Returns a list of a users username, coins, highscore and cumulativeScore
+     * Post requests will update the values inside the request body
      *
      * @author Jasper
     """
+    permission_classes = [SuperUserCheck]
     serializer_class = UserInfoSerializer
     def get(self, request, *args, **kwargs):
         user_object = User.objects.filter(username__iexact=kwargs['username']).first()
@@ -164,7 +196,8 @@ class UserData(generics.GenericAPIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response({}, status=status.HTTP_404_NOT_FOUND)
     def post(self, request, *args, **kwargs):
-        user_object = User.objects.filter(username__iexact=self.request.user).first()
+        user_object = User.objects.filter(username__iexact=kwargs['username']).first()
+
         if not user_object:
             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -172,7 +205,57 @@ class UserData(generics.GenericAPIView):
         serializer = self.get_serializer(user_info_object, data=request.data, partial=True)
 
         if serializer.is_valid():
+            user_object.is_staff = request.data.get('is_staff', request.user.is_staff)
+            user_object.is_superuser = request.data.get('is_superuser', request.user.is_superuser)
+
             serializer.save()
+            user_object.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AdminShopData(generics.GenericAPIView):
+    """
+     * Returns a list of all the current shop data
+     * Post requests will update the shop items price, description and cost for each one that is in the request body
+     *
+     * @author Jasper
+    """
+    permission_classes = [GameKeeperCheck]
+    serializer_class = ShopSerializer
+
+    def get_queryset(self):
+        return Shop.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = ShopSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        if kwargs['item_type_id']:
+            item_id_type = kwargs['item_type_id'].split('-')
+
+            name = request.data.get('name', None)
+            description = request.data.get('description', None)
+            price = request.data.get('price', None)
+
+            try:
+                item_id, item_type = item_id_type[0], item_id_type[1]
+            except IndexError:
+                return Response({'error': 'Invalid item'}, status=status.HTTP_400_BAD_REQUEST)
+
+            shop_object = Shop.objects.filter(item_id=item_id, item_type=item_type).first()
+            if name:
+                shop_object.name = name
+            if description:
+                shop_object.description = description
+            if price:
+                shop_object.price = price
+
+            shop_object.save()
+
+            return Response({}, status=200)
+
+        return Response({}, status=400)

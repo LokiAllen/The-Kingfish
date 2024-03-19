@@ -117,11 +117,19 @@ class UserInfoSerializer(serializers.ModelSerializer):
      * @author Jasper
     """
     user_username = serializers.SerializerMethodField()
+    is_staff = serializers.SerializerMethodField()
+    is_superuser = serializers.SerializerMethodField()
 
     def get_user_username(self, obj):
         return obj.user.username
 
+    def get_is_staff(self, obj):
+        return obj.user.is_staff
+
+    def get_is_superuser(self, obj):
+        return obj.user.is_superuser
+
     class Meta:
         model = UserInfo
-        fields = ['id', 'user_username', 'coins', 'highscore', 'cumulativeScore']
+        fields = ['id', 'user_username', 'coins', 'highscore', 'cumulativeScore', 'is_staff', 'is_superuser']
 
