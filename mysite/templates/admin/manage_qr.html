@@ -41,6 +41,14 @@
         [50.725256, -3.543497],
         [50.745256, -3.523497]
     ]);
+    map.on('click', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+
+    // Update the latitude and longitude input fields
+    $('#latitudeInput').val(lat.toFixed(6)); // Formats the latitude up to 6 decimal places
+    $('#longitudeInput').val(lng.toFixed(6)); // Formats the longitude up to 6 decimal places
+    });
 
     </script>
         <br>
