@@ -6,11 +6,27 @@ extends Node2D
 class_name WorldScroller
 
 
-# Define list of chunks for the flipping/jumping states and transitions between them
-var flipChunks : Array[Resource] = getPackedScenesInDirectory("res://Scenes/Chunks/FlipChunks")
-var jumpChunks : Array[Resource] = getPackedScenesInDirectory("res://Scenes/Chunks/JumpChunks")
-var flipTransitionChunks : Array[Resource] = getPackedScenesInDirectory("res://Scenes/Chunks/FlipTransitionChunks")
-var jumpTransitionChunks : Array[Resource] = getPackedScenesInDirectory("res://Scenes/Chunks/JumpTransitionChunks")
+# Define constant lists of all chunk types, using the getPackedScenesInDirectory() function doesn't
+# work in the browser
+const FLIP_CHUNKS : Array[Resource] = [
+	preload("res://Scenes/Chunks/FlipChunks/flipChunk1.tscn"),
+	preload("res://Scenes/Chunks/FlipChunks/flipChunk2.tscn"),
+	preload("res://Scenes/Chunks/FlipChunks/flipChunk2 (2).tscn")
+]
+
+const JUMP_CHUNKS : Array[Resource] = [
+	preload("res://Scenes/Chunks/JumpChunks/jumpChunk1.tscn"),
+	preload("res://Scenes/Chunks/JumpChunks/jumpChunk2.tscn"),
+	preload("res://Scenes/Chunks/JumpChunks/jumpChunk3.tscn"),
+	preload("res://Scenes/Chunks/JumpChunks/jumpChunk4.tscn"),
+	preload("res://Scenes/Chunks/JumpChunks/jumpChunk5.tscn")
+]
+const FLIP_TRANSITION_CHUNKS : Array[Resource] = [
+	preload("res://Scenes/Chunks/FlipTransitionChunks/testStartFlip.tscn")
+]
+const JUMP_TRANSITION_CHUNKS : Array[Resource] = [
+	preload("res://Scenes/Chunks/JumpTransitionChunks/testStartJump.tscn")
+]
 
 
 # Reference to chunks that are safe to spawn the player in
@@ -62,7 +78,7 @@ func _ready():
 			var newChunk
 			# If the chunk is ahead of the player, spawn in a flip chunk, otherwise spawn in a starting chunk
 			if rootChunkPosition.x > CHUNK_WIDTH:
-				newChunk = addChunk(flipChunks.pick_random())
+				newChunk = addChunk(FLIP_CHUNKS.pick_random())
 			else:
 				newChunk = addChunk(STARTING_CHUNK)
 			# Set the position of the new chunk and increment the root position
@@ -105,17 +121,17 @@ func _physics_process(delta):
 			if isChunkTransition():
 				# If transitioning, flip the target state and add a transition to that state
 				if targetMovementState == Player.movementState.flipGravity:
-					newChunk = addChunk(jumpTransitionChunks.pick_random())
+					newChunk = addChunk(JUMP_TRANSITION_CHUNKS.pick_random())
 					targetMovementState = Player.movementState.jumpGravity
 				else:
-					newChunk = addChunk(flipTransitionChunks.pick_random())
+					newChunk = addChunk(FLIP_TRANSITION_CHUNKS.pick_random())
 					targetMovementState = Player.movementState.flipGravity
 			else:
 				# Otherwise get a new chunk for the current movement state
 				if targetMovementState == Player.movementState.flipGravity:
-					newChunk = addChunk(flipChunks.pick_random())
+					newChunk = addChunk(FLIP_CHUNKS.pick_random())
 				else:
-					newChunk = addChunk(jumpChunks.pick_random())
+					newChunk = addChunk(JUMP_CHUNKS.pick_random())
 			
 			
 			# Set the position of the new chunk to be 1 chunk in front of the previously added chunk
