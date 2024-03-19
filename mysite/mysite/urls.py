@@ -19,6 +19,8 @@ from django.urls import include, path
 from mysite import settings, views
 from accounts import views as account_views
 from shop import views as shop_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,3 +36,6 @@ urlpatterns = [
     path('shop/', shop_views.ShopView.as_view(), name='shop'),
     path('terms+and+conditions/', views.terms_and_conditions, name='terms_and_conditions')
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
