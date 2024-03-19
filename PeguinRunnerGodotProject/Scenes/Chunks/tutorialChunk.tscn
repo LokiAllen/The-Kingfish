@@ -5,8 +5,8 @@
 [ext_resource type="TileSet" uid="uid://btbeonu4o5xjs" path="res://Gridmaps/iceSet.tres" id="2_0mes2"]
 [ext_resource type="Theme" uid="uid://be8pcaengcs42" path="res://UI Themes/menu.tres" id="4_ly1wr"]
 [ext_resource type="PackedScene" uid="uid://dp1vd2b7yenfi" path="res://Scenes/tutorial/areatextprompt.tscn" id="4_wi4u0"]
-[ext_resource type="PackedScene" uid="uid://dbeqvani8qkjb" path="res://Scenes/Chunks/TransitionChunks/testStartJump.tscn" id="5_dpnpt"]
-[ext_resource type="PackedScene" uid="uid://bni1khwd6rl7c" path="res://Scenes/Chunks/TransitionChunks/testStartFlip.tscn" id="6_rnb5n"]
+[ext_resource type="PackedScene" uid="uid://dbeqvani8qkjb" path="res://Scenes/Chunks/JumpTransitionChunks/testStartJump.tscn" id="5_rt5wr"]
+[ext_resource type="PackedScene" uid="uid://bni1khwd6rl7c" path="res://Scenes/Chunks/FlipTransitionChunks/testStartFlip.tscn" id="6_w16gx"]
 
 [node name="TutorialScene" type="Control"]
 layout_mode = 3
@@ -123,10 +123,10 @@ position = Vector2(2992, 0)
 targetLabel = NodePath("../../Label")
 textPrompt = "Hitting walls while jumping causes a game over"
 
-[node name="TileMap7" parent="TutorialPosition" instance=ExtResource("5_dpnpt")]
+[node name="TileMap7" parent="TutorialPosition" instance=ExtResource("5_rt5wr")]
 position = Vector2(3576, 0)
 
-[node name="TileMap8" parent="TutorialPosition" instance=ExtResource("6_rnb5n")]
+[node name="TileMap8" parent="TutorialPosition" instance=ExtResource("6_w16gx")]
 position = Vector2(7816, 0)
 
 [node name="Label" type="Label" parent="."]

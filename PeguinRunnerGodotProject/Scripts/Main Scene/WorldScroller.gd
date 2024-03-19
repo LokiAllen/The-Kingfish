@@ -1,41 +1,20 @@
-extends Node2D
 '''
 WorldScroller script for the endless scrolling of the game world
 @author Daniel Hibbin
 '''
+extends Node2D
+class_name WorldScroller
 
 
-# List of chunks for the flipping movement state
-const flipChunks : Array[Resource] = [
-	preload("res://Scenes/Chunks/FlipChunks/flipChunk1.tscn"),
-	preload("res://Scenes/Chunks/FlipChunks/flipChunk2.tscn"),
-	preload("res://Scenes/Chunks/FlipChunks/flipChunk2 (2).tscn")
-]
+# Define list of chunks for the flipping/jumping states and transitions between them
+var flipChunks : Array[Resource] = getPackedScenesInDirectory("res://Scenes/Chunks/FlipChunks")
+var jumpChunks : Array[Resource] = getPackedScenesInDirectory("res://Scenes/Chunks/JumpChunks")
+var flipTransitionChunks : Array[Resource] = getPackedScenesInDirectory("res://Scenes/Chunks/FlipTransitionChunks")
+var jumpTransitionChunks : Array[Resource] = getPackedScenesInDirectory("res://Scenes/Chunks/JumpTransitionChunks")
 
-
-# List of chunks for the jumping movement state
-const jumpChunks : Array[Resource] = [
-	preload("res://Scenes/Chunks/JumpChunks/jumpChunk1.tscn"),
-	preload("res://Scenes/Chunks/JumpChunks/jumpChunk2.tscn"),
-	preload("res://Scenes/Chunks/JumpChunks/jumpChunk3.tscn"),
-	preload("res://Scenes/Chunks/JumpChunks/jumpChunk4.tscn"),
-	preload("res://Scenes/Chunks/JumpChunks/jumpChunk5.tscn")
-]
-
-
-# List of chunks to transition the player into the flip movement state
-const flipTransitionChunks : Array[Resource] = [
-	preload("res://Scenes/Chunks/TransitionChunks/testStartFlip.tscn")
-]
-
-
-# List of chunks to transition the player into the jump movement state
-const jumpTransitionChunks : Array[Resource] = [
-	preload("res://Scenes/Chunks/TransitionChunks/testStartJump.tscn")
-]
 
 # Reference to chunks that are safe to spawn the player in
-const startingChunk : Resource = preload("res://Scenes/Chunks/testChunk2.tscn")
+const STARTING_CHUNK : Resource = preload("res://Scenes/Chunks/testChunk2.tscn")
 
 
 # Varaibles for handling the chunks
@@ -44,9 +23,9 @@ var chunkWidth = 512
 var currentChunks : Array[TileMap]
 
 
-# Speed of chunk movement and chance of transition
+# Speed of chunk movement variables and chance of transition
 var speed : float = 380.0
-const MAXSPEED : float = 410.0
+const MAX_SPEED : float = 410.0
 const ACCELERATION : float = 0.5
 var transitionChance : float = 0.25
 
@@ -59,9 +38,12 @@ var targetMovementState : Player.movementState = Player.movementState.flipGravit
 @export var dead : bool = false
 
 
-# References to parent of background objects and foreground objects
+# References to foreground and to animation player that scrolls the background texture
 @onready var foreground = $Foreground
 @onready var backgroundAnimation = $Background2/AnimationPlayer
+
+
+# Varaible defining render distance of chunks
 var renderDistance = 3
 
 
@@ -70,15 +52,20 @@ func _ready():
 	# Start scrolling background
 	backgroundAnimation.play("scroll")
 	
-	# Create new chunks on game start
+	# Create new chunks on game start, if not started as dead
 	if !dead:
+		# Set the starting position according to the renderdistance
 		rootChunkPosition.x = -chunkWidth * renderDistance
+		
+		# Iterating through the render distance, spawn in chunks
 		for i in range(0, renderDistance*2):
-			var newChunk = flipChunks.pick_random() 
+			var newChunk
+			# If the chunk is ahead of the player, spawn in a flip chunk, otherwise spawn in a starting chunk
 			if rootChunkPosition.x > chunkWidth:
 				newChunk = addChunk(flipChunks.pick_random())
 			else:
-				newChunk = addChunk(startingChunk)
+				newChunk = addChunk(STARTING_CHUNK)
+			# Set the position of the new chunk and increment the root position
 			newChunk.position = rootChunkPosition
 			rootChunkPosition.x += chunkWidth
 
@@ -98,7 +85,7 @@ func _physics_process(delta):
 		# Set the root chunk position to the first chunk of the current chunks
 		rootChunkPosition.x = currentChunks[0].position.x
 		speed += ACCELERATION * delta
-		speed = max(speed, MAXSPEED)
+		speed = max(speed, MAX_SPEED)
 		
 		# Move the chunk positions according to the speed and time between physics frames
 		for chunk in currentChunks:
@@ -148,3 +135,30 @@ func isChunkTransition():
 # Stop scrolling the world
 func stop():
 	dead = true
+
+
+# Function that gets all of the packed scenes in a given directory
+func getPackedScenesInDirectory(path : String):
+	# Open the directory and define the array of packed scenes
+	var dir = DirAccess.open(path)
+	var packedSceneArray : Array[Resource] = []
+	
+	# If the directory was opened, parse through its contents
+	if dir:
+		# Begin parsing through the contents
+		dir.list_dir_begin()
+		var fileName = dir.get_next()
+		
+		# Whilst parsing has not finished, continue parsing
+		while fileName != "":
+			# If the current file is not a directory, append it to the array of packed scenes
+			if !dir.current_is_dir():
+				packedSceneArray.append(load(path+"/"+fileName))
+			# Get the next file
+			fileName = dir.get_next()
+	else:
+		# Otherwise print an error message to the console
+		print("Error has occured trying to access the path")
+	
+	# Return the array of packed scenes
+	return packedSceneArray

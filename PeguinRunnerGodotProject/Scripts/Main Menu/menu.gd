@@ -46,6 +46,8 @@ func _process(delta):
 	# If the audio stream doesn't start for whatever reason, start it
 	if audioStreamPlayer.playing == false:
 		audioStreamPlayer.play()
+	
+	print(startButton.disabled)
 
 
 # When the "Start Game" button is pressed, change to the world scene
