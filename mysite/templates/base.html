@@ -22,7 +22,9 @@
 <nav class="topnav">
 
     <div class="topnav-left">
-        <a class="topnav-brand" href="{% url 'home' %}">Penguin Site</a>
+        <a class="topnav-brand" href="{% url 'home' %}">
+            <img src="{% static '/media/logo.png' %}" alt="">
+        </a>
     </div>
 
     <div class="desktop-navlinks">
@@ -59,8 +61,7 @@
 
         {% else %}
 
-        <button onclick="location.href='{% url 'accounts:register' %}'" type="button"
-            style="margin-right: 5px;">Register</button>
+        <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
         <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button" class="primarybutton">Login</button>
 
         {% endif %}
