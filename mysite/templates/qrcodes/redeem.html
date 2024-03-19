@@ -12,8 +12,7 @@
     <script> var CSRF_TOKEN = '{{ csrf_token }}' </script>
 </head>
 <body onload=getLocation()>
-        <h2>You found a code!</h2>
-        <p>(some message should show up below)</p>
+        <h2 style="margin-top: 15vh;">You found a code!</h2>
         <p id='status'></p>
         <button onclick="location.href='{% url 'quiz:QuizAttempt' %}'" type="button">Extra Coins? BONUS QUIZ</button>
         <button onclick="location.href='{% url 'home' %}'" type="button" class="primarybutton">PLAY</button>

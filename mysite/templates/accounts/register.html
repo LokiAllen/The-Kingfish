@@ -4,82 +4,61 @@
 {% load static %}
 {% block templatepage %}
 
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/edit_profile.css' %}">
-    <title>Register</title>
-</head>
-
-<body>
-    <h2> Register </h2>
-
-    <!-- Rest of your form -->
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+        <title>Register</title>
+    </head>
+    <body>
     <form method="POST" action="" enctype="multipart/form-data" class="dropzone" id="RegisterForm">
         {% csrf_token %}
-
-        <div style="width:fit-content; margin: auto;">
-
-            <div style="display: flex; flex-direction:row; width:fit-content">
-
-                <div class="textfield">
-                    {{ form.email.label_tag }}
-                    {{ form.email }}
-                </div>
-
-                <div class="textfield">
-                    {{ form.username.label_tag }}
-                    {{ form.username }}
-                </div>
+        <div class="register-container">
+            <h1 class="register-title">Register</h1>
+            {% if form.username.errors %}
+                <p class="-username username-error">Username already exists</p>
+            {% endif %}
+            <div class="input-container -username">
+                <input name="username" type="text" required="">
+                <label for="input" class="label">Username</label>
+                <div class="underline"></div>
             </div>
-
-            <div style="display: flex; flex-direction:row; width:fit-content">
-                <div class="textfield">
-                    {{ form.first_name.label_tag }}
-                    {{ form.first_name }}
-                </div>
-
-                <div class="textfield">
-                    {{ form.last_name.label_tag }}
-                    {{ form.last_name }}
-                </div>
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <p class="-email error">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+            <div class="input-container -email">
+                <input name="email" type="text" required="">
+                <label for="input" class="label">Email</label>
+                <div class="underline"></div>
             </div>
-
-            <div style="display: flex; flex-direction:row; width:fit-content">
-                <div class="textfield">
-                    {{ form.password1.label_tag }}
-                    {{ form.password1 }}
-                </div>
-
-                <div class="textfield">
-                    {{ form.password2.label_tag }}
-                    {{ form.password2 }}
-                </div>
+            {% if form.password1.errors %}
+                <p class="-password error">Password is not strong enough</p>
+            {% endif %}
+            <div class="input-container -password">
+                <input name="password1" type="password" required="">
+                <label for="input" class="label">Password</label>
+                <div class="underline"></div>
+            </div>
+            {% if form.password2.errors %}
+                <p class="-confirm-pwd error">Passwords do not match</p>
+            {% endif %}
+            <div class="input-container -confirm-pwd">
+                <input name="password2" type="password" required="">
+                <label for="input" class="label">Confirm password</label>
+                <div class="underline"></div>
+            </div>
+            <div class="terms-conditions-cont">
+                <input type="checkbox" required="">You accept the <a class="terms-conditions" href="{% url 'terms_and_conditions' %}">Terms and conditions</a></input>
+            </div>
+            <div class="buttons">
+                <button type="submit" class="register-btn">Register</button>
+                <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button">Login</button>
             </div>
         </div>
-
-        <input type="submit" value="Register" class="primarybutton">
-        {{ form.errors }}
     </form>
-
-    <!-- Use window.onload to ensure the DOM is fully loaded -->
-    <script>
-        $('document').ready(function () {
-            $("#id_profile_picture").change(function () {
-                if (this.files && this.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $('#pfp').attr('src', e.target.result);
-                        $('#pfp').css('display', 'block');
-                    }
-                    reader.readAsDataURL(this.files[0]);
-                }
-            });
-        });
-    </script>
-</body>
-
-</html>
+    </body>
+    </html>
 {% endblock %}

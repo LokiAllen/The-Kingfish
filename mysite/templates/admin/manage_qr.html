@@ -13,6 +13,8 @@
             var CSRF_TOKEN = '{{ csrf_token }}';
         </script>
         <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     </head>
     <body onload="refresh_values()">
     <div class="page">
@@ -22,6 +24,26 @@
         <input type="text" id="longitudeInput" placeholder="Enter longitude" style="width:18rem">
         <input type="text" id="latitudeInput" placeholder="Enter latitude" style="width:18rem">
         <button onclick="generateQRCode()">Generate QR Code</button>
+        <br>
+        <div id="qrMap" style="height: 400px;"></div>
+    <script>
+        var map = L.map('qrMap').fitBounds([
+        [50.725256, -3.523497],
+        [50.745256, -3.543497]
+    ]);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Set the maximum bounds to restrict the map view
+    map.setMaxBounds([
+        [50.725256, -3.543497],
+        [50.745256, -3.523497]
+    ]);
+
+    </script>
+        <br>
         <div id="qrCodeContainer"></div>
         <br>
         <button onclick="showQRCodes()">Show All QR Codes</button>

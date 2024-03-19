@@ -22,7 +22,7 @@ tbody * {
 }
 
 tr {
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid rgba(255, 0, 0, 0.2);
 }
 
 tr td {
@@ -107,7 +107,7 @@ input {
 }
 
 #updateValues {
-    margin: 10% auto;
+    margin-bottom: 5%;
     width: 50%;
 }
 
@@ -117,4 +117,162 @@ input {
 
 #error {
     color: red;
+}
+
+#shop-container input {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+    border-radius: 0;
+    width: 90%;
+}
+
+.type-update {
+    font-size: medium;
+    width: 10%;
+}
+
+.name-update {
+    width: 25%;
+}
+
+.description-update {
+    width: 50%;
+}
+
+.old-description-update:hover {
+    position: absolute;
+    max-width: 890px;
+    left: 50%;
+    transform: translate(-50%, 3px);
+}
+
+.input-info {
+    display: block;
+    transform: translateY(-50%);
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+    background: white;
+}
+
+.input-info::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.description-update:hover .input-info,
+.name-update:hover .input-info,
+.price-update:hover .input-info {
+    visibility: visible;
+    opacity: 1;
+    height: auto;
+}
+
+.checkboxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 5%;
+}
+
+.mobile-title {
+    display: none;
+}
+
+.mobile-div {
+    display: none;
+}
+
+.home-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    width: fit-content;
+    margin: 15% auto 0;
+    color: #2E2E2E;
+}
+
+.second-title-with-button {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 15%;
+}
+
+.second-title-with-button button {
+    margin-right: 20px;
+    position: absolute;
+    left: -100%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 85%;
+    height: 75%;
+    font-size: xx-large;
+}
+
+.second-title {
+    position: relative;
+    left: 0;
+    transition: transform 0.5s ease;
+}
+
+@media (max-width: 450px) {
+    .mobile-title {
+        margin-top: 9vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #qrCodeContainer img {
+        max-width: 90vw;
+        margin: 3vh auto;
+    }
+
+    .page {
+        background: none;
+        border: none;
+        box-shadow: none;
+    }
+
+    .show-qr {
+        margin-bottom: 10%;
+    }
+
+    table {
+        margin-bottom: 30%;
+    }
+
+    table button {
+        width: 100%;
+    }
+
+    tr td:not(button) {
+        font-size: 0.96rem;
+    }
+
+    #dataInput {
+        max-width: 90vw;
+        margin-bottom: 3vh;
+    }
+
+    .profile-board, .info {
+        width: 90vw;
+        max-width: 90vw;
+    }
+
+    .profile-board {
+        margin-bottom: 24vh;
+    }
+
+    .search-title {
+        font-size: 3rem;
+    }
 }

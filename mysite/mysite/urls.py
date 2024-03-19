@@ -33,7 +33,8 @@ urlpatterns = [
     path('', views.home_view, name='home'),
     path('home/', views.home_view, name='home_view'),
     path('leaderboard/', account_views.LeaderboardView.as_view(), name='leaderboard'),
-    path('shop/', shop_views.ShopView.as_view(), name='shop')
+    path('shop/', shop_views.ShopView.as_view(), name='shop'),
+    path('terms+and+conditions/', views.terms_and_conditions, name='terms_and_conditions')
 ]
 
 if settings.DEBUG:

@@ -9,8 +9,8 @@ from django.db import models
 """
 class QrCodeModel(models.Model):
     id = models.CharField(primary_key=True, max_length=30)
-    latitude = models.IntegerField(default=0)
-    longitude = models.IntegerField(default=0)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, default=50.735256)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, default=-3.533497)
     expired = models.BooleanField(default=False)
     name = models.CharField(max_length=255, default="new bin")
     description = models.TextField(default="new description")
