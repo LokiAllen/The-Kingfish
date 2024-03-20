@@ -590,7 +590,7 @@ select {
 
 .table th,
 .table td {
-    padding: 12px 10px;
+    padding: 16px 8px;
 }
 
 table tr td:last-child {
@@ -603,8 +603,7 @@ table tr th:nth-last-child(2) {
 
 .table th {
     text-align: left;
-    font-size: 32px;
-    font-weight: bolder;
+
 }
 
 .table tbody tr td {
@@ -648,7 +647,8 @@ p.title {
     justify-content: flex-start;
     height: 48px;
     max-height: 48px;
-    overflow: hidden;
+    max-width: 50vw;
+    overflow-y: hidden;
 }
 
 .name-box img {
@@ -831,7 +831,8 @@ p.title {
 .tt-card {
     gap: 8px;
     margin: auto;
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     display: flex;
     flex-direction: row;
     height: fit-content;
