@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% extends "../base.html" %}
+
+{% load static %}
+{% block template %}
+<html lang="en">
+
+<head>
+    <title>QR Code Generator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{% static 'js/manage_shop.js' %}"></script>
+    <script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+    <style>
+        {
+            % if user.is_superuser %
+        }
+
+        .page {
+            border: 3px solid red;
+        }
+
+        button {
+            border-color: red;
+        }
+
+            {
+            % elif user.is_staff %
+        }
+
+        .page {
+            border: 3px solid lightgreen;
+        }
+
+        button {
+            border-color: lightgreen;
+        }
+
+            {
+            % endif %
+        }
+    </style>
+</head>
+
+<body onload="getShopInfo()">
+    <div class="page">
+        <div id="qrCodeContainer"></div>
+        <table>
+            <thead class="shop-table-head">
+                <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="shop-container">
+                <tr>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+</body>
+
+</html>
+{% endblock %}
