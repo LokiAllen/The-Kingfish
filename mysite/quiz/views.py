@@ -66,8 +66,9 @@ def getQuestions(user):
     answeredQuestions = [aq.question for aq in answered ]
 
     unansweredQuestions = [q for q in allQuestions if q not in answeredQuestions]
-    if len(unansweredQuestions) < 3:
-        return []
+    if len(unansweredQuestions) < 3: #If not enough questions in user's pool, reset the question pool.
+        UserAnsweredQuestion.objects.filter(user = user.id).delete()
+        unansweredQuestions = [q for q in allQuestions]
     questions = random.sample(unansweredQuestions, k=3)
     return questions
 

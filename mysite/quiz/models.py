@@ -13,7 +13,6 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE) #Corresponding question.
     a_text = models.CharField(max_length=100) #Text of the answer option
-    label = models.CharField(max_length=1) #Label e.g. A, B, C, not currently being used.
     correct = models.BooleanField(default=False) #Boolean value of whether the option is correct.
 
     def __str__(self) -> str:
