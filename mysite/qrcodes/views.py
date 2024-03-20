@@ -45,9 +45,9 @@ class QRCodeRedeem(LoggedInRequired, View):
         if not self.validate_code():
             return JsonResponse({'message': 'Invalid code'})
 
-        # Disabled atm but it checks whether a code has been scanned in last 24hr
-        #if not self.check_last_visit():
-        #    return JsonResponse({'message': 'You have already scanned this code in the last 24 hours'})
+        # Checks whether a code has been scanned in last 24hr
+        if not self.check_last_visit():
+            return JsonResponse({'message': 'You have already scanned this code in the last 24 hours'})
 
         self.redeem_reward()
         return JsonResponse({'message': 'Successfully redeemed'})
