@@ -1,20 +1,23 @@
+<!--Author: Jasper-->
 
 <!DOCTYPE html>
 {% extends "../base.html" %}
 
 {% load static %}
 {% block template %}
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
-        <script src="{% static 'js/manage_users.js' %}"></script>
-        <script>
-            var CSRF_TOKEN = '{{ csrf_token }}';
-        </script>
-        <title>Title</title>
-    </head>
-    <body>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+    <script src="{% static 'js/manage_users.js' %}"></script>
+    <script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
+    <title>Title</title>
+</head>
+
+<body>
     <div>
         <h1 class="search-title" style="letter-spacing: -3px;">User Score Editor</h1>
         <p id="error" style="display: none;">User does not exist</p>
@@ -44,6 +47,7 @@
             <button id="updateValues" onclick="updateValues()" type="button" class="update-button">Update</button>
         </div>
     </div>
-    </body>
-    </html>
+</body>
+
+</html>
 {% endblock %}

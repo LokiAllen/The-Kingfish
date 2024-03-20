@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
      * @param score_type        The score type to show (I.E highscore)
      */
     function getData(leaderboard_type, score_type) {
-        fetch(`/api/data/leaderboard/${username}/${leaderboard_type}/${score_type}/`)
+        fetch(`/api/data/leaderboard/${leaderboard_type}/${score_type}/`)
             .then(response => response.json())
             .then(data => {
                 if (score_type == 'cumulativeScore') {
