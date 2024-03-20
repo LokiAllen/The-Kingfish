@@ -14,11 +14,11 @@
 
 </head>
 
-<body>
+<body class="background-image">
+
     <form method="POST" action="" enctype="multipart/form-data" class="dropzone" id="RegisterForm">
         {% csrf_token %}
 
-        <div class="background-image"></div>
 
         <h2>Your Profile</h2>
 
@@ -79,6 +79,7 @@
         {{ form.profile_picture.errors }}
 
     </form>
+
 
     <script>
         bg_filenames = {

@@ -31,11 +31,10 @@
     <title>Profile</title>
 </head>
 
-<body>
+<body class="background-image">
+
 
     <h1>{{ user_data.username }}</h1>
-
-    <div class="background-image"></div>
 
     <img src="{{ user_data.userinfo.picture.url }}" class="account-img-profile" alt="Profile Picture">
 
@@ -65,6 +64,8 @@
     <button id="removefriend" onclick="removeFriend('{{ user_data.username }}')" type="button"
         class="primarybutton">Remove friend</button>
     {% endif %}
+
+
 
 
 </body>
