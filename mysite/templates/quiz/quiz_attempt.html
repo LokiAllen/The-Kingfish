@@ -3,7 +3,7 @@
 {% load static %}
 {% load tfilters %}
 {% block templatepage %}
-<!--Author: Tom-->
+<!--Author: Tom, Daniel Banks-->
 <html lang="en">
 
 <head>
@@ -25,7 +25,7 @@
 
             {% with question=questions|return_index:0 %}
             {% if question %}
-            <h4>{{ question.q_text }}</h4>
+            <h5>{{ question.q_text }}</h5>
 
 
             <div class="segmented-button">
@@ -37,10 +37,10 @@
 
             {% endif %}
             {% endwith %}
-
+            <br><br>
             {% with question=questions|return_index:1 %}
             {% if question %}
-            <h4>{{ question.q_text }}</h4>
+            <h5>{{ question.q_text }}</h5>
 
 
             <div class="segmented-button">
@@ -52,10 +52,10 @@
 
             {% endif %}
             {% endwith %}
-
+            <br><br>
             {% with question=questions|return_index:2 %}
             {% if question %}
-            <h4>{{ question.q_text }}</h4>
+            <h5>{{ question.q_text }}</h5>
 
 
             <div class="segmented-button">
@@ -67,7 +67,7 @@
 
             {% endif %}
             {% endwith %}
-
+            <br><br>
 
             <button type="submit" class="primarybutton">Confirm Answers</button>
         </form>
