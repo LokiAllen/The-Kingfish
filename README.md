@@ -25,7 +25,7 @@ This game engine uses GDscript as a language, which lacks any strongly enforced 
 
 ### Daniel Banks - Front End Design and Development:
 
-Daniel Banks worked on the front end of the website. This included the creation of the static `.html` files and `.css` files and ensuring their compatability with the back end. 
+Daniel Banks worked on the front end of the website. This included the creation of the static `.html` files and `.css` files and ensuring their compatibility with the back end. 
 
 ### Back End Design and Development
 Members working on this include:
