@@ -922,8 +922,3 @@ p.title {
 .background-image {
     background-size: cover;
 }
-
-.background-image * {
-    color: white;
-    mix-blend-mode: difference;
-}
