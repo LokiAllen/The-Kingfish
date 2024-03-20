@@ -20,19 +20,19 @@
         <div>
 
             <div class="desktop-logo">
-                <h1 style="margin:0;">Sustainability</h1>
+                <h2 style="margin:0;">Sustainability</h2>
                 <div class="display-large">Slide</div>
             </div>
 
             <div class="mobile-logo">
-                <h2 style="margin:0;">Sustainability</h2>
+                <h3 style="margin:0;">Sustainability</h3>
                 <div class="display-regular">Slide</div>
             </div>
 
             {% if user.is_authenticated %}
             {% if user.is_superuser %}
             <h2 style="margin-top: 8px;">Admin</h2>
-            <button onclick="location.href='{% url 'siteadmin:manageqr' %}'" type="button">Manage QR Codes</button>
+            <button onclick="location.href='{% url 'siteadmin:adminhome' %}'" type="button">Admin Panel</button>
             {% else %}
             <h3 style="margin: 8px 16px;"> Welcome back {{ user.username }}!</h3>
             {% endif %}

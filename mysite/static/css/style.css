@@ -352,7 +352,7 @@ input {
     color: #333c57;
     cursor: pointer;
     display: inline-block;
-    font-family: Neucha, sans-serif;
+    font-family: "PT Sans", sans-serif;
     font-size: 1rem;
     line-height: 23px;
     outline: none;
@@ -386,6 +386,7 @@ button {
     cursor: pointer;
     display: inline-block;
     font-size: 1rem;
+    font-family: "PT Sans", sans-serif;
     line-height: 23px;
     outline: none;
     padding: .75rem;
