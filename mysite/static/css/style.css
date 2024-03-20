@@ -52,6 +52,9 @@ body {
     border-style: solid;
     border-width: 2px;
     color: #333c57;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
     border-top-left-radius: 255px 15px;
     border-top-right-radius: 15px 225px;
 }
