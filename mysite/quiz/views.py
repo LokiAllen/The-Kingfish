@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.models import User
@@ -57,7 +57,21 @@ def QuizResult(request):
 
         result_text = "You scored: "+str(score)+" out of 3!"
         
+        request.session['result_text'] = result_text
+        request.session['score'] = score
+
+        return redirect("quiz:QuizResultDisplay", permanent=True)
+    
+    return render(request, 'quiz/quiz_result.html')
+        
+
+
+def QuizResultDisplay(request):
+    result_text = request.session.get('result_text')
+    score = request.session.get('score')
     return render(request, 'quiz/quiz_result.html', {'result_text':result_text, 'score':score})
+
+
 
 #Retreive all questions that have not been answered correctly by the user yet.
 def getQuestions(user):
@@ -66,8 +80,9 @@ def getQuestions(user):
     answeredQuestions = [aq.question for aq in answered ]
 
     unansweredQuestions = [q for q in allQuestions if q not in answeredQuestions]
-    if len(unansweredQuestions) < 3:
-        return []
+    if len(unansweredQuestions) < 3: #If not enough questions in user's pool, reset the question pool.
+        UserAnsweredQuestion.objects.filter(user = user.id).delete()
+        unansweredQuestions = [q for q in allQuestions]
     questions = random.sample(unansweredQuestions, k=3)
     return questions
 

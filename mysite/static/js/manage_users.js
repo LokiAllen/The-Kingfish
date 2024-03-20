@@ -1,6 +1,6 @@
 /**
- * Sends a request to the endpoint to retrieve users data, setting their values
- * inside the table and making it visible
+ * Sends a request to the endpoint to retrieve all the shop data, creating the elements and
+ * setting them inside the shop table respective of the item type
  *
  * @author Jasper
  */
@@ -15,31 +15,27 @@ function getUserInfo() {
             }
 
             document.getElementById('username').innerHTML = data.user_username;
-            document.getElementById('coins').placeholder = data.coins;
-            document.getElementById('highscore').placeholder = data.highscore;
-            document.getElementById('totalscore').placeholder = data.cumulativeScore;
-            document.getElementById('gamekeeper').checked = data.is_staff;
-            document.getElementById('admin').checked = data.is_superuser;
+            coins = document.getElementById('coins').placeholder = data.coins;
+            highscore = document.getElementById('highscore').placeholder = data.highscore;
+            totalscore = document.getElementById('totalscore').placeholder = data.cumulativeScore;
+
             document.getElementById('error').style = 'display: none;'
             document.getElementsByClassName('profile-board')[0].style = ''
         });
 }
 
 /**
- * Sends a request to the endpoint to update the values
+ * Sends a request to the endpoint for the user to purchase an item
  *
  * @author Jasper
  * @param item_id   The item and category id being purchased (in format 'item_id-cat_id'
  */
 function updateValues() {
-    const username = document.getElementById('username').innerHTML;
-    const coins = document.getElementById('coins').value;
-    const highscore = document.getElementById('highscore').value;
-    const totalscore = document.getElementById('totalscore').value;
-    const game_keeper = document.getElementById('gamekeeper').checked;
-    const super_user = document.getElementById('admin').checked;
-
-    const values = {'is_staff': game_keeper, 'is_superuser': super_user}
+    username = document.getElementById('username').innerHTML;
+    coins = document.getElementById('coins').value;
+    highscore = document.getElementById('highscore').value;
+    totalscore = document.getElementById('totalscore').value;
+    values = {}
 
     if (coins) {
         values['coins'] = coins;
@@ -52,10 +48,6 @@ function updateValues() {
     if (totalscore) {
         values['cumulativeScore'] = totalscore;
     };
-
-    if (Object.keys(values).length === 0) {
-        return
-    }
 
     fetch(`/api/data/user/${username}`, {
         method: 'POST',

@@ -39,10 +39,10 @@ function generateQRCode(code=null) {
 
 // Sends a POST request to add the new QR code to the database
 function add_to_database(code) {
-    var name = $('#nameInput').val() || 'New Bin';
-    var description = $('#descriptionInput').val() || 'New Description';
-    var longitude = $('#longitudeInput').val() || -3.533497;
-    var latitude = $('#latitudeInput').val() || 50.735256;
+    var name = $('#nameInput').val();
+    var description = $('#descriptionInput').val();
+    var longitude = $('#longitudeInput').val();
+    var latitude = $('#latitudeInput').val();
 
     $.ajax({
         url: `/siteadmin/manageqr/${code}/`,
@@ -85,25 +85,6 @@ function deleteQRCode(code) {
     });
 }
 
-function activateQRCode(code) {
-    $.ajax({
-        url: `/siteadmin/manageqr/${code}/`,
-        type: 'POST',
-        data: {
-            data: code,
-            csrfmiddlewaretoken: CSRF_TOKEN,
-            'method': 'undo_delete',
-        },
-        success: function(response) {
-            refresh_values();
-        },
-        error: function(error) {
-            console.error('Error:', error);
-        }
-    });
-}
-
-var qrCodeMarkers = {};
 // Sends a GET request to retrieve all the current QR codes and fills the table with those
 function refresh_values() {
     var qrContainer = $('.qr-container');
@@ -116,21 +97,7 @@ function refresh_values() {
         },
         success: function(data) {
             qrContainer.html('');
-                for (var key in qrCodeMarkers) {
-                    map.removeLayer(qrCodeMarkers[key]);
-                    delete qrCodeMarkers[key];
-                }
             data.values.forEach(function(value) {
-            // Only add non-expired QR codes
-            if (!value.expired) {
-                var marker = L.marker([value.latitude, value.longitude]).addTo(map);
-                marker.bindPopup(`<b>${value.name}</b><br>${value.description}`);
-                qrCodeMarkers[value.id] = marker; // Store the marker reference
-            }
-                var actionButton = value.expired ?
-                    `<button onclick="activateQRCode('${value.id}')">Make Active</button>` :
-                    `<button onclick="deleteQRCode('${value.id}')">Deactivate</button>`;
-
                 qrContainer.append('<tr>' +
                     '<td>' + value.id + '</td>' +
                     '<td>' + value.expired + '</td>' +
@@ -140,7 +107,7 @@ function refresh_values() {
                     '<td>' + value.description + '</td>' +
                     '<td>' +
                     '<button onclick="generateQRCode(\'' + value.id + '\')">Get QR Code</button>' +
-                    actionButton +
+                    '<button onclick="deleteQRCode(\'' + value.id + '\')">Delete</button>' +
                     '</td>' +
                     '</tr>');
             });

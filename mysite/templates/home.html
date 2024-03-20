@@ -1,103 +1,157 @@
+<!--Author: Daniel Banks-->
+
 <!DOCTYPE html>
 
 {% extends "./base.html" %}
-
 {% load static %}
+
+
 {% block template %}
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <script src="{% static 'js/home.js' %}"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home</title>
-    </head>
-    <body>
-    <div class="fullscreen-bg">
-        <div class="home-title">
-            <a class="mobile-only" href="{% url 'home' %}"><img src="{% static '/media/logo.png' %}" alt="Sustainability Slides"></a>
-            <h1 class="first-title">Sustainability</h1>
-            <h1 class="second-title">Slide</h1>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+
+<body>
+
+    <div style="height: 56vh; display: flex; justify-content: center; align-items: center;">
+        <div>
+
+            <div class="desktop-logo">
+                <h2 style="margin:0;">Sustainability</h2>
+                <div class="display-large">Slide</div>
+            </div>
+
+            <div class="mobile-logo">
+                <h3 style="margin:0;">Sustainability</h3>
+                <div class="display-regular">Slide</div>
+            </div>
+
             {% if user.is_authenticated %}
-                <button onclick="location.href='{% url 'game' %}'" type="button" class="buttons">Play</button>
+            {% if user.is_superuser %}
+            <h2 style="margin-top: 8px;">Admin</h2>
+            <button onclick="location.href='{% url 'siteadmin:adminhome' %}'" type="button">Admin Panel</button>
             {% else %}
-                <button onclick="location.href='{% url 'accounts:register' %}'" type="button" class="buttons">Get Started</button>
+            <h3 style="margin: 8px 16px;"> Welcome back {{ user.username }}!</h3>
+            {% endif %}
+
+            <button onclick="location.href='{% url 'game' %}'" type="button" class="primarybutton">PLAY</button>
+            {% else %}
+            <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
+            <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button"
+                class="primarybutton">Login</button>
             {% endif %}
         </div>
-
-        <div class="scroll-indicator">
-            <a href="#about-content" class="learn-more">Learn More</a>
-            <div class="arrow-down"></div>
-        </div>
     </div>
 
-    <div class="page" id="about-content">
+    <div class="page" id="about">
         <h2>About</h2>
 
-        <div class="carousel web-only">
-            <img src="{{ user.userinfo.picture.url }}" class="slide">
-            <img src="{{ user.userinfo.picture.url }}" class="slide expanded">
-            <img src="{{ user.userinfo.picture.url }}" class="slide">
+        <div class="para">In the UK there are 30,000,000 tonnes of litter collected annually, and there's plenty that
+            goes uncollected in nature. The litter lasts - It takes 10-20 years for a littered plastic bag to
+            degrade,80-100 years for an aluminium can, while plastic and glass bottles may never degrade.</div>
+
+        <a href="https://housekeep.com/blog/2022/03/10/the-great-british-spring-clean-2022-impact-of-litter/#:~:text=In%20total%2C%20there%20are%2030%2C000%2C000,of%20four%20Wembley%20Stadium%27s%20worth
+            ">https://housekeep.com/blog/2022/03/10/the-great-british-spring-clean-2022-impact-of-litter</a>
+
+
+        <div class="carousel">
+            <img src="{% static '/media/penguins_walking_trash.png' %}" class="slide">
+            <img src="{% static '/media/penguin_plastic.jpg' %}" class="slide expanded">
+            <img src="{% static '/media/penguin-fishing-net-chile.png' %}" class="slide">
         </div>
 
-        <div class="mobile-images mobile-only">
-            <img src="{% static '/media/penguin_plastic.jpg' %}" class="">
-            <!--<img src="{% static '/media/penguins_walking_trash.png' %}" class="">-->
+        <a href="https://wwf.org.au/blogs/in-photos-drowning-in-plastics/">wwf.org.au</a>
+        <a
+            href="https://www.sciencealert.com/no-these-penguins-aren-t-living-on-an-island-of-plastic-but-they-soon-could-be">www.sciencealert.com</a>
+
+        <h3>Who We Are</h3>
+        <div class="para">We are a dedicated team of individuals driven by our passion to devise an enjoyable solution
+            that encourages
+            and
+            enhances recycling efforts.</div>
+
+        <h3>Our Mission</h3>
+
+        <div class="para">Our mission is to develop an engaging game aimed at raising awareness of littering among
+            students on campus.
+            We
+            aspire to address the issue of littering in a manner that is both enjoyable and environmentally sustainable.
+            To
+            realise this vision, our game incorporates an innovative approach – users can scan QR codes located on bins,
+            to
+            give themselves coins they can play with. Additionally, they can answer a quiz on sustainability for extra
+            coins
+            if they answer correctly. To further promote sustainability, players can compete for the best high score,
+            encouraging them to think more about sustainable waste disposal.</div>
+
+        <h2 id="getcoins">FAQ</h2>
+
+        <h5>How do I earn coins?</h5>
+
+        <div class="para">You can earn coins by scanning QR codes on bins around campus. You get a base amount from
+            that, and you also
+            have the option to take a sustainability quiz to earn additional coins. You can also buy different
+            backgrounds and titles in the shop.</div>
+
+        <h5>What can I spend my coins on?</h5>
+
+        <div class="para">You can spend your coins on the Sustainability Slide game, try and get a new highscore to
+            compare with
+            friends.</div>
+
+        <h5>Is there a limit on scanning QR codes?</h5>
+
+        <div class="para">You can only scan the same QR code once a day. However, there are multiple QR codes around
+            campus, so there
+            is
+            no limit on how many different QR codes you scan a day!</div>
+
+        <h5>How does this help the environment?</h5>
+
+        <div class="para">Our aim with this game is to make people more aware of locations of bins around campus. By
+            enhancing this
+            awareness, we aim to reduce instances of littering and promote a cleaner, more environmentally conscious
+            campus
+            community. Incorporating a quiz component into the game serves as a clever mechanism to encourage ongoing
+            engagement with sustainable practices beyond just waste disposal.</div>
+
+        <h2>Charities</h2>
+
+        <div class="para">Here are some useful links that you could look at. These charities help remove litter from
+            streets, and help
+            look after injured animals affected by litter.
+            <br><br>
+            <b>Keep Britain Tidy</b><br>
+            <a href="https://www.keepbritaintidy.org">https://www.keepbritaintidy.org</a>
+            <br>
+            <b>Eco Active</b><br>
+            <a href=https://www.ecoactive.org.uk>https://www.ecoactive.org.uk</a>
+            <br>
+            <b>WWF Australia</b><br>
+            <a href=https://wwf.org.au>https://wwf.org.au</a>
+            <br>
+            <b>Planet Earth Games</b><br>
+            <a href=https://planetearthgames.org>https://planetearthgames.org</a>
         </div>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const images = document.querySelectorAll(".slide");
-
-                images.forEach(image => {
-                    image.addEventListener("click", function () {
-                        images.forEach(img => img.classList.remove("expanded"));
-                        this.classList.add("expanded");
-                    });
-                });
-            });
-        </script>
-
-        <div style="max-width: 700px; margin: auto;">
-
-
-            About penguin game..... insert some copy here whoever is writing that stuff
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-            ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-            fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit
-            anim id est laborum.
-
-        </div>
-
-        <h2 id="getcoins">How do I get coins?</h2>
-
-        <div style="max-width: 700px; margin: auto;">
-
-            Some copy text about getting coins...Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit
-            in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </div>
     </div>
-    <div class="fullscreen-bg web-only" id="second-background">
-        <section>
-            <div id="about" class="about-title">ABOUT</div>
-            <div class="about-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget mauris ultricies, consectetur dolor in, commodo ante. Donec sed aliquam lorem, eget ornare elit. Maecenas hendrerit sapien velit, sit amet tincidunt sapien semper in. Maecenas a sodales massa. Proin eu sollicitudin ex. Sed quis blandit ante, eu euismod magna. Etiam placerat, nibh eget facilisis gravida, arcu augue ultrices ligula, non consequat augue nisi quis turpis. Duis bibendum lorem tempor augue fermentum, at luctus eros posuere. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris ultricies consequat elit quis pharetra. Nunc arcu ligula, maximus eget lectus ut, eleifend blandit arcu.</div>
-            <div>
-                <button>Map</button>
-                <button>Carbon Footprint</button>
-                <button>Sustainability Course</button>
-            </div>
-        </section>
-        <div class="penguin">
-            <img src="{% static '/media/penguin_plastic.jpg' %}">
-            <img src="{% static '/media/penguins_walking_trash.png' %}">
-        </div>
-    </body>
-    </html>
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const images = document.querySelectorAll(".slide");
+
+        images.forEach(image => {
+            image.addEventListener("click", function () {
+                images.forEach(img => img.classList.remove("expanded"));
+                this.classList.add("expanded");
+            });
+        });
+    });
+</script>
+
+</html>
 {% endblock %}

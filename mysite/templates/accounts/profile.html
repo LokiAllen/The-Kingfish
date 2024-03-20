@@ -1,64 +1,76 @@
+<!--Author: Jasper, Daniel Banks-->
+
 <!DOCTYPE html>
 {% extends "../base.html" %}
 <html lang="en">
 {% load static %}
 {% block templatepage %}
-    <head>
-        <meta charset="UTF-8">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="{% static 'js/profile.js' %}"></script>
-        <script>
-            var user_background = '{{ user_data.userinfo.background.css_class }}';
-            var CSRF_TOKEN = '{{ csrf_token }}';
-        </script>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/background_styles.css' %}">
-        <style>
-            {% if user_data.userinfo.background.picture %}
-                .background-image {
-                    background: url("{% static 'media/profile_backgrounds/' %}{{ user_data.userinfo.background.picture }}");
-                    background-size: cover;
-                }
-            {% endif %}
-        </style>
-        <title>Profile</title>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{% static 'js/profile.js' %}"></script>
+    <script>
+        var user_background = '{{ user_data.userinfo.background.css_class }}';
+        var CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
+
+    <style>
+        {
+            % if user_data.userinfo.background.picture %
+        }
+
+        .background-image {
+            background: url("{% static 'media/profile_backgrounds/' %}{{ user_data.userinfo.background.picture }}");
+            background-size: cover;
+        }
+
+            {
+            % endif %
+        }
+    </style>
+    <title>Profile</title>
+</head>
+
+<body class="background-image">
+
+
+    <h1>{{ user_data.username }}</h1>
+
+    <img src="{{ user_data.userinfo.picture.url }}" class="account-img-profile" alt="Profile Picture">
+
+
+    <h5>{{ title }}</h5>
+
+    <div class="stat">
+        <p>Coins</p>
+        <p>{{ user_data.userinfo.coins }}</p>
+    </div>
+    <div class="stat">
+        <p>Highscore</p>
+        <p>{{ user_data.userinfo.highscore }}</p>
+    </div>
+    <div class="stat">
+        <p>Total Score</p>
+        <p>{{ user_data.userinfo.cumulativeScore }}</p>
     </div>
 
-    <div class="profile-board">
-        <div class="background-image"></div>
-        <div class="profile-picture-container">
-            <img src="{{ user_data.userinfo.picture.url }}" alt="Profile Picture" class="profile-picture">
-        </div>
-        <div class="info">
-            <h1>{{ user_data.username }}</h1>
-            <h2>{{ title }}</h2>
-            <div class="stats">
-                <div class="stat">
-                    <p>Coins</p>
-                    <p>{{ user_data.userinfo.coins }}</p>
-                </div>
-                <div class="stat">
-                    <p>Highscore</p>
-                    <p>{{ user_data.userinfo.highscore }}</p>
-                </div>
-                <div class="stat">
-                    <p>Total Score</p>
-                    <p>{{ user_data.userinfo.cumulativeScore }}</p>
-                </div>
-            </div>
-            {% if not following %}
-                <button onclick="addFriend('{{ user_data.username }}')" class="profile-button">Add Friend</button>
-            {% elif friend %}
-                <button onclick="location.href='{% url 'accounts:message' username=user_data.username %}'" type="button" class="profile-button">Message</button>
-            {% endif %}
-            {% if following %}
-                <button id="removefriend" onclick="removeFriend('{{ user_data.username }}')" type="button" class="profile-button">Remove friend</button>
-            {% endif %}
-        </div>
-    </div>
-    </body>
-    </html>
+    {% if not following %}
+    <button onclick="addFriend('{{ user_data.username }}')" class="primarybutton">Add Friend</button>
+    {% elif friend %}
+    <button onclick="location.href='{% url 'accounts:message' username=user_data.username %}'" type="button"
+        class="profile-button">Message</button>
+    {% endif %}
+    {% if following %}
+    <button id="removefriend" onclick="removeFriend('{{ user_data.username }}')" type="button"
+        class="primarybutton">Remove friend</button>
+    {% endif %}
+
+
+
+
+</body>
+
+</html>
 {% endblock %}

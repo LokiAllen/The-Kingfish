@@ -1,113 +1,115 @@
+<!--Author: Daniel Banks-->
+
 {% load static %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap"
+    rel="stylesheet">
 
 <!doctype html>
 <html lang="en">
+
 <head>
+    <meta name="theme-color" content="#f4f4f4"> <!--Titlebar color for Safari 15-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <script src="https://kit.fontawesome.com/b0aa482a7d.js" crossorigin="anonymous"></script>
-    <style>
-        {% if user.is_superuser %}
-            .navbar {
-                border: 3px solid indianred;
-            }
-            .admin-btn {
-                border-color: red;
-            }
-            @media (max-width: 450px) {
-                .navbar {
-                    border: none;
-                    border-top: 3px solid indianred;
-                }
-            }
-        {% elif user.is_staff %}
-            .navbar {
-                border: 3px solid lightgreen;
-            }
-            .admin-btn {
-                background-color: seagreen;
-            }
-            .admin-btn:hover {
-                background-color: darkseagreen;
-            }
-            @media (max-width: 450px) {
-                .navbar {
-                    border: none;
-                    border-top: 3px solid lightgreen;
-                }
-            }
-        {% endif %}
-    </style>
 </head>
-<body>
-<nav class="navbar">
-    <div id="mobile-nav" class="navbar-container mobile-only">
-        <a href="{% url 'home' %}"><i class="fa-solid fa-house"></i></a>
+
+
+
+<nav class="topnav">
+
+    <div class="topnav-left">
+        <a class="topnav-brand" href="{% url 'home' %}">
+            <img src="{% static '/media/logo.png' %}" alt="">
+        </a>
+    </div>
+
+    <div class="desktop-navlinks">
+
         {% if user.is_authenticated %}
-            <a href="{% url 'leaderboard' %}"><i class="fa-solid fa-chart-simple"></i></a>
-            <a href="{% url 'accounts:profile' username=user.username %}"><i class="fa-solid fa-user"></i></a>
-            {% if user.is_superuser %}
-            <a href="{% url 'siteadmin:adminhome' %}"><i class="fa-solid fa-gear" style="color:indianred"></i></a>
-                {% elif user.is_staff %}
-            <a href="{% url 'siteadmin:adminhome' %}"><i class="fa-solid fa-gear" style="color:seagreen"></i></a>
-                {% endif %}
-            <a href="{% url 'shop' %}"><i class="fa-solid fa-cart-shopping"></i></a>
-            <a href="{% url 'accounts:logout' %}"><i class="fa-solid fa-right-from-bracket"></i></a>
-        {% else %}
-                <a href='{% url 'accounts:register' %}'>Register</a>
-                <a href='{% url 'accounts:log_in' %}'>Login</a>
+
+        <a href="{% url 'leaderboard' %}" class="nav-link">Leaderboard</a>
+        <a href="{% url 'shop' %}" class="nav-link">Shop</a>
+
         {% endif %}
+        <a href="{% url 'home' %}#about" class="nav-link">About</a>
+        <a href="{% url 'home' %}#getcoins" class="nav-link">Get Coins</a>
+
+        {% if user.is_superuser %}
+        <button class="primarybutton" onclick="location.href='{% url 'siteadmin:adminhome' %}'" type="button">Admin
+            Panel</button>
+        {% endif %}
+
     </div>
-    <div id="web-nav" class="navbar-container web-only">
-        <div class="logo">
-            <a href="{% url 'home' %}"><img src="{% static '/media/logo.png' %}" alt="Sustainability Slides"></a>
+
+    <div class="topnav-right">
+        {% if user.is_authenticated %}
+
+        <div class="userinfo">
+            <a href="{% url 'accounts:profile' username=user.username %}" class="nav-link">{{ user.username }} </a>
+            COINS: {{ user.userinfo.coins }}
         </div>
-        <ul class="nav-links">
 
-            {% if user.is_authenticated %}
+        <a id="pfp" href="{% url 'accounts:profile' username=user.username %}">
+            <img class="account-img" src="{{ user.userinfo.picture.url }}" />
+        </a>
 
-                <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
-                <li><a href="{% url 'shop' %}">Shop</a></li>
-            {% endif %}
-            <li><a href="{% url 'home' %}#about-content">About</a></li>
-        </ul>
-        <div class="nav-buttons">
-            {% if user.is_authenticated %}
+        <button onclick="location.href='{% url 'accounts:logout' %}'" type="button">Logout</button>
 
-                <div class="userinfo">
-                    <a href="{% url 'accounts:profile' username=user.username %}" class="nav-link">{{ user.username }} </a>
-                    <span>{{ user.userinfo.coins }}Ȼ</span>
-                </div>
+        {% else %}
 
-                <a id="pfp" href="{% url 'accounts:profile' username=user.username %}">
-                    <img class="account-img" src="{{ user.userinfo.picture.url }}" />
-                </a>
+        <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
+        <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button" class="primarybutton">Login</button>
+
+        {% endif %}
+
+        <div class="mobile-navlinks">
+            <button class="dropbtn">☰</button>
+            <div class="dropdown-content">
+                {% if user.is_authenticated %}
+                <a href="{% url 'leaderboard' %}">Leaderboard</a>
+                <a href="{% url 'shop' %}">Shop</a>
+                {% endif %}
+                <a href="{% url 'home' %}#about">About</a>
+                <a href="{% url 'home' %}#getcoins">Get Coins</a>
+
                 {% if user.is_superuser %}
-                    <button onclick="location.href='{% url 'siteadmin:adminhome' %}'" type="button" class="btn admin-btn">Admin Panel</button>
-                {% elif user.is_staff %}
-                    <button onclick="location.href='{% url 'siteadmin:adminhome' %}'" type="button" class="btn admin-btn">Game Keeper</button>
+                <button class="primarybutton" onclick="location.href='{% url 'siteadmin:adminhome' %}'" type="button"
+                    style="margin-bottom: 8px;">Admin
+                    Panel</button>
                 {% endif %}
 
-
-                <button onclick="location.href='{% url 'accounts:logout' %}'">Logout</button>
-            {% else %}
-                <button onclick="location.href='{% url 'accounts:register' %}'" type="button">Register</button>
-                <button onclick="location.href='{% url 'accounts:log_in' %}'" type="button">Login</button>
-            {% endif %}
-
+            </div>
         </div>
+    </div>
 
-    </div>
-    </div>
 </nav>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".dropbtn").click(function () {
+            $(".dropdown-content").toggle();
+        });
+    });
+</script>
 
-{% block template %}
-    {% block templatepage %}
+<body>
+
+    {% block template %}
+    <div class="page">
+        {% block templatepage %}
+        {% endblock %}
+    </div>
     {% endblock %}
-{% endblock %}
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <div class="footer">
+        For help and queries please contact: help@sustainabilityslide.co.uk
+    </div>
 </body>
+
 </html>

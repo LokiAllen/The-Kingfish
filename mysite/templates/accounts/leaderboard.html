@@ -1,52 +1,57 @@
-<!-- template.html -->
+<!--Author: Daniel Banks-->
+
 <!DOCTYPE html>
 {% extends "../base.html" %}
 {% load static %}
 
 {% block templatepage %}
-    <html lang="en">
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/leaderboard.css' %}">
-        <script src="{% static 'js/leaderboard.js' %}"></script>
-        <title>Leaderboard</title>
-        <script>
-            var CSRF_TOKEN = '{{ csrf_token }}';
-        </script>
-    </head>
-    <body>
-    <div class="page">
-        <h2 style="margin-bottom: 3%;">Leaderboard</h2>
-        <div class="segmented-button">
-            <input type="radio" name="leaderboardtype" value="global" id="global" checked="checked">
-            <label for="global">Global</label>
-            <input type="radio" name="leaderboardtype" value="friends" id="friends">
-            <label for="friends">Friends</label>
-        </div>
+<html lang="en">
 
-        <div class="segmented-button">
-            <input type="radio" name="scoretype" value="cumulativeScore" id="cumulativeScore">
-            <label for="cumulativeScore">Cumulative Score</label>
-            <input type="radio" name="scoretype" value="highscore" id="highscore">
-            <label for="highscore">High Score</label>
-            <input type="radio" name="scoretype" value="coins" id="coins" checked="checked">
-            <label for="coins">Coins</label>
-        </div>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/leaderboard.css' %}">
+    <script src="{% static 'js/leaderboard.js' %}"></script>
+    <title>Leaderboard</title>
+    <script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+        const username = '{{ user.username }}';
+    </script>
+</head>
 
-        <table class="table">
-            <thead>
+<body>
+
+    <h2>Leaderboard</h2>
+
+    <div class="segmented-button">
+        <input type="radio" name="leaderboardtype" value="global" id="global" checked="checked">
+        <label for="global">Global</label>
+        <input type="radio" name="leaderboardtype" value="friends" id="friends">
+        <label for="friends">Friends</label>
+    </div>
+
+    <div class="segmented-button">
+        <input type="radio" name="scoretype" value="cumulativeScore" id="cumulativeScore">
+        <label for="cumulativeScore">Cumulative Score</label>
+        <input type="radio" name="scoretype" value="highscore" id="highscore">
+        <label for="highscore">High Score</label>
+        <input type="radio" name="scoretype" value="coins" id="coins" checked="checked">
+        <label for="coins">Coins</label>
+    </div>
+
+
+    <table class="table">
+        <thead>
             <tr>
                 <th></th>
                 <th>Username</th>
                 <th id="th-score-type">Cumulative Score</th>
-                <th>   </th>
+                <th> </th>
             </tr>
-            </thead>
-            <tbody id="leaderboard-table">
+        </thead>
+        <tbody id="leaderboard-table">
 
-            </tbody>
-        </table>
-    </div>
-    </body>
+        </tbody>
+    </table>
+</body>
 
-    </html>
+</html>
 {% endblock %}

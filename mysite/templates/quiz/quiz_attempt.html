@@ -3,77 +3,78 @@
 {% load static %}
 {% load tfilters %}
 {% block templatepage %}
-<!--Author: Tom-->
+<!--Author: Tom, Daniel Banks-->
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/quiz.css' %}">
-    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
     <title>Quiz Attempt</title>
 </head>
+
 <body>
-    <div id="quizMain" class="quiz-container page">
-        <h1>Bonus Quiz!</h1>
+    <div id="quizMain">
+        <h2>Bonus Quiz!</h2>
 
         <!--Post request to result page including the user's answer choices-->
-        <form method="POST"  id="quiz-form" action="{% url 'quiz:QuizResult' %}">
+        <form method="POST" id="quiz-form" action="{% url 'quiz:QuizResult' %}" class="para">
             {% csrf_token %}
             <!--Use custom template filter to index through question and answer arrays and load their data to page-->
-            <div class="question">
-                {% with question=questions|return_index:0 %}
-                    {% if question %}
-                        <h2>{{ question.q_text }}</h2>
 
-                        
-                            {% for answer in answers|return_index:0 %}
-                                <div class="answers">
-                                <input type="radio" id="{{ answer.id }}" name="chosen_answerID1" value="{{ answer.id }}">
-                                <label for="{{ answer.id }}">{{ answer.a_text }}</label><br>
-                                </div>
-                            {% endfor %}
-                           
-                    {% endif %} 
-                {% endwith %}
-            </div>
-            <div class="question">
-                {% with question=questions|return_index:1 %}
-                    {% if question %}
-                        <h2>{{ question.q_text }}</h2>
+            {% with question=questions|return_index:0 %}
+            {% if question %}
+            <h5>{{ question.q_text }}</h5>
 
-                        
-                            {% for answer in answers|return_index:1 %}
-                            <div class="answers">
-                                <input type="radio" id="{{ answer.id }}" name="chosen_answerID2" value="{{ answer.id }}">
-                                <label for="{{ answer.id }}">{{ answer.a_text }}</label><br>
-                            </div>
-                            {% endfor %}
-                         
-                    {% endif %}
-                {% endwith %}
-            </div>
-            <div class="question">
-                {% with question=questions|return_index:2 %}
-                    {% if question %}
-                        <h2>{{ question.q_text }}</h2>
 
-                        
-                            {% for answer in answers|return_index:2 %}
-                            <div class="answers">
-                                <input type="radio" id="{{ answer.id }}" name="chosen_answerID3" value="{{ answer.id }}">
-                                <label for="{{ answer.id }}">{{ answer.a_text }}</label><br>
-                            </div>
-                            {% endfor %}
-                                
-                    {% endif %}
-                {% endwith %}
+            <div class="segmented-button">
+                {% for answer in answers|return_index:0 %}
+                <input type="radio" id="{{ answer.id }}" name="chosen_answerID1" value="{{ answer.id }}">
+                <label for="{{ answer.id }}">{{ answer.a_text }}</label>
+                {% endfor %}
             </div>
 
-            <button type="submit">Confirm Answers</button>
+            {% endif %}
+            {% endwith %}
+            <br><br>
+            {% with question=questions|return_index:1 %}
+            {% if question %}
+            <h5>{{ question.q_text }}</h5>
+
+
+            <div class="segmented-button">
+                {% for answer in answers|return_index:1 %}
+                <input type="radio" id="{{ answer.id }}" name="chosen_answerID2" value="{{ answer.id }}">
+                <label for="{{ answer.id }}">{{ answer.a_text }}</label>
+                {% endfor %}
+            </div>
+
+            {% endif %}
+            {% endwith %}
+            <br><br>
+            {% with question=questions|return_index:2 %}
+            {% if question %}
+            <h5>{{ question.q_text }}</h5>
+
+
+            <div class="segmented-button">
+                {% for answer in answers|return_index:2 %}
+                <input type="radio" id="{{ answer.id }}" name="chosen_answerID3" value="{{ answer.id }}">
+                <label for="{{ answer.id }}">{{ answer.a_text }}</label>
+                {% endfor %}
+            </div>
+
+            {% endif %}
+            {% endwith %}
+            <br><br>
+
+            <button type="submit" class="primarybutton">Confirm Answers</button>
         </form>
     </div>
 
 
 </body>
+
 </html>
 {% endblock %}

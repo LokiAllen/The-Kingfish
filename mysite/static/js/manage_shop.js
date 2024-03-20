@@ -48,21 +48,21 @@ function getShopInfo() {
             shopTable.innerHTML = ''
             data.forEach(item => {
                 const row = createElement('tr', {}, [
-                    createElement('td', {classList: ['type-update'], textContent: itemTypes[item.item_type]}, []),
-                    createElement('td', {classList: ['name-update']}, [
-                        createElement('span', {classList: ['input-info'], textContent: item.name}),
-                        createElement('input', {type: 'text', placeholder: item.name})
+                    createElement('td', { classList: ['type-update'], textContent: itemTypes[item.item_type] }, []),
+                    createElement('td', { classList: ['name-update'] }, [
+                        createElement('span', { classList: ['input-info'], textContent: item.name }),
+                        createElement('input', { type: 'text', placeholder: item.name })
                     ]),
-                    createElement('td', {classList: ['description-update']}, [
-                        createElement('span', {classList: ['input-info'], textContent: item.description}),
-                        createElement('input', {type: 'text', placeholder: item.description}),
+                    createElement('td', { classList: ['description-update'] }, [
+                        createElement('span', { classList: ['input-info'], textContent: item.description }),
+                        createElement('input', { type: 'text', placeholder: item.description }),
                     ]),
-                    createElement('td', {classList: ['price-update']}, [
-                        createElement('span', {classList: ['input-info'], textContent: item.price}),
-                        createElement('input', {type: 'text', placeholder: item.price})
+                    createElement('td', { classList: ['price-update'] }, [
+                        createElement('span', { classList: ['input-info'], textContent: item.price }),
+                        createElement('input', { type: 'text', placeholder: item.price })
                     ]),
                     createElement('td', {}, [
-                        createElement('button', {value: `${item.item_id}-${item.item_type}`, textContent: 'Update'}, []),
+                        createElement('button', { value: `${item.item_id}-${item.item_type}`, textContent: 'Update' }, []),
                     ]),
                 ]);
                 shopTable.appendChild(row);
@@ -117,7 +117,7 @@ function updateValues(button) {
 }
 
 
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
     if (event.target.nodeName == 'BUTTON' && event.target.innerHTML == 'Update') {
         updateValues(event.target);
     }
