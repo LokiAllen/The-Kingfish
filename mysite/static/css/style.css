@@ -918,3 +918,12 @@ p.title {
     border-top-left-radius: 45px 50px;
     border-top-right-radius: 50px 45px;
 }
+
+.background-image {
+    background-size: cover;
+}
+
+.background-image * {
+    color: white;
+    mix-blend-mode: difference;
+}
