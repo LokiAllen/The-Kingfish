@@ -1,22 +1,26 @@
+<!--Author: Jasper-->
 
 <!DOCTYPE html>
 {% extends "../base.html" %}
 
 {% load static %}
 {% block template %}
-    <html lang="en">
-    <head>
-        <title>QR Code Generator</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="{% static 'js/manage_qr.js' %}"></script>
-        <script>
-            var CSRF_TOKEN = '{{ csrf_token }}';
-        </script>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
-    </head>
-    <body onload="refresh_values()">
+<html lang="en">
+
+<head>
+    <title>QR Code Generator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{% static 'js/manage_qr.js' %}"></script>
+    <script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+</head>
+
+<body onload="refresh_values()">
     <div class="page">
-        <input type="text" id="dataInput" placeholder="Enter a code (leave blank to complete for you)" style="width:24rem">
+        <input type="text" id="dataInput" placeholder="Enter a code (leave blank to complete for you)"
+            style="width:24rem">
         <input type="text" id="nameInput" placeholder="Enter name" style="width:18rem">
         <input type="text" id="descriptionInput" placeholder="Enter description" style="width:18rem">
         <input type="text" id="longitudeInput" placeholder="Enter longitude" style="width:18rem">
@@ -28,20 +32,21 @@
         <br>
         <table>
             <thead class="qr-table-head" style="display:none">
-            <tr>
-                <th>Code</th>
-                <th>Expired</th>
-                <th>Longitude</th>
-                <th>Latitude</th>
-                <th>Name</th>
-                <th>Description</th>
-            </tr>
+                <tr>
+                    <th>Code</th>
+                    <th>Expired</th>
+                    <th>Longitude</th>
+                    <th>Latitude</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
             </thead>
             <tbody class="qr-container">
             </tbody>
         </table>
         <br>
     </div>
-    </body>
-    </html>
+</body>
+
+</html>
 {% endblock %}

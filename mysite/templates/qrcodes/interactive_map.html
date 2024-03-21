@@ -4,58 +4,62 @@
 {% block templatepage %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>QR Code Map View</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-          crossorigin=""/>
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
+
 <body>
+    <h2>Map</h2>
 
-<div id="map" style="width: 100%; height: 800px;"></div>
+    <div id="map" class="map"></div>
 
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
 
-<script>
-    var map = L.map('map', {
-        center: [50.735256, -3.533497], // Initial map center
-        zoom: 16,
-        maxBounds: [[50.725256, -3.523497], [50.745256, -3.543497]],
-        minZoom: 16,
-        maxZoom: 18,
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    function loadQRCodes() {
-        $.ajax({
-            url: '/siteadmin/manageqr/',
-            type: 'GET',
-            data: {
-                'method': 'refresh'
-            },
-            success: function(data) {
-                data.values.forEach(function(value) {
-                    if (!value.expired) {
-                        var marker = L.marker([value.latitude, value.longitude]).addTo(map);
-                        marker.bindPopup(`<b>${value.name}</b><br>${value.description}`);
-                    }
-                });
-            },
-            error: function(error) {
-                console.error('Error loading QR codes:', error);
-            }
+    <script>
+        var map = L.map('map', {
+            center: [50.735256, -3.533497], // Initial map center
+            zoom: 16,
+            maxBounds: [[50.725256, -3.523497], [50.745256, -3.543497]],
+            minZoom: 16,
+            maxZoom: 18,
         });
-    }
 
-    loadQRCodes();
-</script>
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        function loadQRCodes() {
+            $.ajax({
+                url: '/siteadmin/manageqr/',
+                type: 'GET',
+                data: {
+                    'method': 'refresh'
+                },
+                success: function (data) {
+                    data.values.forEach(function (value) {
+                        if (!value.expired) {
+                            var marker = L.marker([value.latitude, value.longitude]).addTo(map);
+                            marker.bindPopup(`<b>${value.name}</b><br>${value.description}`);
+                        }
+                    });
+                },
+                error: function (error) {
+                    console.error('Error loading QR codes:', error);
+                }
+            });
+        }
+
+        loadQRCodes();
+    </script>
 
 </body>
+
 </html>
 {% endblock %}
