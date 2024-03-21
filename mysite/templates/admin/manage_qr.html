@@ -1,52 +1,77 @@
-<!--Author: Jasper-->
 
 <!DOCTYPE html>
 {% extends "../base.html" %}
 
 {% load static %}
 {% block template %}
-<html lang="en">
-
-<head>
-    <title>QR Code Generator</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="{% static 'js/manage_qr.js' %}"></script>
-    <script>
-        var CSRF_TOKEN = '{{ csrf_token }}';
-    </script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
-</head>
-
-<body onload="refresh_values()">
+    <html lang="en">
+    <head>
+        <title>QR Code Generator</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="{% static 'js/manage_qr.js' %}"></script>
+        <script>
+            var CSRF_TOKEN = '{{ csrf_token }}';
+        </script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    </head>
+    <body onload="refresh_values()">
     <div class="page">
-        <input type="text" id="dataInput" placeholder="Enter a code (leave blank to complete for you)"
-            style="width:24rem">
+        <input type="text" id="dataInput" placeholder="Enter a code (leave blank to complete for you)" style="width:24rem">
         <input type="text" id="nameInput" placeholder="Enter name" style="width:18rem">
         <input type="text" id="descriptionInput" placeholder="Enter description" style="width:18rem">
         <input type="text" id="longitudeInput" placeholder="Enter longitude" style="width:18rem">
         <input type="text" id="latitudeInput" placeholder="Enter latitude" style="width:18rem">
         <button onclick="generateQRCode()">Generate QR Code</button>
+        <br>
+        <div id="qrMap" style="height: 400px;"></div>
+    <script>
+        var map = L.map('qrMap').fitBounds([
+        [50.725256, -3.523497],
+        [50.745256, -3.543497]
+    ]);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Set the maximum bounds to restrict the map view
+    map.setMaxBounds([
+        [50.725256, -3.543497],
+        [50.745256, -3.523497]
+    ]);
+    map.on('click', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+
+    // Update the latitude and longitude input fields
+    $('#latitudeInput').val(lat.toFixed(6)); // Formats the latitude up to 6 decimal places
+    $('#longitudeInput').val(lng.toFixed(6)); // Formats the longitude up to 6 decimal places
+    });
+
+    </script>
+        <br>
         <div id="qrCodeContainer"></div>
         <br>
         <button onclick="showQRCodes()">Show All QR Codes</button>
         <br>
         <table>
             <thead class="qr-table-head" style="display:none">
-                <tr>
-                    <th>Code</th>
-                    <th>Expired</th>
-                    <th>Longitude</th>
-                    <th>Latitude</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                </tr>
+            <tr>
+                <th>Code</th>
+                <th>Expired</th>
+                <th>Longitude</th>
+                <th>Latitude</th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
             </thead>
             <tbody class="qr-container">
             </tbody>
         </table>
         <br>
     </div>
-</body>
-
-</html>
+    </body>
+    </html>
 {% endblock %}
