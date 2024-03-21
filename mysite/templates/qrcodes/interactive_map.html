@@ -1,47 +1,59 @@
-<!DOCTYPE html>
 {% extends "../base.html" %}
 {% load static %}
 
 {% block templatepage %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>QR Code Map View</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-      crossorigin=""/>
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 
 <div id="map" style="width: 100%; height: 800px;"></div>
 
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-   crossorigin=""></script>
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
 
 <script>
-    // Initialize the map
     var map = L.map('map', {
-        center: [50.735256, -3.533497], // Set the initial center of the map
+        center: [50.735256, -3.533497], // Initial map center
         zoom: 16,
-        maxBounds: [[50.725256, -3.523497], [50.745256, -3.543497]], // Prevent the user from viewing outside of Exeter campus
-        minZoom: 16, // Prevent the user from zooming out beyond the initial zoom level
-        maxZoom: 18, // Set a maximum zoom level to a reasonable level
+        maxBounds: [[50.725256, -3.523497], [50.745256, -3.543497]],
+        minZoom: 16,
+        maxZoom: 18,
     });
 
-    // Add an OpenStreetMap layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Add marker for a bin
-    var Bin2 = L.marker([50.735260, -3.533286]).addTo(map);
-    Bin2.bindPopup("<b>Forum Bin 2</b><br>General Waste.");
+    function loadQRCodes() {
+        $.ajax({
+            url: '/siteadmin/manageqr/',
+            type: 'GET',
+            data: {
+                'method': 'refresh'
+            },
+            success: function(data) {
+                data.values.forEach(function(value) {
+                    if (!value.expired) {
+                        var marker = L.marker([value.latitude, value.longitude]).addTo(map);
+                        marker.bindPopup(`<b>${value.name}</b><br>${value.description}`);
+                    }
+                });
+            },
+            error: function(error) {
+                console.error('Error loading QR codes:', error);
+            }
+        });
+    }
 
-    var Bin1 = L.marker([50.735460, -3.533386]).addTo(map);
-    Bin1.bindPopup("<b>Forum Bin 1</b><br>Recycling Plastic and Cardboard");
-
-    // Set the map's view to the center with the normal zoom level
-    map.setView([50.735256, -3.533497], 16);
-
+    loadQRCodes();
 </script>
 
 </body>
