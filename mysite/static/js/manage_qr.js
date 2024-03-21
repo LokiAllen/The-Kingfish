@@ -85,6 +85,25 @@ function deleteQRCode(code) {
     });
 }
 
+function activateQRCode(code) {
+    $.ajax({
+        url: `/siteadmin/manageqr/${code}/`,
+        type: 'POST',
+        data: {
+            data: code,
+            csrfmiddlewaretoken: CSRF_TOKEN,
+            'method': 'undo_delete',
+        },
+        success: function(response) {
+            refresh_values();
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
+}
+
+var qrCodeMarkers = {};
 // Sends a GET request to retrieve all the current QR codes and fills the table with those
 function refresh_values() {
     var qrContainer = $('.qr-container');
@@ -97,7 +116,21 @@ function refresh_values() {
         },
         success: function(data) {
             qrContainer.html('');
+                for (var key in qrCodeMarkers) {
+                    map.removeLayer(qrCodeMarkers[key]);
+                    delete qrCodeMarkers[key];
+                }
             data.values.forEach(function(value) {
+            // Only add non-expired QR codes
+            if (!value.expired) {
+                var marker = L.marker([value.latitude, value.longitude]).addTo(map);
+                marker.bindPopup(`<b>${value.name}</b><br>${value.description}`);
+                qrCodeMarkers[value.id] = marker; // Store the marker reference
+            }
+                var actionButton = value.expired ?
+                    `<button onclick="activateQRCode('${value.id}')">Make Active</button>` :
+                    `<button onclick="deleteQRCode('${value.id}')">Deactivate</button>`;
+
                 qrContainer.append('<tr>' +
                     '<td>' + value.id + '</td>' +
                     '<td>' + value.expired + '</td>' +
@@ -107,7 +140,7 @@ function refresh_values() {
                     '<td>' + value.description + '</td>' +
                     '<td>' +
                     '<button onclick="generateQRCode(\'' + value.id + '\')">Get QR Code</button>' +
-                    '<button onclick="deleteQRCode(\'' + value.id + '\')">Delete</button>' +
+                    actionButton +
                     '</td>' +
                     '</tr>');
             });
